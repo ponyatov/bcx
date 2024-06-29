@@ -3,6 +3,9 @@ MODULE  = $(notdir $(CURDIR))
 
 # dirs
 CWD = $(CURDIR)
+INC = $(CWD)/inc
+SRC = $(CWD)/src
+TMP = $(CWD)/tmp
 
 # tool
 CURL   = curl -L -o
@@ -13,6 +16,9 @@ C += $(wildcard src/*.c*)
 H += $(wildcard inc/*.h*)
 F += lib/$(MODULE).ini $(wildcard lib/*.f)
 S  = $(C) $(H) $(F)
+
+# cfg
+CFLAGS += -I$(INC) -I$(TMP)
 
 # all
 .PHONY: all
