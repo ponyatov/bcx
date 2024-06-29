@@ -12,10 +12,11 @@ CF     = clang-format -style=file -i
 C += $(wildcard src/*.c*)
 H += $(wildcard inc/*.h*)
 F += lib/$(MODULE).ini $(wildcard lib/*.f)
+S  = $(C) $(H) $(F)
 
 # all
 .PHONY: all
-all: bin/$(MODULE) $(F)
+all: bin/$(MODULE) lib/$(MODULE).ini
 	$^
 
 # format
@@ -27,3 +28,21 @@ tmp/format_cpp: $(C) $(H)
 # rule
 bin/$(MODULE): $(C) $(H)
 	$(CXX) $(CFLAGS) -o $@ $(C) $(L)
+
+# doc
+.PHONY: doc
+doc:
+
+.PHONY: doxy
+doxy: .doxygen
+	rm -rf docs ; doxygen $< 1>/dev/null
+
+# install
+.PHONY: install update gz ref
+install: doc gz ref
+	$(MAKE) update
+update:
+	sudo apt update
+	sudo apt install -uy `cat apt.txt`
+gz:
+ref:
