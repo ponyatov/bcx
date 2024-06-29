@@ -5,6 +5,11 @@
 %defines %union { char c; char *s; uint8_t op; }
 
 %token<op> CMD
+%token<s> ID
+%token COLON
 
 %%
-syntax: | syntax CMD { cbyte($2); }
+syntax: | syntax ex
+
+ex : CMD        { cbyte($1); }
+   | COLON ID   { cword($2); }

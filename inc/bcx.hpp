@@ -8,7 +8,7 @@
 /// @{
 
 /// @ref M main Memory size, bytes
-#define Msz 0x10
+#define Msz 0x100
 /// @ref R Return stack size, cells
 #define Rsz 0x10
 /// Data stack size, cells
@@ -20,6 +20,10 @@
 #include <stdlib.h>
 #include <assert.h>
 #include <stdint.h>
+#include <string.h>
+
+#include <map>
+#include <string>
 
 /// @brief program entry point
 extern int main(int argc, char *argv[]);
@@ -74,7 +78,20 @@ extern void halt();  ///< `( -- )` stop whole system
 /// @defgroup compiler compiler
 /// @{
 
-extern void cbyte(uint8_t b);  ///< compile byte
+struct HEADER {
+    uint32_t heap = 0;  ///< last Cp value
+    uint32_t latest = 0;
+};
+extern HEADER *header;
+
+extern std::map<std::string, uint32_t> label;  ///< symbol table
+
+extern void cbyte(uint8_t b);   ///< compile byte
+extern void cshort(int16_t s);  ///< compile 16-bit short int
+extern void cint(int32_t n);    ///< compile 32-bit integer
+extern void cword(char *name);  ///< compile word header
+
+extern void lfa();  ///< compile LFA
 
 /// @}
 
