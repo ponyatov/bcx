@@ -30,7 +30,6 @@ int32_t D[Dsz];
 uint8_t Dp = 0;
 
 int vm() {
-    header->latest = 0;
     while (true) {
         assert(Ip < Cp);
         op = (OP)M[Ip++];
@@ -61,14 +60,18 @@ void halt() {
 void cbyte(uint8_t b) {
     assert(Cp < Msz);
     M[Cp++] = b;
-    // fprintf(stderr, "%.4X:\t%.2X\t%s\n", Cp - 1, b, yytext);
-    header->heap = Cp;
+    fprintf(stderr, "%.2X ", b);
 }
 
-extern void cint(int32_t n) {
+void cshort(int16_t s) {
+    *(uint16_t*)(&M[Cp]) = s;
+    Cp += sizeof(s);
+    fprintf(stderr, "%.4X ", s);
+}
+
+void cint(int32_t n) {
     *(uint32_t*)(&M[Cp]) = n;
     Cp += sizeof(n);
-    header->heap = Cp;
     fprintf(stderr, "%.4X\t%.8X\n", Cp - sizeof(n), n);
 }
 
@@ -76,16 +79,21 @@ std::map<std::string, uint32_t> label;
 
 HEADER* header = (HEADER*)&M;
 
+uint16_t latest = 0;
+
 void lfa() {
-    uint32_t latest = header->latest;
-    header->latest = Cp;
-    cint(latest);
+    uint32_t t = latest;
+    latest = Cp;
+    cshort(t);
+    fprintf(stderr, "%.4X ", t);
 }
 
 void nfa(char* name) {
-    size_t len = strlen(name); assert(len<0x10);
+    size_t len = strlen(name);
+    assert(len < 0x10);
+    fprintf(stderr, "%.4X\t", Cp);
     cbyte(strlen(name));
-    for(int i=0;i<len;i++) cbyte(name[i]);
+    for (int i = 0; i < len; i++) cbyte(name[i]);
 }
 
 void afa(uint8_t attr = 0) { cbyte(attr); }
@@ -93,11 +101,11 @@ void afa(uint8_t attr = 0) { cbyte(attr); }
 void cfa(uint32_t addr) {}
 
 extern void cword(char* name) {
+    fprintf(stderr, "%.4X:\t", Cp);
     lfa();
     nfa(name);
     afa();
     cfa(Cp);
     label[name] = Cp;
     Ip = Cp;
-    header->heap = Cp;
 }

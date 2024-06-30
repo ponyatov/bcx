@@ -32,18 +32,13 @@ extern void arg(int argc, char argv[]);
 
 /// @defgroup skelex lexical skeleton
 /// @{
-extern int yylex();
-extern int yylineno;
-extern char *yytext;
-extern FILE *yyin;
-extern int yyparse();
-extern void yyerror(const char *msg);
+extern int yylex();                    ///< lexer
+extern int yylineno;                   ///< current source line
+extern char *yytext;                   ///< parsed token value
+extern FILE *yyin;                     ///< input file handler
+extern int yyparse();                  ///< parser
+extern void yyerror(const char *msg);  ///< syntax error callback
 #include "bcx.parser.hpp"
-#define COMMAND(X)         \
-    {                      \
-        yylval.op = OP::X; \
-        return CMD;        \
-    }
 /// @}
 
 /// @defgroup vm Virtual Machine
@@ -79,19 +74,26 @@ extern void halt();  ///< `( -- )` stop whole system
 /// @{
 
 struct HEADER {
-    uint32_t heap = 0;  ///< last Cp value
-    uint32_t latest = 0;
+    uint16_t entry = sizeof(HEADER);  ///< @ref Ip
+    uint16_t heap = 0;                ///< @ref Cp
+    uint16_t latest = 0;              ///< @ref latest
 };
 extern HEADER *header;
 
 extern std::map<std::string, uint32_t> label;  ///< symbol table
+
+extern uint16_t latest;  ///< last defined word
 
 extern void cbyte(uint8_t b);   ///< compile byte
 extern void cshort(int16_t s);  ///< compile 16-bit short int
 extern void cint(int32_t n);    ///< compile 32-bit integer
 extern void cword(char *name);  ///< compile word header
 
-extern void lfa();  ///< compile LFA
+extern void lfa();  ///< compile LFA: vocabulary link field
+
+/// @brief NFA: word name as byte-counted string
+/// @param[in] name short ASCIIZ string (<16 chars)
+extern void nfa(char *name);
 
 /// @}
 
