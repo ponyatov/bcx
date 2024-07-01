@@ -23,6 +23,7 @@ DOC = $(CWD)/doc
 INC = $(CWD)/inc
 SRC = $(CWD)/src
 TMP = $(CWD)/tmp
+BLD = $(TMP)/$(MODULE)
 include mk/dirs.mk
 
 # tool
@@ -33,7 +34,7 @@ CF     = clang-format -style=file -i
 C += $(wildcard src/*.c*)
 H += $(wildcard inc/*.h*)
 F += lib/$(MODULE).ini $(wildcard lib/*.f)
-S  = $(C) $(H) $(F)
+S  = $(C) $(H) $(F) CMakeLists.txt
 CP = tmp/$(MODULE).parser.cpp tmp/$(MODULE).lexer.cpp
 HP = tmp/$(MODULE).parser.hpp
 
@@ -64,6 +65,9 @@ tmp/$(MODULE).lexer.cpp: src/$(MODULE).lex
 	flex -o $@ $<
 tmp/$(MODULE).parser.cpp: src/$(MODULE).yacc
 	bison -o $@ $<
+
+cmake: $(S)
+	echo $^
 
 include mk/rule.mk
 
