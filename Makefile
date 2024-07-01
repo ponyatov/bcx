@@ -81,7 +81,12 @@ ref:
 include mk/gz.mk
 
 # cross
-gmp: $(GZ)/$(GMP_GZ)
+gmp: $(TMP)/$(GMP)/README.md
+	$(TMP)/$(GMP)/configure --help
+
+$(TMP)/%/README: $(GZ)/%.tar.xz
+	cd $(TMP) ; xzcat $< | tar x && touch $@
+
 mpfr: $(GZ)/$(MPFR_GZ)
 mpc: $(GZ)/$(MPC_GZ)
 gcc: $(GZ)/$(GCC_GZ)
