@@ -32,6 +32,8 @@ extern void arg(int argc, char argv[]);
 
 /// @defgroup skelex lexical skeleton
 /// @{
+#include <readline/readline.h>
+#include <readline/history.h>
 extern int yylex();                    ///< lexer
 extern int yylineno;                   ///< current source line
 extern char *yytext;                   ///< parsed token value

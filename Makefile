@@ -17,18 +17,18 @@ include  app/$(APP).mk
 include mk/version.mk
 
 # dirs
-CWD = $(CURDIR)
-BIN = $(CWD)/bin
-DOC = $(CWD)/doc
-INC = $(CWD)/inc
-SRC = $(CWD)/src
-TMP = $(CWD)/tmp
-BLD = $(TMP)/$(MODULE)
+CWD   = $(CURDIR)
+BIN   = $(CWD)/bin
+DOC   = $(CWD)/doc
+INC   = $(CWD)/inc
+SRC   = $(CWD)/src
+TMP   = $(CWD)/tmp
+BUILD = $(TMP)/$(MODULE)
 include mk/dirs.mk
 
 # tool
-CURL   = curl -L -o
-CF     = clang-format -style=file -i
+CURL = curl -L -o
+CF   = clang-format -style=file -i
 
 # src
 C += $(wildcard src/*.c*)
@@ -54,30 +54,39 @@ all: bin/$(MODULE) lib/$(MODULE).ini
 
 # format
 .PHONY: format
-format: tmp/format_cpp
-tmp/format_cpp: $(C) $(H)
+format: tmp/format_c
+tmp/format_c: $(C) $(H)
 	$(CF) $? && touch $@
 
 # rule
-bin/$(MODULE): $(C) $(H) $(CP) $(HP)
-	$(CXX) $(CFLAGS) -o $@ $(C) $(CP) $(L)
+# bin/$(MODULE): $(C) $(H) $(CP) $(HP)
+# 	$(CXX) $(CFLAGS) -o $@ $(C) $(CP) $(L)
 tmp/$(MODULE).lexer.cpp: src/$(MODULE).lex
 	flex -o $@ $<
 tmp/$(MODULE).parser.cpp: src/$(MODULE).yacc
 	bison -o $@ $<
 
-cmake: $(S)
-	echo $^
+cmake: bin/$(MODULE)
+	ls -la $^
+
+bin/$(MODULE): $(S) $(CP) $(HP)
+	rm -rf $(BUILD) ; git checkout $(BUILD)
+	cmake -DAPP=$(MODULE) -DCMAKE_TOOLCHAIN_FILE=Linux -S$(CWD) -B$(BUILD)
+	cd $(BUILD) ; make -j$(CORES)
+# tmp/$(MODULE).exe: $(S)
+# 	rm -rf $(BUILD)
+# 	cmake -DAPP=$(MODULE) -DCMAKE_TOOLCHAIN_FILE=Windows_ -S$(CWD) -B$(BUILD)
 
 include mk/rule.mk
 
 # doc
-.PHONY: doc
-doc:
-
 .PHONY: doxy
 doxy: .doxygen
 	rm -rf docs ; doxygen $< 1>/dev/null
+
+.PHONY: doc
+doc:
+
 
 # install
 .PHONY: install update gz ref
@@ -95,3 +104,29 @@ ref:
 include mk/gz.mk
 include mk/cclibs.mk
 include mk/gcc.mk
+
+# merge
+MERGE += Makefile README.md .gitignore .clang-format .doxygen
+MERGE += bin doc lib inc src tmp ref $(S)
+MERGE += all hw cpu arch app
+MERGE += apt.txt
+
+.PHONY: dev
+dev:
+	git push -v
+	git checkout $@
+	git pull -v
+	git checkout shadow -- $(MERGE)
+#	$(MAKE) doxy ; git add -f docs
+
+.PHONY: shadow
+shadow:
+	git push -v
+	git checkout $@
+	git pull -v
+
+.PHONY: release
+release:
+	git tag $(NOW)-$(REL)
+	git push -v --tags
+	$(MAKE) shadow
