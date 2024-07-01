@@ -1,7 +1,7 @@
 #
 # Automatically generated make config: don't edit
 # Busybox version: 1.36.1
-# Mon Jul  1 18:28:12 2024
+# Mon Jul  1 18:37:50 2024
 #
 CONFIG_HAVE_DOT_CONFIG=y
 
@@ -9,7 +9,7 @@ CONFIG_HAVE_DOT_CONFIG=y
 # Settings
 #
 CONFIG_DESKTOP=y
-# CONFIG_EXTRA_COMPAT is not set
+CONFIG_EXTRA_COMPAT=y
 # CONFIG_FEDORA_COMPAT is not set
 # CONFIG_INCLUDE_SUSv2 is not set
 # CONFIG_LONG_OPTS is not set
