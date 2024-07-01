@@ -1,3 +1,6 @@
 # processor
 CONFIG_X86_GENERIC=y
 CONFIG_HIGHMEM4G=y
+
+# drivers
+CONFIG_ISAPNP=y
