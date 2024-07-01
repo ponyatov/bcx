@@ -15,3 +15,4 @@
 ::ctrlaltdel:/sbin/reboot
 # ::shutdown:/bin/umount -a -r
 # ::shutdown:/sbin/swapoff -a
+::shutdown:/sbin/poweroff -f
