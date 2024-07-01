@@ -1,5 +1,9 @@
 # var
 MODULE  = $(notdir $(CURDIR))
+NOW     = $(shell date +%d%m%y)
+REL     = $(shell git rev-parse --short=4 HEAD)
+BRANCH  = $(shell git rev-parse --abbrev-ref HEAD)
+CORES  ?= $(shell grep processor /proc/cpuinfo | wc -l)
 
 # cross
 APP ?= $(MODULE)
@@ -20,6 +24,7 @@ INC = $(CWD)/inc
 SRC = $(CWD)/src
 TMP = $(CWD)/tmp
 GZ  = $(HOME)/gz
+CROSS = $(CWD)/cross
 
 # tool
 CURL   = curl -L -o
@@ -35,6 +40,7 @@ HP = tmp/$(MODULE).parser.hpp
 
 # cfg
 CFLAGS += -I$(INC) -I$(TMP)
+CFG = configure --prefix=$(CROSS)
 
 # package
 include mk/package.mk
@@ -81,8 +87,14 @@ ref:
 include mk/gz.mk
 
 # cross
-gmp: $(TMP)/$(GMP)/README.md
-	$(TMP)/$(GMP)/configure --help
+
+GCCLIBS_CFG = --disable-shared
+GMP_CFG     = $(GCCLIBS_CFG)
+
+gmp: $(CROSS)/lib/libgmpa.a
+$(CROSS)/lib/libgmpa.a: $(TMP)/$(GMP)/README.md
+	cd $(TMP)/$(GMP); ./$(CFG) $(GMP_CFG) \
+	&& $(MAKE) -j$(CORES) && $(MAKE) install
 
 $(TMP)/%/README: $(GZ)/%.tar.xz
 	cd $(TMP) ; xzcat $< | tar x && touch $@
