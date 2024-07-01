@@ -34,6 +34,6 @@ LIBC     = uClibc-ng-$(LIBC_VER)
 LIBC_GZ  = $(LIBC).tar.xz
 LIBC_URL = https://downloads.uclibc-ng.org/releases/$(LIBC_VER)
 
-BB     = busybox
+BB     = busybox-$(BB_VER)
 BB_GZ  = $(BB).tar.bz2
 BB_URL = https://busybox.net/downloads
