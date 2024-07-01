@@ -41,6 +41,7 @@ HP = tmp/$(MODULE).parser.hpp
 CFLAGS += -I$(INC) -I$(TMP)
 CFG  = configure --prefix=$(CROSS) --disable-nls
 CCFG = configure --prefix=$(ROOT)  --disable-nls
+XPATH = PATH=$(CROSS)/bin:$(PATH)
 
 # package
 include mk/package.mk
