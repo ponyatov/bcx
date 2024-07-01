@@ -85,9 +85,7 @@ gz: \
 	$(GZ)/$(GMP_GZ) $(GZ)/$(MPFR_GZ) $(GZ)/$(MPC_GZ)
 ref:
 
-include mk/gz.mk
-
 # cross
+include mk/gz.mk
 include mk/cclibs.mk
-gcc: $(GZ)/$(GCC_GZ)
-binutils: $(GZ)/$(BINUTILS_GZ)
+include mk/gcc.mk
