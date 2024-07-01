@@ -1,8 +1,8 @@
-GCCLIBS_CFG  = --disable-shared
-GCCLIBS_WITH = --with-gmp=$(CROSS) --with-mpfr=$(CROSS) --with-mpc=$(CROSS)
-GMP_CFG     = $(GCCLIBS_CFG) $(GCCLIBS_WITH)
-MPFR_CFG    = $(GCCLIBS_CFG) $(GCCLIBS_WITH)
-MPC_CFG     = $(GCCLIBS_CFG) $(GCCLIBS_WITH)
+CCLIBS_CFG  = --disable-shared
+CCLIBS_WITH = --with-gmp=$(CROSS) --with-mpfr=$(CROSS) --with-mpc=$(CROSS)
+GMP_CFG     = $(CCLIBS_CFG) $(CCLIBS_WITH)
+MPFR_CFG    = $(CCLIBS_CFG) $(CCLIBS_WITH)
+MPC_CFG     = $(CCLIBS_CFG) $(CCLIBS_WITH)
 
 cclibs: gmp mpfr mpc
 
