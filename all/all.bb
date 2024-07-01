@@ -1,7 +1,7 @@
 #
 # Automatically generated make config: don't edit
 # Busybox version: 1.36.1
-# Mon Jul  1 19:42:24 2024
+# Mon Jul  1 19:47:22 2024
 #
 CONFIG_HAVE_DOT_CONFIG=y
 
@@ -250,7 +250,7 @@ CONFIG_FEATURE_SKIP_ROOTFS=y
 # CONFIG_UNIX2DOS is not set
 CONFIG_DU=y
 CONFIG_FEATURE_DU_DEFAULT_BLOCKSIZE_1K=y
-CONFIG_ECHO=y
+# CONFIG_ECHO is not set
 CONFIG_FEATURE_FANCY_ECHO=y
 CONFIG_ENV=y
 # CONFIG_EXPAND is not set
@@ -308,8 +308,8 @@ CONFIG_RM=y
 # CONFIG_SEQ is not set
 # CONFIG_SHRED is not set
 # CONFIG_SHUF is not set
-CONFIG_SLEEP=y
-CONFIG_FEATURE_FANCY_SLEEP=y
+# CONFIG_SLEEP is not set
+# CONFIG_FEATURE_FANCY_SLEEP is not set
 # CONFIG_SORT is not set
 # CONFIG_FEATURE_SORT_BIG is not set
 # CONFIG_FEATURE_SORT_OPTIMIZE_MEMORY is not set
@@ -1128,10 +1128,10 @@ CONFIG_ASH_INTERNAL_GLOB=y
 # CONFIG_ASH_EXPAND_PRMT is not set
 # CONFIG_ASH_IDLE_TIMEOUT is not set
 # CONFIG_ASH_MAIL is not set
-# CONFIG_ASH_ECHO is not set
+CONFIG_ASH_ECHO=y
 # CONFIG_ASH_PRINTF is not set
 # CONFIG_ASH_TEST is not set
-# CONFIG_ASH_SLEEP is not set
+CONFIG_ASH_SLEEP=y
 # CONFIG_ASH_HELP is not set
 # CONFIG_ASH_GETOPTS is not set
 # CONFIG_ASH_CMDCMD is not set
