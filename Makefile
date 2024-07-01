@@ -95,13 +95,11 @@ install: doc gz ref
 update:
 	sudo apt update
 	sudo apt install -uy `cat apt.txt`
-gz: \
-	$(GZ)/$(BINUTILS_GZ) $(GZ)/$(GCC_GZ) \
-	$(GZ)/$(GMP_GZ) $(GZ)/$(MPFR_GZ) $(GZ)/$(MPC_GZ)
+include mk/gz.mk
+gz: $(GZX)
 ref:
 
 # cross
-include mk/gz.mk
 include mk/cclibs.mk
 include mk/gcc.mk
 
