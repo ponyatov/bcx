@@ -39,7 +39,8 @@ HP = tmp/$(MODULE).parser.hpp
 
 # cfg
 CFLAGS += -I$(INC) -I$(TMP)
-CFG = configure --prefix=$(CROSS)
+CFG  = configure --prefix=$(CROSS) --disable-nls
+CCFG = configure --prefix=$(ROOT)  --disable-nls
 
 # package
 include mk/package.mk
