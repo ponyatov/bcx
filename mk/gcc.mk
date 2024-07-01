@@ -18,13 +18,13 @@ $(CROSS)/bin/$(TARGET)-ld: $(TMP)/$(BINUTILS)/README
 gcc0: $(CROSS)/bin/$(TARGET)-gcc
 $(CROSS)/bin/$(TARGET)-gcc: $(TMP)/$(GCC)/README
 	cd $(TMP)/$(GCC); $(XPATH) ./$(CFG) $(GCC0_CFG)
-	touch $@
-# $(MAKE) gccall
+	$(MAKE) gccall
 
 .PHONY: gccall
 gccall:
 	cd $(TMP)/$(GCC) && \
-	$(XPATH) $(MAKE) -j$(CORES) all-gcc install-gcc
+	$(XPATH) $(MAKE) -j$(CORES) all-gcc
+#  install-gcc
 # $(MAKE) -j$(CORES) all-gcc             \
 # $(MAKE)            install-gcc         \
 # $(MAKE) -j$(CORES) all-target-libgcc   \

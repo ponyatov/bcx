@@ -17,7 +17,9 @@
     },
     "files.watcherExclude": {
         "docs/**": true,
+        "tmp/**": true,
         "ref/**": true,
+        "cross/**": true,
     },
     "files.associations": {
         "*.json": "jsonc",

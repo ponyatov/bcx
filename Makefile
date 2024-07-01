@@ -103,6 +103,7 @@ ref:
 include mk/cclibs.mk
 include mk/gcc.mk
 include mk/linux.mk
+include mk/libc.mk
 include mk/qemu.mk
 
 # merge

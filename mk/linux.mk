@@ -1,9 +1,9 @@
-CFG_LINUX = ARCH=$(ARCH) INSTALL_HDR_PATH=$(ROOT) INSTALL_MOD_PATH=$(ROOT)
+LINUX_CFG = ARCH=$(ARCH) INSTALL_HDR_PATH=$(ROOT) INSTALL_MOD_PATH=$(ROOT)
 
 .PHONY: linux
 linux: $(TMP)/$(LINUX)/README
 	cd $(TMP)/$(LINUX) ; rm .config ;\
-	$(MAKE) $(CFG_LINUX) allnoconfig ;\
+	$(XPATH) $(MAKE) $(LINUX_CFG) allnoconfig ;\
 	echo "CONFIG_CROSS_COMPILE=\"$(TARGET)-\""    >> .config ;\
 	echo 'CONFIG_LOCALVERSION="-$(APP)_$(HW)"'    >> .config ;\
 	echo 'CONFIG_DEFAULT_HOSTNAME="$(APP)_$(HW)"' >> .config ;\
@@ -12,9 +12,9 @@ linux: $(TMP)/$(LINUX)/README
 	cat $(CWD)/cpu/$(CPU).linux   >> .config ;\
 	cat $(CWD)/arch/$(ARCH).linux >> .config ;\
 	cat $(CWD)/app/$(APP).linux   >> .config ;\
-	$(MAKE) $(CFG_LINUX) menuconfig &&\
-	$(MAKE) $(CFG_LINUX) -j$(CORES) &&\
-	$(MAKE) $(CFG_LINUX) -j$(CORES) modules_install headers_install
+	$(XPATH) $(MAKE) $(LINUX_CFG) menuconfig &&\
+	$(XPATH) $(MAKE) $(LINUX_CFG) -j$(CORES) &&\
+	$(XPATH) $(MAKE) $(LINUX_CFG) -j$(CORES) modules_install headers_install
 
 KERNEL = $(FW)/$(APP)_$(HW).kernel
 
