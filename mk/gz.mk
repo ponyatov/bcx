@@ -1,0 +1,2 @@
+$(GZ)/$(BINUTILS_GZ):
+	$(CURL) $@ $(BINUTILS_URL)/$(BINUTILS_GZ)

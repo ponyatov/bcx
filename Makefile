@@ -9,6 +9,7 @@ include  cpu/$(CPU).mk
 include arch/$(ARCH).mk
 include  app/$(APP).mk
 
+# version
 include mk/version.mk
 
 # dirs
@@ -34,6 +35,9 @@ HP = tmp/$(MODULE).parser.hpp
 
 # cfg
 CFLAGS += -I$(INC) -I$(TMP)
+
+# package
+include mk/package.mk
 
 # all
 .PHONY: all
@@ -69,7 +73,10 @@ install: doc gz ref
 update:
 	sudo apt update
 	sudo apt install -uy `cat apt.txt`
-gz:
+gz: \
+	$(GZ)/$(BINUTILS_GZ)
 ref:
+
+include mk/gz.mk
 
 # cross
