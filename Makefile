@@ -74,9 +74,15 @@ update:
 	sudo apt update
 	sudo apt install -uy `cat apt.txt`
 gz: \
-	$(GZ)/$(BINUTILS_GZ) $(GZ)/$(GCC_GZ)
+	$(GZ)/$(BINUTILS_GZ) $(GZ)/$(GCC_GZ) \
+	$(GZ)/$(GMP_GZ) $(GZ)/$(MPFR_GZ) $(GZ)/$(MPC_GZ)
 ref:
 
 include mk/gz.mk
 
 # cross
+gmp: $(GZ)/$(GMP_GZ)
+mpfr: $(GZ)/$(MPFR_GZ)
+mpc: $(GZ)/$(MPC_GZ)
+gcc: $(GZ)/$(GCC_GZ)
+binutils: $(GZ)/$(BINUTILS_GZ)
