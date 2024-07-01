@@ -1,6 +1,16 @@
 # var
 MODULE  = $(notdir $(CURDIR))
 
+# cross
+APP ?= $(MODULE)
+HW  ?= qemu386
+include   hw/$(HW).mk
+include  cpu/$(CPU).mk
+include arch/$(ARCH).mk
+include  app/$(APP).mk
+
+include mk/version.mk
+
 # dirs
 CWD = $(CURDIR)
 BIN = $(CWD)/bin
@@ -8,6 +18,7 @@ DOC = $(CWD)/doc
 INC = $(CWD)/inc
 SRC = $(CWD)/src
 TMP = $(CWD)/tmp
+GZ  = $(HOME)/gz
 
 # tool
 CURL   = curl -L -o
@@ -60,3 +71,5 @@ update:
 	sudo apt install -uy `cat apt.txt`
 gz:
 ref:
+
+# cross

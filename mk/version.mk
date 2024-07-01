@@ -1,0 +1,6 @@
+# version
+BINUTILS_VER = 
+GCC_VER =
+LINUX_VER = 
+LIBC_VER =
+BB_VER =
