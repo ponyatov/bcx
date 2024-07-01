@@ -18,7 +18,8 @@ $(CROSS)/bin/$(TARGET)-ld: $(TMP)/$(BINUTILS)/README
 gcc0: $(CROSS)/bin/$(TARGET)-gcc
 $(CROSS)/bin/$(TARGET)-gcc: $(TMP)/$(GCC)/README
 	cd $(TMP)/$(GCC); $(XPATH) ./$(CFG) $(GCC0_CFG)
-	$(MAKE) gccall
+	touch $@
+# $(MAKE) gccall
 
 .PHONY: gccall
 gccall:
@@ -28,3 +29,6 @@ gccall:
 # $(MAKE)            install-gcc         \
 # $(MAKE) -j$(CORES) all-target-libgcc   \
 # $(MAKE)            install-target-libgcc
+
+.PHONY: cross
+cross: cclibs binutils gcc0

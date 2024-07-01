@@ -1,5 +1,6 @@
 CCLIBS_CFG  = --disable-shared
 CCLIBS_WITH = --with-gmp=$(CROSS) --with-mpfr=$(CROSS) --with-mpc=$(CROSS)
+# --with-isl=$(CROSS) --with-cloog=$(CROSS)
 GMP_CFG     = $(CCLIBS_CFG) $(CCLIBS_WITH)
 MPFR_CFG    = $(CCLIBS_CFG) $(CCLIBS_WITH)
 MPC_CFG     = $(CCLIBS_CFG) $(CCLIBS_WITH)
