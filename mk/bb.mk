@@ -1,4 +1,5 @@
-BB_CFG = 
+BB_CFG = CROSS_COMPILE=$(TARGET)- PREFIX=$(ROOT)/bb
+
 # CROSS_COMPILE=$(TARGET)- ARCH=$(ARCH) PREFIX=$(ROOT)
 
 # echo 'KERNEL_HEADERS="$(ROOT)/usr/include"' >> .config ;\
