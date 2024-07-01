@@ -1,3 +1,4 @@
+::sysinit:mount -t proc p /proc
 ::sysinit:/etc/init.d/rcS
 
 ::askfirst:-/bin/sh
