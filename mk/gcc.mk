@@ -17,18 +17,16 @@ $(CROSS)/bin/$(TARGET)-ld: $(TMP)/$(BINUTILS)/README
 .PHONY: gcc0
 gcc0: $(CROSS)/bin/$(TARGET)-gcc
 $(CROSS)/bin/$(TARGET)-gcc: $(TMP)/$(GCC)/README
-	cd $(TMP)/$(GCC); $(XPATH) ./$(CFG) $(GCC0_CFG)
+	rm -rf $(TMP)/gcc ; mkdir $(TMP)/gcc ;\
+	cd $(TMP)/gcc ; $(XPATH) $(TMP)/$(GCC)/$(CFG) $(GCC0_CFG)
 	$(MAKE) gccall
 
 .PHONY: gccall
 gccall:
-	cd $(TMP)/$(GCC) && \
-	$(XPATH) $(MAKE) -j$(CORES) all-gcc
-#  install-gcc
-# $(MAKE) -j$(CORES) all-gcc             \
-# $(MAKE)            install-gcc         \
-# $(MAKE) -j$(CORES) all-target-libgcc   \
-# $(MAKE)            install-target-libgcc
+	cd $(TMP)/gcc && $(XPATH) $(MAKE) -j$(CORES) all-gcc
+	cd $(TMP)/gcc && $(XPATH) $(MAKE)            install-gcc
+	cd $(TMP)/gcc && $(XPATH) $(MAKE) -j$(CORES) all-target-libgcc
+	cd $(TMP)/gcc && $(XPATH) $(MAKE)            install-target-libgcc
 
 .PHONY: cross
 cross: cclibs binutils gcc0
