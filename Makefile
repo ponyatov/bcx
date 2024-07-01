@@ -74,7 +74,7 @@ update:
 	sudo apt update
 	sudo apt install -uy `cat apt.txt`
 gz: \
-	$(GZ)/$(BINUTILS_GZ)
+	$(GZ)/$(BINUTILS_GZ) $(GZ)/$(GCC_GZ)
 ref:
 
 include mk/gz.mk
