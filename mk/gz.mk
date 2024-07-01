@@ -19,3 +19,12 @@ $(GZ)/$(GCC_GZ):
 	$(CURL) $@ $(GCC_URL)/$(GCC_GZ)
 
 GZX += $(GZ)/$(BINUTILS_GZ) $(GZ)/$(GCC_GZ)
+
+$(GZ)/$(LINUX_GZ):
+	$(CURL) $@ $(LINUX_URL)/$(LINUX_GZ)
+$(GZ)/$(LIBC_GZ):
+	$(CURL) $@ $(LIBC_URL)/$(LIBC_GZ)
+$(GZ)/$(BB_GZ):
+	$(CURL) $@ $(BB_URL)/$(BB_GZ)
+
+GZX += $(GZ)/$(LINUX_GZ) $(GZ)/$(LIBC_GZ) $(GZ)/$(BB_GZ)

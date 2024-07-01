@@ -25,3 +25,15 @@ BINUTILS_URL = http://ftp.gnu.org/gnu/binutils
 GCC          = gcc-$(GCC_VER)
 GCC_GZ       = $(GCC).tar.xz
 GCC_URL      = https://mirror.koddos.net/gcc/releases/$(GCC)
+
+LINUX     = linux-$(LINUX_VER)
+LINUX_GZ  = $(LINUX).tar.xz
+LINUX_URL = http://mirrors.edge.kernel.org/pub/linux/kernel/v6.x
+
+LIBC     = uClibc-ng-$(LIBC_VER)
+LIBC_GZ  = $(LIBC).tar.xz
+LIBC_URL = https://downloads.uclibc-ng.org/releases/$(LIBC_VER)
+
+BB     = busybox
+BB_GZ  = $(BB).tar.bz2
+BB_URL = https://busybox.net/downloads

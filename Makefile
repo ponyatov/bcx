@@ -102,6 +102,7 @@ ref:
 # cross
 include mk/cclibs.mk
 include mk/gcc.mk
+include mk/linux.mk
 
 # merge
 MERGE += Makefile README.md .gitignore .clang-format .doxygen

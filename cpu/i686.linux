@@ -1,0 +1,4 @@
+# processor
+CONFIG_M686=y
+# bus
+CONFIG_ISA=y

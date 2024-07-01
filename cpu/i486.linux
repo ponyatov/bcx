@@ -1,0 +1,5 @@
+# processor
+CONFIG_M486=y
+CONFIG_NOHIGHMEM=y
+# bus
+CONFIG_ISA=y
