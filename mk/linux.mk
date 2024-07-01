@@ -5,8 +5,8 @@ linux: $(TMP)/$(LINUX)/README
 	cd $(TMP)/$(LINUX) ; rm .config ;\
 	$(MAKE) $(CFG_LINUX) allnoconfig ;\
 	echo "CONFIG_CROSS_COMPILE=\"$(TARGET)-\""    >> .config ;\
-	echo 'CONFIG_LOCALVERSION="-$(APP)@$(HW)"'    >> .config ;\
-	echo 'CONFIG_DEFAULT_HOSTNAME="$(APP)@$(HW)"' >> .config ;\
+	echo 'CONFIG_LOCALVERSION="-$(APP)_$(HW)"'    >> .config ;\
+	echo 'CONFIG_DEFAULT_HOSTNAME="$(APP)_$(HW)"' >> .config ;\
 	cat $(CWD)/all/all.linux      >> .config ;\
 	cat $(CWD)/hw/$(HW).linux     >> .config ;\
 	cat $(CWD)/cpu/$(CPU).linux   >> .config ;\
@@ -17,5 +17,8 @@ linux: $(TMP)/$(LINUX)/README
 	$(MAKE) $(CFG_LINUX) -j$(CORES) modules_install headers_install
 
 KERNEL = $(FW)/$(APP)_$(HW).kernel
+
+.PHONY: fw
+fw: $(KERNEL)
 $(KERNEL): $(TMP)/$(LINUX)/arch/$(ARCH)/boot/bzImage
 	cp $< $@
