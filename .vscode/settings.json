@@ -44,4 +44,15 @@
         "editor.formatOnSave":     true
     },
     "C_Cpp.intelliSenseEngine": "Tag Parser",
+
+    // cmake
+    "cmake.buildDirectory":  "${workspaceFolder}/tmp/${workspaceFolderBasename}",
+    "cmake.sourceDirectory": "${workspaceFolder}",
+    "cmake.configureArgs": [ "-DAPP=${workspaceFolderBasename}" ],
+    "cmake.debugConfig": {
+         "cwd": "${workspaceFolder}",
+        "args": ["${workspaceFolder}/lib/${workspaceFolderBasename}.ini"]
+    },
+    "C_Cpp.default.configurationProvider": "ms-vscode.cmake-tools",
+    "cmake.generator": "Unix Makefiles",
 }
