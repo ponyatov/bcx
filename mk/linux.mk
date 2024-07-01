@@ -17,6 +17,7 @@ linux: $(TMP)/$(LINUX)/README
 	$(XPATH) $(MAKE) $(LINUX_CFG) -j$(CORES) modules_install headers_install
 
 KERNEL = $(FW)/$(APP)_$(HW).kernel
+INITRD = $(FW)/$(APP)_$(HW).initrd
 
 .PHONY: fw
 fw: $(KERNEL)

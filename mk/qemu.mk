@@ -1,3 +1,3 @@
 .PHONY: qemu
-qemu: $(KERNEL)
-	$(QEMU) $(QEMU_CFG) -kernel $(KERNEL)
+qemu: $(KERNEL) $(INITRD)
+	$(QEMU) $(QEMU_CFG) -kernel $(KERNEL) -initrd $(INITRD)
