@@ -23,7 +23,8 @@
     },
     "files.associations": {
         "*.json": "jsonc",
-        "*.linux": "shellscript"
+        "*.linux": "shellscript",
+        "*.libc": "shellscript",
     },
 
     // editor
