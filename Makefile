@@ -103,6 +103,7 @@ ref:
 include mk/cclibs.mk
 include mk/gcc.mk
 include mk/linux.mk
+include mk/qemu.mk
 
 # merge
 MERGE += Makefile README.md .gitignore .clang-format .doxygen
