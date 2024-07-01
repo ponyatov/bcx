@@ -23,8 +23,7 @@ DOC = $(CWD)/doc
 INC = $(CWD)/inc
 SRC = $(CWD)/src
 TMP = $(CWD)/tmp
-GZ  = $(HOME)/gz
-CROSS = $(CWD)/cross
+include mk/dirs.mk
 
 # tool
 CURL   = curl -L -o
@@ -64,6 +63,8 @@ tmp/$(MODULE).lexer.cpp: src/$(MODULE).lex
 tmp/$(MODULE).parser.cpp: src/$(MODULE).yacc
 	bison -o $@ $<
 
+include mk/rule.mk
+
 # doc
 .PHONY: doc
 doc:
@@ -87,19 +88,6 @@ ref:
 include mk/gz.mk
 
 # cross
-
-GCCLIBS_CFG = --disable-shared
-GMP_CFG     = $(GCCLIBS_CFG)
-
-gmp: $(CROSS)/lib/libgmpa.a
-$(CROSS)/lib/libgmpa.a: $(TMP)/$(GMP)/README.md
-	cd $(TMP)/$(GMP); ./$(CFG) $(GMP_CFG) \
-	&& $(MAKE) -j$(CORES) && $(MAKE) install
-
-$(TMP)/%/README: $(GZ)/%.tar.xz
-	cd $(TMP) ; xzcat $< | tar x && touch $@
-
-mpfr: $(GZ)/$(MPFR_GZ)
-mpc: $(GZ)/$(MPC_GZ)
+include mk/cclibs.mk
 gcc: $(GZ)/$(GCC_GZ)
 binutils: $(GZ)/$(BINUTILS_GZ)
