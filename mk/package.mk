@@ -1,22 +1,28 @@
+# gcc tested versions
+GCC_INFRA = http://gcc.gnu.org/pub/gcc/infrastructure
+
 GMP       = gmp-$(GMP_VER)
-GMP_GZ    = $(GMP).tar.xz
-GMP_URL   = https://ftp.gnu.org/gnu/gmp
+GMP_GZ    = $(GMP).tar.bz2
+# GMP_URL   = https://ftp.gnu.org/gnu/gmp
+GMP_URL   = $(GCC_INFRA)
 
 MPFR      = mpfr-$(MPFR_VER)
-MPFR_GZ   = $(MPFR).tar.xz
-MPFR_URL  = https://www.mpfr.org/mpfr-current
+MPFR_GZ   = $(MPFR).tar.bz2
+# MPFR_URL  = https://www.mpfr.org/mpfr-current
+MPFR_URL  = $(GCC_INFRA)
 
 MPC       = mpc-$(MPC_VER)
 MPC_GZ    = $(MPC).tar.gz
-MPC_URL   = https://ftp.gnu.org/gnu/mpc/$(MPC)
+# MPC_URL   = https://ftp.gnu.org/gnu/mpc/$(MPC)
+MPC_URL   = $(GCC_INFRA)
 
 ISL       = isl-$(ISL_VER)
 ISL_GZ    = $(ISL).tar.bz2
-ISL_URL	  = https://gcc.gnu.org/pub/gcc/infrastructure
+ISL_URL	  = $(GCC_INFRA)
 
 CLOOG     = cloog-$(CLOOG_VER)
 CLOOG_GZ  = $(CLOOG).tar.gz
-CLOOG_URL = $(ISL_URL)
+CLOOG_URL = $(GCC_INFRA)
 
 BINUTILS     = binutils-$(BINUTILS_VER)
 BINUTILS_GZ  = $(BINUTILS).tar.xz
