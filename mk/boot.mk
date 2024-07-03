@@ -28,7 +28,7 @@ SYSLINUX_FILES  = $(ISOLINUX_DIR)/isolinux.bin
 SYSLINUX_FILES += $(ISOLINUX_DIR)/ldlinux.c32 $(ISOLINUX_DIR)/libcom32.c32
 SYSLINUX_FILES += $(ISOLINUX_DIR)/ls.c32 $(ISOLINUX_DIR)/poweroff.c32 $(ISOLINUX_DIR)/reboot.c32
 
-$(ISO): $(SYSLINUX_FILES)
+$(ISO): $(SYSLINUX_FILES) fw
 	xorriso -as mkisofs -r -J -A $(APP)@$(HW) -P "$(USER) <$(EMAIL)>" \
 		-eltorito-platform x86 -b isolinux/isolinux.bin \
 		-c boot.cat -iso-level 3 \
