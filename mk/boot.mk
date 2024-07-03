@@ -1,4 +1,4 @@
-APPEND += softdog.soft_margin=5 softdog.nowayout
+# APPEND += softdog.soft_margin=1 softdog.nowayout
 
 .PHONY: boot initrd
 boot: initrd
