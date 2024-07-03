@@ -3,25 +3,19 @@ BINUTILS_CFG = --target=$(TARGET) \
 				--disable-lto --disable-multilib
 
 GCC_ALL      = $(BINUTILS_CFG) $(CCLIBS_WITH) --disable-bootstrap
-GCC0_CFG     = $(GCC_ALL) \
+GCC_CFG      = $(GCC_ALL) \
 				--disable-shared --disable-threads \
 				--without-headers --with-newlib \
 				--enable-languages="c"
-GCC_CFG      = $(GCC_ALL) \
+GPP_CFG      = $(GCC_ALL) \
 				--enable-shared --enable-threads \
-				--enable-languages="c"
+				--enable-languages="c,c++"
 
 .PHONY: binutils
 binutils: $(CROSS)/bin/$(TARGET)-ld
 $(CROSS)/bin/$(TARGET)-ld: $(TMP)/$(BINUTILS)/README
 	cd $(TMP)/$(BINUTILS); $(XPATH) ./$(CFG) $(BINUTILS_CFG) \
 	&& $(MAKE) -j$(CORES) && $(MAKE) install
-
-.PHONY: gcc0
-gcc0: $(TMP)/$(GCC)/README
-	rm -rf $(TMP)/gcc ; mkdir $(TMP)/gcc ;\
-	cd $(TMP)/gcc ; $(XPATH) $(TMP)/$(GCC)/$(CFG) $(GCC0_CFG)
-	$(MAKE) gccall
 
 .PHONY: gcc
 gcc: $(TMP)/$(GCC)/README
@@ -36,5 +30,17 @@ gccall:
 	cd $(TMP)/gcc && $(XPATH) $(MAKE) -j$(CORES) all-target-libgcc
 	cd $(TMP)/gcc && $(XPATH) $(MAKE)            install-target-libgcc
 
+.PHONY: gpp
+gpp: $(TMP)/$(GCC)/README
+	rm -rf $(TMP)/gcc ; mkdir $(TMP)/gcc ;\
+	cd $(TMP)/gcc ; $(XPATH) $(TMP)/$(GCC)/$(CFG) $(GPP_CFG)
+	$(MAKE) gccpp
+
+.PHONY: gccpp
+gccpp:
+	$(MAKE) gccall
+	cd $(TMP)/gcc && $(XPATH) $(MAKE) -j$(CORES) all-target-libstdc++-v3
+	cd $(TMP)/gcc && $(XPATH) $(MAKE)            install-target-libstdc++-v3
+
 .PHONY: cross
-cross: cclibs binutils gcc0 libc gcc
+cross: cclibs binutils gcc libc gpp
