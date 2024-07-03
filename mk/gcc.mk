@@ -1,14 +1,14 @@
-BINUTILS_CFG = --target=$(TARGET) \
+BINUTILS_CFG = --target=$(TARGET) $(CCLIBS_WITH) \
 				--with-sysroot=$(ROOT) --with-native-system-header-dir=/usr/include \
-				--disable-lto --disable-multilib
+				--enable-lto --disable-multilib
 
-GCC_ALL      = $(BINUTILS_CFG) $(CCLIBS_WITH) --disable-bootstrap
+GCC_ALL      = $(BINUTILS_CFG) --disable-bootstrap
 GCC_CFG      = $(GCC_ALL) \
 				--disable-shared --disable-threads \
 				--without-headers --with-newlib \
 				--enable-languages="c"
 GPP_CFG      = $(GCC_ALL) \
-				--enable-shared --enable-threads \
+				--enable-shared --enable-threads --enable-libgomp \
 				--enable-languages="c,c++"
 
 .PHONY: binutils

@@ -1,5 +1,5 @@
 git make curl
 code meld doxygen clang-format
 cmake g++ flex bison libreadline-dev
-bc rsync
+bc rsync texinfo
 qemu-system-i386
