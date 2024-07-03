@@ -16,10 +16,10 @@ linux: $(TMP)/$(LINUX)/README
 	$(XPATH) $(MAKE) $(LINUX_CFG) -j$(CORES) &&\
 	$(XPATH) $(MAKE) $(LINUX_CFG) -j$(CORES) modules_install headers_install
 
-KERNEL = $(FW)/$(APP)_$(HW).kernel
-INITRD = $(FW)/$(APP)_$(HW).initrd
+KERNEL = $(FW)/iso/$(APP)_$(HW).kernel
+INITRD = $(FW)/iso/$(APP)_$(HW).initrd
 
 .PHONY: fw
-fw: $(KERNEL)
+fw: $(KERNEL) $(INITRD)
 $(KERNEL): $(TMP)/$(LINUX)/arch/$(ARCH)/boot/bzImage
 	cp $< $@

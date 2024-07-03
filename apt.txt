@@ -2,4 +2,4 @@ git make curl
 code meld doxygen clang-format
 cmake g++ flex bison libreadline-dev
 bc rsync texinfo
-qemu-system-x86 xorriso syslinux
+qemu-system-x86 xorriso syslinux isolinux libcdio-utils
