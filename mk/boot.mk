@@ -24,9 +24,10 @@ USER  = $(shell git config user.name )
 EMAIL = $(shell git config user.email)
 
 ISOLINUX_DIR    = $(FW)/iso/isolinux
-SYSLINUX_FILES  = $(ISOLINUX_DIR)/isolinux.bin
+SYSLINUX_FILES  = $(ISOLINUX_DIR)/isolinux.bin $(ISOLINUX_DIR)/isolinux.cfg
 SYSLINUX_FILES += $(ISOLINUX_DIR)/ldlinux.c32 $(ISOLINUX_DIR)/libcom32.c32
-SYSLINUX_FILES += $(ISOLINUX_DIR)/ls.c32 $(ISOLINUX_DIR)/poweroff.c32 $(ISOLINUX_DIR)/reboot.c32
+SYSLINUX_FILES += $(ISOLINUX_DIR)/poweroff.c32 $(ISOLINUX_DIR)/reboot.c32
+SYSLINUX_FILES += $(ISOLINUX_DIR)/ls.c32 $(ISOLINUX_DIR)/cat.c32 
 
 $(ISO): $(SYSLINUX_FILES) fw
 	xorriso -as mkisofs -r -J -A $(APP)@$(HW) -P "$(USER) <$(EMAIL)>" \
@@ -37,6 +38,14 @@ $(ISO): $(SYSLINUX_FILES) fw
 		-o $@ $(FW)/iso
 	iso-info $@
 	$(QEMU) $(QEMU_CFG) -boot d -cdrom $@
+
+.PHONY: $(ISOLINUX_DIR)/isolinux.cfg
+$(ISOLINUX_DIR)/isolinux.cfg: Makefile
+	echo "DEFAULT $(APP)_$(HW)"         > $@
+	echo "LABEL   $(APP)_$(HW)"        >> $@
+	echo "LINUX  /$(APP)_$(HW).kernel" >> $@
+	echo "INITRD /$(APP)_$(HW).initrd" >> $@
+
 $(ISOLINUX_DIR)/%: /usr/lib/ISOLINUX/%
 	cp $< $@
 $(ISOLINUX_DIR)/%: /usr/lib/syslinux/modules/bios/%
