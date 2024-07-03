@@ -105,8 +105,8 @@ include mk/gcc.mk
 include mk/linux.mk
 include mk/libc.mk
 include mk/bb.mk
-include mk/qemu.mk
 include mk/boot.mk
+include mk/qemu.mk
 
 # merge
 MERGE += Makefile README.md .gitignore .clang-format .doxygen

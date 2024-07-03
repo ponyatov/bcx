@@ -1,3 +1,5 @@
+APPEND += softdog.soft_margin=5 softdog.nowayout
+
 .PHONY: boot initrd
 boot: initrd
 initrd: $(INITRD)
@@ -40,11 +42,12 @@ $(ISO): $(SYSLINUX_FILES) fw
 	$(QEMU) $(QEMU_CFG) -boot d -cdrom $@
 
 .PHONY: $(ISOLINUX_DIR)/isolinux.cfg
-$(ISOLINUX_DIR)/isolinux.cfg: Makefile
+$(ISOLINUX_DIR)/isolinux.cfg: Makefile mk/boot.mk
 	echo "DEFAULT $(APP)_$(HW)"         > $@
 	echo "LABEL   $(APP)_$(HW)"        >> $@
 	echo "LINUX  /$(APP)_$(HW).kernel" >> $@
 	echo "INITRD /$(APP)_$(HW).initrd" >> $@
+	echo "APPEND  $(APPEND)"           >> $@
 
 $(ISOLINUX_DIR)/%: /usr/lib/ISOLINUX/%
 	cp $< $@

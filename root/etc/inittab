@@ -1,9 +1,11 @@
 # https://git.busybox.net/busybox/tree/docs/mdev.txt?h=1_18_stable
 
+::sysinit:sh -c "echo 1 > /dev/watchdog"
 ::sysinit:mount -t proc proc /proc
 ::sysinit:mount -t sysfs sysfs /sys
-# ::sysinit:mount -t proc p /proc
-# ::sysinit:/etc/init.d/rcS
+::sysinit:echo /sbin/mdev > /proc/sys/kernel/hotplug
+::sysinit:mdev -s
+::sysinit:/etc/init.d/rcS
 
 ::askfirst:-/bin/sh
 
