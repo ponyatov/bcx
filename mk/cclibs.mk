@@ -1,11 +1,11 @@
 CCLIBS_CFG  = --enable-static --disable-shared
 CCLIBS_WITH = --with-gmp=$(CROSS) --with-mpfr=$(CROSS) --with-mpc=$(CROSS)
-#   --with-isl=$(CROSS) --with-cloog=$(CROSS)
+				--with-isl=$(CROSS) --with-cloog=$(CROSS)
 
 GMP_CFG     = $(CCLIBS_CFG) $(CCLIBS_WITH)
 MPFR_CFG    = $(CCLIBS_CFG) $(CCLIBS_WITH)
 MPC_CFG     = $(CCLIBS_CFG) $(CCLIBS_WITH)
-# ISL_CFG     = $(CCLIBS_CFG) --with-gmp-prefix=$(CROSS)
+ISL_CFG     = $(CCLIBS_CFG) --with-gmp-prefix=$(CROSS)
 # CLOOG_CFG   = $(ISL_CFG)
 
 .PHONY: cclibs gmp mpfr mpc graphite
@@ -26,10 +26,10 @@ $(CROSS)/lib/libmpc.a: $(TMP)/$(MPC)/README
 	cd $(TMP)/$(MPC); ./$(CFG) $(MPC_CFG) \
 	&& $(MAKE) -j$(CORES) && $(MAKE) install-strip
 
-# isl: $(CROSS)/lib/libisl.a
-# $(CROSS)/lib/libisl.a: $(TMP)/$(ISL)/README
-# 	cd $(TMP)/$(ISL); ./$(CFG) $(ISL_CFG) \
-# 	&& $(MAKE) -j$(CORES) && $(MAKE) install-strip
+isl: $(CROSS)/lib/libisl.a
+$(CROSS)/lib/libisl.a: $(TMP)/$(ISL)/README
+	cd $(TMP)/$(ISL); ./$(CFG) $(ISL_CFG) \
+	&& $(MAKE) -j$(CORES) && $(MAKE) install-strip
 
 # cloog: $(CROSS)/lib/libcloog-isl.a
 # $(CROSS)/lib/libcloog-isl.a: $(TMP)/$(CLOOG)/README
@@ -37,7 +37,8 @@ $(CROSS)/lib/libmpc.a: $(TMP)/$(MPC)/README
 # 	&& $(MAKE) -j$(CORES) && $(MAKE) install-strip
 
 # cd $(TMP)/$(GCC) ; ./contrib/download_prerequisites --graphite && touch $@
-graphite: $(TMP)/$(BINUTILS)/isl/README $(TMP)/$(GCC)/isl/README
+graphite: isl
+# $(TMP)/$(BINUTILS)/isl/README $(TMP)/$(GCC)/isl/README
 
 $(TMP)/$(BINUTILS)/isl/README: $(TMP)/$(BINUTILS)/README $(TMP)/$(ISL)/README
 	ln -fs $(TMP)/$(ISL)       $(TMP)/$(BINUTILS)/isl    && touch $@
