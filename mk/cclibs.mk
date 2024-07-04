@@ -6,7 +6,7 @@ GMP_CFG     = $(CCLIBS_CFG) $(CCLIBS_WITH)
 MPFR_CFG    = $(CCLIBS_CFG) $(CCLIBS_WITH)
 MPC_CFG     = $(CCLIBS_CFG) $(CCLIBS_WITH)
 ISL_CFG     = $(CCLIBS_CFG) --with-gmp-prefix=$(CROSS)
-# CLOOG_CFG   = $(ISL_CFG)
+CLOOG_CFG   = $(ISL_CFG)
 
 .PHONY: cclibs gmp mpfr mpc graphite
 cclibs: gmp mpfr mpc graphite
