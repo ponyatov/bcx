@@ -16,32 +16,9 @@
 
 /// @}
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <assert.h>
-#include <stdint.h>
-#include <string.h>
-
-#include <map>
-#include <string>
-
-/// @brief program entry point
-extern int main(int argc, char *argv[]);
-/// @brief dump command line argument
-extern void arg(int argc, char argv[]);
-
-/// @defgroup skelex lexical skeleton
-/// @{
-#include <readline/readline.h>
-#include <readline/history.h>
-extern int yylex();                    ///< lexer
-extern int yylineno;                   ///< current source line
-extern char *yytext;                   ///< parsed token value
-extern FILE *yyin;                     ///< input file handler
-extern int yyparse();                  ///< parser
-extern void yyerror(const char *msg);  ///< syntax error callback
-#include "bcx.parser.hpp"
-/// @}
+#include "inc.hpp"
+#include "main.hpp"
+#include "skelex.hpp"
 
 /// @defgroup vm Virtual Machine
 /// @{

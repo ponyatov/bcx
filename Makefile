@@ -30,6 +30,10 @@ include mk/dirs.mk
 CURL = curl -L -o
 CF   = clang-format -style=file -i
 
+TCXX  = $(XPATH) $(TARGET)-g++
+TSIZE = $(XPATH) $(TARGET)-size
+
+
 # src
 C += $(wildcard src/*.c*)
 H += $(wildcard inc/*.h*)
@@ -37,9 +41,12 @@ F += lib/$(MODULE).ini $(wildcard lib/*.f)
 S  = $(C) $(H) $(F) CMakeLists.txt
 CP = tmp/$(MODULE).parser.cpp tmp/$(MODULE).lexer.cpp
 HP = tmp/$(MODULE).parser.hpp
+MK = Makefile $(wildcard mk/*.mk)
 
 # cfg
 CFLAGS += -I$(INC) -I$(TMP)
+TCFLAGS += $(CFLAGS)
+
 CFG  = configure --prefix=$(CROSS) --disable-nls
 CCFG = configure --prefix=$(ROOT)  --disable-nls
 XPATH = PATH=$(CROSS)/bin:$(PATH)
@@ -107,6 +114,7 @@ include mk/libc.mk
 include mk/bb.mk
 include mk/boot.mk
 include mk/qemu.mk
+include mk/sw.mk
 
 # merge
 MERGE += Makefile README.md .gitignore .clang-format .doxygen
