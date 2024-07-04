@@ -13,12 +13,12 @@ GPP_CFG      = $(GCC_ALL) \
 
 .PHONY: binutils
 binutils: $(CROSS)/bin/$(TARGET)-ld
-$(CROSS)/bin/$(TARGET)-ld: $(TMP)/$(BINUTILS)/README
+$(CROSS)/bin/$(TARGET)-ld: $(TMP)/$(BINUTILS)/README cclibs
 	cd $(TMP)/$(BINUTILS); $(XPATH) ./$(CFG) $(BINUTILS_CFG) \
 	&& $(MAKE) -j$(CORES) && $(MAKE) install
 
 .PHONY: gcc
-gcc: $(TMP)/$(GCC)/README
+gcc: $(TMP)/$(GCC)/README cclibs
 	rm -rf $(TMP)/gcc ; mkdir $(TMP)/gcc ;\
 	cd $(TMP)/gcc ; $(XPATH) $(TMP)/$(GCC)/$(CFG) $(GCC_CFG)
 	$(MAKE) gccall
@@ -31,7 +31,7 @@ gccall:
 	cd $(TMP)/gcc && $(XPATH) $(MAKE)            install-target-libgcc
 
 .PHONY: gpp
-gpp: $(TMP)/$(GCC)/README
+gpp: $(TMP)/$(GCC)/README cclibs
 	rm -rf $(TMP)/gcc ; mkdir $(TMP)/gcc ;\
 	cd $(TMP)/gcc ; $(XPATH) $(TMP)/$(GCC)/$(CFG) $(GPP_CFG)
 	$(MAKE) gccpp
