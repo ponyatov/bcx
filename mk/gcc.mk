@@ -7,7 +7,7 @@ BINUTILS_CFG = --target=$(TARGET) --with-sysroot=$(ROOT) --disable-bootstrap \
 
 GCC0_CFG     = --disable-shared --disable-threads \
 				--without-headers --with-newlib   \
-				--enable-languages="c" --disable-gdb
+				--enable-languages="c"
 
 GCC_CFG      = --enable-shared --enable-threads --enable-libgomp \
 				--enable-languages="c,c++"
@@ -57,14 +57,14 @@ $(TMP)/gcc/gcc:      $(TMP)/$(GCC)/README
 	mkdir -p $(TMP)/gcc ; cd $(TMP)/gcc ;\
 	ln -fs $(TMP)/$(GCC)/*      . && touch $@
 
-# .PHONY: binutils
+.PHONY: binutils
+
 # binutils:
 # 	cd $(TMP)/gcc-build ;\
 # 	$(XPATH) $(MAKE) -j$(CORES)     all-binutils     all-ld     all-gas   &&\
 # 	$(XPATH) $(MAKE)            install-binutils install-ld install-gas
 
-.PHONY: binutils
 binutils: $(CROSS)/bin/$(TARGET)-ld
-$(CROSS)/bin/$(TARGET)-ld: $(TMP)/$(BINUTILS)/README cclibs
+$(CROSS)/bin/$(TARGET)-ld: $(TMP)/$(BINUTILS)/README
 	cd $(TMP)/$(BINUTILS); $(XPATH) ./$(CFG) $(BINUTILS_CFG) &&\
 	$(MAKE) -j$(CORES) && $(MAKE) install
