@@ -4,19 +4,24 @@
 BINUTILS_CFG = --target=$(TARGET) --with-sysroot=$(ROOT) --disable-bootstrap \
 				--with-native-system-header-dir=/usr/include \
 				--enable-lto --disable-multilib \
-				--without-headers --with-newlib --enable-languages="c"
+				--enable-gold --enable-ld=default
+
+GCC0_CFG     = --disable-shared --disable-threads \
+				--without-headers --with-newlib   \
+				--enable-languages="c"
 
 # https://raghunathlolur.wordpress.com/2014/06/30/combined-tree-build-of-gcc-binutils-and-libraries/
 
 .PHONY: cross0 cross
 cross0: $(TMP)/gcc/binutils $(TMP)/gcc/gcc cclibs
-# rm -rf $(TMP)/gcc-build ; mkdir $(TMP)/gcc-build ; cd $(TMP)/gcc-build ;\
-# $(XPATH) $(TMP)/gcc/$(CFG) $(BINUTILS_CFG) &&\
-# $(XPATH) $(MAKE) -j$(CORES) all-binutils &&\
-# $(XPATH) $(MAKE) install-binutils
-	cd $(TMP)/gcc-build ;\
-	$(XPATH) $(MAKE) -j$(CORES) all-gcc all-target-libgcc
-#  install-gcc install-target-libgcc
+	rm -rf $(TMP)/gcc-build ; mkdir $(TMP)/gcc-build ; cd $(TMP)/gcc-build ;\
+	$(XPATH) $(TMP)/gcc/$(CFG) $(BINUTILS_CFG) $(GCC0_CFG) &&\
+	$(XPATH) $(MAKE) -j$(CORES) all-binutils               &&\
+	$(XPATH) $(MAKE)            install-binutils           &&\
+	$(XPATH) $(MAKE) -j$(CORES) all-gcc                    &&\
+	$(XPATH) $(MAKE)            install-gcc                &&\
+	$(XPATH) $(MAKE) -j$(CORES) all-target-libgcc          &&\
+	$(XPATH) $(MAKE)            install-target-libgcc
 
 cross:
 
@@ -29,7 +34,7 @@ $(TMP)/gcc/gcc:      $(TMP)/$(GCC)/README
 
 # GCC_ALL      = $(BINUTILS_CFG) 
 # GCC_CFG      = $(GCC_ALL) \
-# 				--disable-shared --disable-threads \
+# 				 \
 # GPP_CFG      = $(GCC_ALL) \
 # 				--enable-shared --enable-threads --enable-libgomp \
 # 				--enable-languages="c,c++"
