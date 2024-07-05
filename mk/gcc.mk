@@ -2,8 +2,8 @@
 BINUTILS_CFG = --target=$(TARGET) --with-sysroot=$(ROOT) --disable-bootstrap \
 				--with-native-system-header-dir=/usr/include \
 				--enable-lto --disable-multilib \
-				--enable-ld=default --enable-gold --enable-plugins \
                 $(CCLIBS_WITH)
+# --enable-ld=default --enable-gold --enable-plugins
 
 GCC0_CFG     = --disable-shared --disable-threads \
 				--without-headers --with-newlib   \
@@ -21,10 +21,10 @@ GCC_CFG      = --enable-shared --enable-threads --enable-libgomp \
 # 	$(XPATH) $(TMP)/gcc/$(CFG) $(BINUTILS_CFG) $(GCC0_CFG)
 # 	$(MAKE) gcc
 
-cross0: $(TMP)/$(GCC)/README cclibs
+cross0: $(TMP)/$(GCC)/README cclibs binutils
 	rm -rf $(TMP)/gcc-build ; mkdir $(TMP)/gcc-build ; cd $(TMP)/gcc-build ;\
 	$(XPATH) $(TMP)/$(GCC)/$(CFG) $(BINUTILS_CFG) $(GCC0_CFG)
-	$(XPATH) $(MAKE) gcc
+	$(MAKE) gcc
 
 # cross: $(TMP)/gcc/gcc cclibs
 # 	rm -rf $(TMP)/gcc-build ; mkdir $(TMP)/gcc-build ; cd $(TMP)/gcc-build ;\
@@ -34,7 +34,7 @@ cross0: $(TMP)/$(GCC)/README cclibs
 cross: $(TMP)/$(GCC)/README cclibs
 	rm -rf $(TMP)/gcc-build ; mkdir $(TMP)/gcc-build ; cd $(TMP)/gcc-build ;\
 	$(XPATH) $(TMP)/$(GCC)/$(CFG) $(BINUTILS_CFG) $(GCC_CFG)
-# $(MAKE) gcc
+	$(MAKE) gcc
 
 .PHONY: gcc
 gcc:
