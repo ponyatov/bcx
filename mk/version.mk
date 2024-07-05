@@ -13,3 +13,6 @@ GCC_VER      = 14.1.0
 LINUX_VER    = 6.9.7
 LIBC_VER     = 1.0.49
 BB_VER       = 1.36.1
+
+ZLIB_VER = 1.2.11
+# 1.3.1

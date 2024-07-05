@@ -43,3 +43,7 @@ LIBC_URL = https://downloads.uclibc-ng.org/releases/$(LIBC_VER)
 BB     = busybox-$(BB_VER)
 BB_GZ  = $(BB).tar.bz2
 BB_URL = https://busybox.net/downloads
+
+ZLIB     = zlib-$(ZLIB_VER)
+ZLIB_GZ  = $(ZLIB).tar.gz
+ZLIB_URL = https://www.zlib.net/fossils

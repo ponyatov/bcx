@@ -28,3 +28,8 @@ $(GZ)/$(BB_GZ):
 	$(CURL) $@ $(BB_URL)/$(BB_GZ)
 
 GZX += $(GZ)/$(LINUX_GZ) $(GZ)/$(LIBC_GZ) $(GZ)/$(BB_GZ)
+
+$(GZ)/$(ZLIB_GZ):
+	$(CURL) $@ $(ZLIB_URL)/$(ZLIB_GZ)
+
+GZX += $(GZ)/$(ZLIB_GZ)
