@@ -1,29 +1,29 @@
 # .PHONY: cross
 # cross: cclibs binutils gcc libc gpp
 
-BINUTILS_CFG = --target=$(TARGET)
+BINUTILS_CFG = --target=$(TARGET) --with-sysroot=$(ROOT) --disable-bootstrap \
+				--with-native-system-header-dir=/usr/include \
+				--enable-lto --disable-multilib \
+				--without-headers --with-newlib --enable-languages="c"
 
 # https://raghunathlolur.wordpress.com/2014/06/30/combined-tree-build-of-gcc-binutils-and-libraries/
 
 .PHONY: cross
-cross: $(TMP)/gcc/binutils $(TMP)/gcc/gcc gmp
-	rm -rf $(TMP)/gcc-build ; mkdir $(TMP)/gcc-build ; cd $(TMP)/gcc-build ;\
-	$(XPATH) $(TMP)/gcc/$(CFG) $(BINUTILS_CFG) > con.figure
+cross: $(TMP)/gcc/binutils $(TMP)/gcc/gcc cclibs
+# rm -rf $(TMP)/gcc-build ; mkdir $(TMP)/gcc-build ; cd $(TMP)/gcc-build ;\
+# $(XPATH) $(TMP)/gcc/$(CFG) $(BINUTILS_CFG) &&\
+# $(XPATH) $(MAKE) -j$(CORES) binutils-all
 
 $(TMP)/gcc/binutils: $(TMP)/$(BINUTILS)/README
-	cd $(TMP)/gcc ; ln -fs $(TMP)/$(BINUTILS)/* . && touch $@
+	mkdir -p $(TMP)/gcc ; cd $(TMP)/gcc ;\
+	ln -fs $(TMP)/$(BINUTILS)/* . && touch $@
 $(TMP)/gcc/gcc:      $(TMP)/$(GCC)/README
-	cd $(TMP)/gcc ; ln -fs $(TMP)/$(GCC)/*      . && touch $@
+	mkdir -p $(TMP)/gcc ; cd $(TMP)/gcc ;\
+	ln -fs $(TMP)/$(GCC)/*      . && touch $@
 
-# BINUTILS_CFG = --target=$(TARGET) $(CCLIBS_WITH) \
-# 				--with-sysroot=$(ROOT) --with-native-system-header-dir=/usr/include \
-# 				--enable-lto --disable-multilib
-
-# GCC_ALL      = $(BINUTILS_CFG) --disable-bootstrap
+# GCC_ALL      = $(BINUTILS_CFG) 
 # GCC_CFG      = $(GCC_ALL) \
 # 				--disable-shared --disable-threads \
-# 				--without-headers --with-newlib \
-# 				--enable-languages="c"
 # GPP_CFG      = $(GCC_ALL) \
 # 				--enable-shared --enable-threads --enable-libgomp \
 # 				--enable-languages="c,c++"

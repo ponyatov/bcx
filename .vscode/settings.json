@@ -26,6 +26,7 @@
         "*.linux": "shellscript",
         "*.libc":  "shellscript",
         "*.bb":    "shellscript",
+        "Makefile*": "makefile",
     },
 
     // editor
