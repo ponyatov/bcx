@@ -1,5 +1,5 @@
-.PHONY: cclibs gmp mpfr mpc isl cloog
-cclibs: gmp mpfr mpc isl cloog
+.PHONY: cclibs gmp mpfr mpc
+cclibs: gmp mpfr mpc
 
 # cd $(TMP)/$(GCC) ; ./contrib/download_prerequisites --graphite
 
@@ -43,10 +43,10 @@ $(CROSS)/lib/libmpc.a: $(TMP)/$(MPC)/README
 	cd $(TMP)/$(MPC); ./$(CFG) $(MPC_CFG) \
 	&& $(MAKE) -j$(CORES) && $(MAKE) install-strip
 
-isl: $(TMP)/$(GCC)/isl
-$(TMP)/$(GCC)/isl: $(TMP)/$(ISL)/README
-	ln -fs $(TMP)/$(ISL) $@ && touch $@
+# isl: $(TMP)/$(GCC)/isl
+# $(TMP)/$(GCC)/isl: $(TMP)/$(ISL)/README
+# 	ln -fs $(TMP)/$(ISL) $@ && touch $@
 
-cloog: $(TMP)/$(GCC)/cloog
-$(TMP)/$(GCC)/cloog: $(TMP)/$(CLOOG)/README
-	ln -fs $(TMP)/$(CLOOG) $@ && touch $@
+# cloog: $(TMP)/$(GCC)/cloog
+# $(TMP)/$(GCC)/cloog: $(TMP)/$(CLOOG)/README
+# 	ln -fs $(TMP)/$(CLOOG) $@ && touch $@
