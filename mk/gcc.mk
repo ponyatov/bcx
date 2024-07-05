@@ -4,7 +4,7 @@
 BINUTILS_CFG = --target=$(TARGET) --with-sysroot=$(ROOT) --disable-bootstrap \
 				--with-native-system-header-dir=/usr/include \
 				--enable-lto --disable-multilib \
-				--enable-gold --enable-ld=default
+				--enable-ld=default --enable-gold --enable-plugins
 
 GCC0_CFG     = --disable-shared --disable-threads \
 				--without-headers --with-newlib   \
@@ -16,12 +16,14 @@ GCC0_CFG     = --disable-shared --disable-threads \
 cross0: $(TMP)/gcc/binutils $(TMP)/gcc/gcc cclibs
 	rm -rf $(TMP)/gcc-build ; mkdir $(TMP)/gcc-build ; cd $(TMP)/gcc-build ;\
 	$(XPATH) $(TMP)/gcc/$(CFG) $(BINUTILS_CFG) $(GCC0_CFG) &&\
-	$(XPATH) $(MAKE) -j$(CORES) all-binutils               &&\
-	$(XPATH) $(MAKE)            install-binutils           &&\
-	$(XPATH) $(MAKE) -j$(CORES) all-gcc                    &&\
-	$(XPATH) $(MAKE)            install-gcc                &&\
-	$(XPATH) $(MAKE) -j$(CORES) all-target-libgcc          &&\
-	$(XPATH) $(MAKE)            install-target-libgcc
+	$(XPATH) $(MAKE) -j$(CORES) && $(XPATH) $(MAKE) install
+
+# $(XPATH) $(MAKE) -j$(CORES) all-binutils               &&\
+# $(XPATH) $(MAKE)            install-binutils           &&\
+# $(XPATH) $(MAKE) -j$(CORES) all-gcc                    &&\
+# $(XPATH) $(MAKE)            install-gcc                &&\
+# $(XPATH) $(MAKE) -j$(CORES) all-target-libgcc          &&\
+# $(XPATH) $(MAKE)            install-target-libgcc
 
 cross:
 
