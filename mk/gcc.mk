@@ -8,11 +8,17 @@ BINUTILS_CFG = --target=$(TARGET) --with-sysroot=$(ROOT) --disable-bootstrap \
 
 # https://raghunathlolur.wordpress.com/2014/06/30/combined-tree-build-of-gcc-binutils-and-libraries/
 
-.PHONY: cross
-cross: $(TMP)/gcc/binutils $(TMP)/gcc/gcc cclibs
+.PHONY: cross0 cross
+cross0: $(TMP)/gcc/binutils $(TMP)/gcc/gcc cclibs
 # rm -rf $(TMP)/gcc-build ; mkdir $(TMP)/gcc-build ; cd $(TMP)/gcc-build ;\
 # $(XPATH) $(TMP)/gcc/$(CFG) $(BINUTILS_CFG) &&\
-# $(XPATH) $(MAKE) -j$(CORES) binutils-all
+# $(XPATH) $(MAKE) -j$(CORES) all-binutils &&\
+# $(XPATH) $(MAKE) install-binutils
+	cd $(TMP)/gcc-build ;\
+	$(XPATH) $(MAKE) -j$(CORES) all-gcc all-target-libgcc
+#  install-gcc install-target-libgcc
+
+cross:
 
 $(TMP)/gcc/binutils: $(TMP)/$(BINUTILS)/README
 	mkdir -p $(TMP)/gcc ; cd $(TMP)/gcc ;\

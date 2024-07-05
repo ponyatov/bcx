@@ -26,6 +26,8 @@ cclibs: gmp mpfr mpc isl cloog
 # 	cd $(TMP)/$(MPC); ./$(CFG) $(MPC_CFG) \
 # 	&& $(MAKE) -j$(CORES) && $(MAKE) install-strip
 
+# cd $(TMP)/$(GCC) ; ./contrib/download_prerequisites --graphite
+
 gmp: $(TMP)/gcc/gmp
 $(TMP)/gcc/gmp: $(TMP)/$(GMP)/README
 	mkdir -p $(TMP)/gcc ; ln -fs $(TMP)/$(GMP)   $@ && touch $@
@@ -41,21 +43,3 @@ $(TMP)/gcc/isl: $(TMP)/$(ISL)/README
 cloog: $(TMP)/gcc/cloog
 $(TMP)/gcc/cloog: $(TMP)/$(CLOOG)/README
 	mkdir -p $(TMP)/gcc ; ln -fs $(TMP)/$(CLOOG) $@ && touch $@
-
-# isl: $(CROSS)/lib/libisl.a
-# $(CROSS)/lib/libisl.a: $(TMP)/$(ISL)/README
-# 	cd $(TMP)/$(ISL); ./$(CFG) $(ISL_CFG) \
-# 	&& $(MAKE) -j$(CORES) && $(MAKE) install-strip
-
-# # cloog: $(CROSS)/lib/libcloog-isl.a
-# # $(CROSS)/lib/libcloog-isl.a: $(TMP)/$(CLOOG)/README
-# # 	cd $(TMP)/$(CLOOG); ./$(CFG) $(CLOOG_CFG) \
-# # 	&& $(MAKE) -j$(CORES) && $(MAKE) install-strip
-
-# # cd $(TMP)/$(GCC) ; ./contrib/download_prerequisites --graphite
-# graphite: $(TMP)/gcc/isl/README $(TMP)/gcc/cloog/README
-# $(TMP)/gcc/isl/README: $(TMP)/gcc/README $(TMP)/$(ISL)/README
-# 	ln -fs $(TMP)/$(ISL)       $(TMP)/gcc/isl    && touch $@
-# $(TMP)/gcc/cloog/README: $(TMP)/gcc/README $(TMP)/$(CLOOG)/README
-# 	ln -fs $(TMP)/$(CLOOG)     $(TMP)/gcc/cloog  && touch $@
-# # https://raghunathlolur.wordpress.com/2014/06/30/combined-tree-build-of-gcc-binutils-and-libraries/
