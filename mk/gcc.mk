@@ -1,27 +1,33 @@
 
-BINUTILS_CFG = --target=$(TARGET) --with-sysroot=$(ROOT) --disable-bootstrap \
-				--with-native-system-header-dir=/usr/include \
-				--enable-lto --disable-multilib \
-				--enable-ld=default --enable-gold --enable-plugins \
-                $(CCLIBS_WITH)
+BINUTILS_CFG = --target=$(TARGET) $(CCLIBS_WITH) --with-sysroot=$(ROOT)  \
+				--with-native-system-header-dir=/usr/include             \
+				--enable-lto --disable-multilib                          \
+				--enable-ld=default --enable-gold --enable-plugins
 
-GCC0_CFG     = --disable-shared --disable-threads \
-				--without-headers --with-newlib   \
-				--enable-languages="c" --disable-gdb
+GCC_ANY      = $(BINUTILS_CFG) --disable-bootstrap                       \
+				--disable-decimal-float --disable-libatomic              \
+				--disable-libgomp --disable-libmpx --disable-libquadmath \
+				--disable-libssp --disable-libvtv
 
-GCC_CFG      = --enable-shared --enable-threads --enable-libgomp \
+GCC0_CFG     = $(GCC_ANY)                          \
+				--disable-shared --disable-threads \
+				--without-headers --with-newlib    \
+				--enable-languages="c"
+
+GCC_CFG      = $(GCC_ANY)                          \
+				--enable-shared --enable-threads   \
 				--enable-languages="c,c++"
 
 .PHONY: cross0 cross
 
 cross0: $(TMP)/$(GCC)/README cclibs binutils
 	rm -rf $(TMP)/gcc-build ; mkdir $(TMP)/gcc-build ; cd $(TMP)/gcc-build ;\
-	$(XPATH) $(TMP)/$(GCC)/$(CFG) $(BINUTILS_CFG) $(GCC0_CFG)
-	$(XPATH) $(MAKE) gcc
+	$(XPATH) $(TMP)/$(GCC)/$(CFG) $(GCC0_CFG)
+	$(MAKE) gcc
 
 cross: $(TMP)/$(GCC)/README cclibs
 	rm -rf $(TMP)/gcc-build ; mkdir $(TMP)/gcc-build ; cd $(TMP)/gcc-build ;\
-	$(XPATH) $(TMP)/$(GCC)/$(CFG) $(BINUTILS_CFG) $(GCC_CFG)
+	$(XPATH) $(TMP)/$(GCC)/$(CFG) $(GCC_CFG)
 	$(MAKE) gcc
 
 .PHONY: gcc
@@ -41,5 +47,6 @@ gpp:
 .PHONY: binutils
 binutils: $(CROSS)/bin/$(TARGET)-ld
 $(CROSS)/bin/$(TARGET)-ld: $(TMP)/$(BINUTILS)/README cclibs
-	cd $(TMP)/$(BINUTILS); $(XPATH) ./$(CFG) $(BINUTILS_CFG) &&\
+	rm -rf $(TMP)/bu-build ; mkdir $(TMP)/bu-build ; cd $(TMP)/bu-build ;\
+	$(XPATH) $(TMP)/$(BINUTILS)/$(CFG) $(BINUTILS_CFG) &&\
 	$(MAKE) -j$(CORES) && $(MAKE) install
