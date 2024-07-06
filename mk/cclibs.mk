@@ -6,10 +6,9 @@ GMP_CFG     = $(CCLIBS_CFG) $(CCLIBS_WITH)
 MPFR_CFG    = $(CCLIBS_CFG) $(CCLIBS_WITH)
 MPC_CFG     = $(CCLIBS_CFG) $(CCLIBS_WITH)
 ISL_CFG     = $(CCLIBS_CFG) --with-gmp-prefix=$(CROSS)
-CLOOG_CFG   = $(ISL_CFG)
 
-.PHONY: cclibs gmp mpfr mpc isl cloog
-cclibs:        gmp mpfr mpc isl cloog
+.PHONY: cclibs gmp mpfr mpc isl
+cclibs:        gmp mpfr mpc isl
 
 gmp: $(CROSS)/lib/libgmp.a
 $(CROSS)/lib/libgmp.a:   $(TMP)/$(GMP)/README
@@ -29,9 +28,4 @@ $(CROSS)/lib/libmpc.a:  $(TMP)/$(MPC)/README
 isl: $(CROSS)/lib/libisl.a
 $(CROSS)/lib/libisl.a:  $(TMP)/$(ISL)/README
 	cd $(TMP)/$(ISL);   ./$(CFG) $(ISL_CFG) &&\
-	$(MAKE) -j$(CORES) && $(MAKE) install-strip
-
-cloog: $(CROSS)/lib/libcloog-isl.a
-$(CROSS)/lib/libcloog-isl.a:  $(TMP)/$(CLOOG)/README
-	cd $(TMP)/$(CLOOG);   ./$(CFG) $(CLOOG_CFG) &&\
 	$(MAKE) -j$(CORES) && $(MAKE) install-strip

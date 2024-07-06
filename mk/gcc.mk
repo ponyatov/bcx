@@ -47,6 +47,6 @@ gpp:
 .PHONY: binutils
 binutils: $(CROSS)/bin/$(TARGET)-ld
 $(CROSS)/bin/$(TARGET)-ld: $(TMP)/$(BINUTILS)/README cclibs
-	rm -rf $(TMP)/bu-build ; mkdir $(TMP)/bu-build ; cd $(TMP)/bu-build ;\
+	rm -rf $(TMP)/gcc-build ; mkdir $(TMP)/gcc-build ; cd $(TMP)/gcc-build ;\
 	$(XPATH) $(TMP)/$(BINUTILS)/$(CFG) $(BINUTILS_CFG) &&\
 	$(MAKE) -j$(CORES) && $(MAKE) install
