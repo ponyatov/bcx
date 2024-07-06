@@ -4,6 +4,7 @@ BINUTILS_CFG = --target=$(TARGET) --with-sysroot=$(ROOT) --disable-bootstrap \
 				--enable-lto --disable-multilib \
 				--enable-ld=default --enable-gold --enable-plugins \
                 $(CCLIBS_WITH)
+# configuring in isl error:
 
 GCC0_CFG     = --disable-shared --disable-threads \
 				--without-headers --with-newlib   \

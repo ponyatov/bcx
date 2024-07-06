@@ -45,12 +45,12 @@ $(CROSS)/lib/libmpc.a:  $(TMP)/$(MPC)/README
 
 isl:   $(TMP)/$(GCC)/isl   $(TMP)/$(BINUTILS)/isl
 $(TMP)/$(GCC)/isl:         $(TMP)/$(ISL)/README   $(TMP)/$(GCC)/README
-	ln -fs $(TMP)/$(ISL)   $@ && touch $@
+	cp -r $(TMP)/$(ISL) $@
 $(TMP)/$(BINUTILS)/isl:    $(TMP)/$(ISL)/README   $(TMP)/$(BINUTILS)/README
-	ln -fs $(TMP)/$(ISL)   $@ && touch $@
+	cp -r $(TMP)/$(ISL) $@
 
 cloog: $(TMP)/$(GCC)/cloog $(TMP)/$(BINUTILS)/cloog
 $(TMP)/$(GCC)/cloog:       $(TMP)/$(CLOOG)/README $(TMP)/$(GCC)/README
-	ln -fs $(TMP)/$(CLOOG) $@ && touch $@
+	cp -r $(TMP)/$(CLOOG) $@
 $(TMP)/$(BINUTILS)/cloog:  $(TMP)/$(CLOOG)/README $(TMP)/$(BINUTILS)/README
-	ln -fs $(TMP)/$(CLOOG) $@ && touch $@
+	cp -r $(TMP)/$(CLOOG) $@
