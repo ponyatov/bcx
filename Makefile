@@ -115,6 +115,7 @@ include mk/bb.mk
 include mk/boot.mk
 include mk/qemu.mk
 include mk/sw.mk
+include mk/clean.mk
 
 # merge
 MERGE += Makefile README.md .gitignore .clang-format .doxygen
