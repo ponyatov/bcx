@@ -16,8 +16,7 @@ GCC0_CFG     = $(GCC_ANY)                          \
 
 GCC_CFG      = $(GCC_ANY)                          \
 				--enable-shared --enable-threads   \
-				--enable-languages="c,c++"
-# --enable-languages="c,c++,d"
+				--enable-languages="c,c++,d"
 
 .PHONY: cross0 cross
 
