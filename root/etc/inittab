@@ -5,8 +5,8 @@
 ::sysinit:mount -t sysfs sysfs /sys
 # ::sysinit:echo /sbin/mdev > /proc/sys/kernel/hotplug
 ::sysinit:mdev -s
+# ::sysinit:watchdog -T 30 -t 10 /dev/watchdog0
 # ::sysinit:/etc/init.d/rcS
-# ::sysinit:watchdog -T 6 -t 3 /dev/watchdog0
 ::sysinit:pstree -p
 
 # ::askfirst:-/bin/sh
