@@ -32,7 +32,7 @@ SYSLINUX_FILES += $(ISOLINUX_DIR)/poweroff.c32 $(ISOLINUX_DIR)/reboot.c32
 SYSLINUX_FILES += $(ISOLINUX_DIR)/ls.c32 $(ISOLINUX_DIR)/cat.c32 
 
 $(ISO): $(SYSLINUX_FILES) fw
-	xorriso -as mkisofs -r -J -A $(APP)@$(HW) -P "$(USER) <$(EMAIL)>" \
+	xorriso -as mkisofs -r -J -A $(APP)_$(HW) -P "$(USER) <$(EMAIL)>" \
 		-eltorito-platform x86 -b isolinux/isolinux.bin \
 		-c boot.cat -iso-level 3 \
 		-no-emul-boot -partition_offset 16 -boot-load-size 4 \

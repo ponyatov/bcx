@@ -20,12 +20,15 @@ GCC_CFG      = $(GCC_ANY)                          \
 
 .PHONY: cross0 cross
 
-cross0: $(TMP)/$(GCC)/README cclibs binutils
+cross0: cclibs binutils $(CROSS)/bin/$(TARGET)-gcc
+$(CROSS)/bin/$(TARGET)-gcc: $(TMP)/$(GCC)/README
 	rm -rf $(TMP)/gcc-build ; mkdir $(TMP)/gcc-build ; cd $(TMP)/gcc-build ;\
 	$(XPATH) $(TMP)/$(GCC)/$(CFG) $(GCC0_CFG)
 	$(MAKE) gcc
+	touch $@
 
-cross: $(TMP)/$(GCC)/README cclibs
+cross: cclibs $(CROSS)/bin/$(TARGET)-g++
+$(CROSS)/bin/$(TARGET)-g++: $(TMP)/$(GCC)/README
 	rm -rf $(TMP)/gcc-build ; mkdir $(TMP)/gcc-build ; cd $(TMP)/gcc-build ;\
 	$(XPATH) $(TMP)/$(GCC)/$(CFG) $(GCC_CFG)
 	$(MAKE) gcc
