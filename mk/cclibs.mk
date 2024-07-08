@@ -47,7 +47,9 @@ $(CROSS)/lib/libmpc.a:  $(TMP)/$(MPC)/README
 	$(XPATH) $(TMP)/$(MPC)/$(CFG) $(MPC0_CFG) &&\
 	$(XPATH) $(MAKE) -j$(CORES) && $(XPATH) $(MAKE) install-strip
 
-# <complex> error
+# set_x.c:96:29: error: implicit declaration of function 'creall'
+# set_x.c:96:29: note: include '<complex.h>' or provide a declaration of 'creall'
+# set_x.c::96:41: error: implicit declaration of function 'cimagl'
 MPC_CFG =
 
 mpc: $(ROOT)/lib/libmpc.a
@@ -62,6 +64,7 @@ $(CROSS)/lib/libisl.a:  $(TMP)/$(ISL)/README
 	$(XPATH) $(TMP)/$(ISL)/$(CFG) $(ISL0_CFG) &&\
 	$(XPATH) $(MAKE) -j$(CORES) && $(XPATH) $(MAKE) install-strip
 
+# ld: failed to set dynamic section sizes: bad value
 ISL_CFG =
 
 isl: $(ROOT)/lib/libisl.a

@@ -47,6 +47,12 @@ gpp:
 	$(XPATH) $(MAKE) -j$(CORES)     all-target-libstdc++-v3 &&\
 	$(XPATH) $(MAKE)            install-target-libstdc++-v3
 
+.PHONY: gdc
+gdc:
+	cd $(TMP)/gcc-build ;\
+	$(XPATH) $(MAKE) -j$(CORES)     all-gdc           &&\
+	$(XPATH) $(MAKE)            install-gdc
+
 .PHONY: binutils
 binutils: $(CROSS)/bin/$(TARGET)-ld
 $(CROSS)/bin/$(TARGET)-ld: $(TMP)/$(BINUTILS)/README
