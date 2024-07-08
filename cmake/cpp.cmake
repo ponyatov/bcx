@@ -1,9 +1,12 @@
 set(CMAKE_CXX_STANDARD          17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
-file(GLOB C RELATIVE ${CMAKE_SOURCE_DIR} "src/*.c*" "tmp/*.c*")
-file(GLOB H RELATIVE ${CMAKE_SOURCE_DIR} "inc/*.h*" "tmp/*.h*")
+# file(GLOB C RELATIVE ${CMAKE_SOURCE_DIR} "src/*.c*" "tmp/*.c*")
+# file(GLOB H RELATIVE ${CMAKE_SOURCE_DIR} "inc/*.h*" "tmp/*.h*")
 # file(GLOB R RELATIVE ${CMAKE_SOURCE_DIR} "inc/*.qrc")
+file(GLOB C RELATIVE ${CMAKE_SOURCE_DIR} "src/${APP}*.c*" "tmp/${APP}*.c*")
+file(GLOB H RELATIVE ${CMAKE_SOURCE_DIR} "inc/${APP}*.h*" "tmp/${APP}*.h*")
+
 
 include_directories(
     "${CMAKE_SOURCE_DIR}/inc"

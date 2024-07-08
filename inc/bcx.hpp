@@ -22,15 +22,16 @@
 
 /// @defgroup vm Virtual Machine
 /// @{
+
 /// @defgroup memory memory
 /// @{
-extern uint8_t M[Msz];   ///< @brief main Memory, byte addressed
-extern uint32_t Cp;      ///< @brief compiler pointer / allocator
-extern uint32_t Ip;      ///< @brief instruction pointer
-extern uint32_t R[Rsz];  ///< @brief Return stack
-extern uint16_t Rp;      ///< @brief return stack pointer
-extern int32_t D[Dsz];   ///< @brief Data stack
-extern uint8_t Dp;       ///< @brief data stack pointer
+extern uint8_t M[Msz];  ///< @brief main Memory, byte addressed
+extern uint32_t Cp;     ///< @brief compiler pointer / allocator
+extern uint32_t Ip;     ///< @brief instruction pointer
+// extern uint32_t R[Rsz];  ///< @brief Return stack
+// extern uint16_t Rp;      ///< @brief return stack pointer
+// extern int32_t D[Dsz];   ///< @brief Data stack
+// extern uint8_t Dp;       ///< @brief data stack pointer
 /// @}
 
 extern int vm();  ///< bytecode interpreter
@@ -39,14 +40,16 @@ extern int vm();  ///< bytecode interpreter
 /// @{
 enum OP : uint8_t {  ///< command opcodes
     NOP = 0x00,
+    SYNC = 0xFE,
     HALT = 0xFF,
 };
 
 /// @ingroup memory
 extern OP op;  ///< @brief current opcode
 
-extern void nop();   ///< `( -- )` empty command
-extern void halt();  ///< `( -- )` stop whole system
+extern void nop();    ///< `( -- )` empty command
+extern void _sync();  ///< `( -- )` sync persistent memory (@ref HEADER)
+extern void halt();   ///< `( -- )` stop whole system
 /// @}
 
 /// @defgroup compiler compiler
@@ -54,25 +57,25 @@ extern void halt();  ///< `( -- )` stop whole system
 
 struct HEADER {
     uint16_t entry = sizeof(HEADER);  ///< @ref Ip
-    uint16_t heap = 0;                ///< @ref Cp
-    uint16_t latest = 0;              ///< @ref latest
+    uint16_t heap = sizeof(HEADER);   ///< @ref Cp
+    //     uint16_t latest = 0;              ///< @ref latest
 };
 extern HEADER *header;
 
 extern std::map<std::string, uint32_t> label;  ///< symbol table
 
-extern uint16_t latest;  ///< last defined word
+// extern uint16_t latest;  ///< last defined word
 
-extern void cbyte(uint8_t b);   ///< compile byte
-extern void cshort(int16_t s);  ///< compile 16-bit short int
-extern void cint(int32_t n);    ///< compile 32-bit integer
+extern void cbyte(uint8_t b);  ///< compile byte
+// extern void cshort(int16_t s);  ///< compile 16-bit short int
+// extern void cint(int32_t n);    ///< compile 32-bit integer
 extern void cword(char *name);  ///< compile word header
 
-extern void lfa();  ///< compile LFA: vocabulary link field
+// extern void lfa();  ///< compile LFA: vocabulary link field
 
-/// @brief NFA: word name as byte-counted string
-/// @param[in] name short ASCIIZ string (<16 chars)
-extern void nfa(char *name);
+// /// @brief NFA: word name as byte-counted string
+// /// @param[in] name short ASCIIZ string (<16 chars)
+// extern void nfa(char *name);
 
 /// @}
 

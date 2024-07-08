@@ -1,3 +1,6 @@
+/// @file
+/// @brief lexical skeleton
+
 #pragma once
 
 /// @defgroup skelex lexical skeleton

@@ -33,15 +33,15 @@ CF   = clang-format -style=file -i
 TCXX  = $(XPATH) $(TARGET)-g++
 TSIZE = $(XPATH) $(TARGET)-size
 
-
 # src
-C += $(wildcard src/*.c*)
+C += $(wildcard src/$(MODULE).c*)
 H += $(wildcard inc/*.h*)
 F += lib/$(MODULE).ini $(wildcard lib/*.f)
-S  = $(C) $(H) $(F) CMakeLists.txt
 CP = tmp/$(MODULE).parser.cpp tmp/$(MODULE).lexer.cpp
 HP = tmp/$(MODULE).parser.hpp
+CM = CMakeLists.txt $(wildcard cmake/*.cmake)
 MK = Makefile $(wildcard mk/*.mk)
+S  = $(C) $(H) $(F) $(CM) $(MK)
 
 # cfg
 CFLAGS += -I$(INC) -I$(TMP)
@@ -66,23 +66,21 @@ tmp/format_c: $(C) $(H)
 	$(CF) $? && touch $@
 
 # rule
-# bin/$(MODULE): $(C) $(H) $(CP) $(HP)
-# 	$(CXX) $(CFLAGS) -o $@ $(C) $(CP) $(L)
+bin/$(MODULE): $(C) $(H) $(CP) $(HP)
+	$(CXX) $(CFLAGS) -o $@ $(C) $(CP) $(L)
 tmp/$(MODULE).lexer.cpp: src/$(MODULE).lex
 	flex -o $@ $<
 tmp/$(MODULE).parser.cpp: src/$(MODULE).yacc
 	bison -o $@ $<
 
-cmake: bin/$(MODULE)
-	ls -la $^
-
-bin/$(MODULE): $(S) $(CP) $(HP)
-	rm -rf $(BUILD) ; git checkout $(BUILD)
+cmake: bin/$(MODULE) $(F)
+	$^
+$(BUILD)/CMakeCache.txt: $(S)
 	cmake -DAPP=$(MODULE) -DCMAKE_TOOLCHAIN_FILE=Linux -S$(CWD) -B$(BUILD)
-	cd $(BUILD) ; make -j$(CORES)
-# tmp/$(MODULE).exe: $(S)
-# 	rm -rf $(BUILD)
-# 	cmake -DAPP=$(MODULE) -DCMAKE_TOOLCHAIN_FILE=Windows_ -S$(CWD) -B$(BUILD)
+# bin/$(MODULE): $(BUILD)/CMakeCache.txt $(CP) $(HP)
+# 	cd $(BUILD) ; make -j$(CORES)
+tmp/$(MODULE).exe: $(BUILD)/CMakeCache.txt $(CP) $(HP)
+	cmake -DAPP=$(MODULE) -DCMAKE_TOOLCHAIN_FILE=Windows -S$(CWD) -B$(BUILD)
 
 include mk/rule.mk
 
