@@ -16,26 +16,27 @@ GCC0_CFG     = $(GCC_ANY)                          \
 
 GCC_CFG      = $(GCC_ANY)                          \
 				--enable-shared --enable-threads   \
-				--enable-languages="c,c++,d"
+				--enable-languages="c,c++"
+# --enable-languages="c,c++,d" --disable-libphobos
 
 .PHONY: cross0 cross
 
 cross0: cclibs0 binutils $(CROSS)/bin/$(TARGET)-gcc
 $(CROSS)/bin/$(TARGET)-gcc: $(TMP)/$(GCC)/README
-	rm -rf $(TMP)/gcc-build ; mkdir $(TMP)/gcc-build ; cd $(TMP)/gcc-build ;\
+	rm -rf $(TMP)/gcc ; mkdir $(TMP)/gcc ; cd $(TMP)/gcc ;\
 	$(XPATH) $(TMP)/$(GCC)/$(CFG) $(GCC0_CFG)
 	$(MAKE) gcc
 	touch $@
 
 cross: cclibs0 $(CROSS)/bin/$(TARGET)-g++
 $(CROSS)/bin/$(TARGET)-g++: $(TMP)/$(GCC)/README
-	rm -rf $(TMP)/gcc-build ; mkdir $(TMP)/gcc-build ; cd $(TMP)/gcc-build ;\
+	rm -rf $(TMP)/gcc ; mkdir $(TMP)/gcc ; cd $(TMP)/gcc ;\
 	$(XPATH) $(TMP)/$(GCC)/$(CFG) $(GCC_CFG)
 	$(MAKE) gcc gpp
 
 .PHONY: gcc
 gcc:
-	cd $(TMP)/gcc-build ;\
+	cd $(TMP)/gcc ;\
 	$(XPATH) $(MAKE) -j$(CORES)     all-gcc           &&\
 	$(XPATH) $(MAKE)            install-gcc           &&\
 	$(XPATH) $(MAKE) -j$(CORES)     all-target-libgcc &&\
@@ -43,19 +44,19 @@ gcc:
 
 .PHONY: gpp
 gpp:
-	cd $(TMP)/gcc-build ;\
+	cd $(TMP)/gcc ;\
 	$(XPATH) $(MAKE) -j$(CORES)     all-target-libstdc++-v3 &&\
 	$(XPATH) $(MAKE)            install-target-libstdc++-v3
 
-.PHONY: gdc
-gdc:
-	cd $(TMP)/gcc-build ;\
-	$(XPATH) $(MAKE) -j$(CORES)     all-gdc           &&\
-	$(XPATH) $(MAKE)            install-gdc
+# .PHONY: gdc
+# gdc:
+# 	cd $(TMP)/gcc ;\
+# 	$(XPATH) $(MAKE) -j$(CORES)     all-gdc           &&\
+# 	$(XPATH) $(MAKE)            install-gdc
 
 .PHONY: binutils
 binutils: $(CROSS)/bin/$(TARGET)-ld
 $(CROSS)/bin/$(TARGET)-ld: $(TMP)/$(BINUTILS)/README
-	rm -rf $(TMP)/gcc-build ; mkdir $(TMP)/gcc-build ; cd $(TMP)/gcc-build ;\
+	rm -rf $(TMP)/binutils ; mkdir $(TMP)/binutils ; cd $(TMP)/binutils ;\
 	$(XPATH) $(TMP)/$(BINUTILS)/$(CFG) $(BINUTILS_CFG) &&\
 	$(MAKE) -j$(CORES) && $(MAKE) install
