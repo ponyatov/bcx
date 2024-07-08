@@ -47,7 +47,9 @@ S  = $(C) $(H) $(F) $(CM) $(MK)
 CFLAGS += -I$(INC) -I$(TMP)
 TCFLAGS += $(CFLAGS)
 
-LIBS_CFG = --enable-static --enable-shared
+LIBS_CFG = --enable-static --enable-shared \
+			--infodir=$(TMP)/info --mandir=$(TMP)/man \
+			--includedir=$(ROOT)/usr/include --libdir=$(ROOT)/lib
 
 CFG   = configure --prefix=$(CROSS) --disable-nls
 TFG   = configure --prefix=$(ROOT)  --disable-nls --host=$(TARGET) $(LIBS_CFG)
