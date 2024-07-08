@@ -47,6 +47,7 @@ $(CROSS)/lib/libmpc.a:  $(TMP)/$(MPC)/README
 	$(XPATH) $(TMP)/$(MPC)/$(CFG) $(MPC0_CFG) &&\
 	$(XPATH) $(MAKE) -j$(CORES) && $(XPATH) $(MAKE) install-strip
 
+# <complex> error
 MPC_CFG =
 
 mpc: $(ROOT)/lib/libmpc.a
@@ -59,4 +60,12 @@ isl0: $(CROSS)/lib/libisl.a
 $(CROSS)/lib/libisl.a:  $(TMP)/$(ISL)/README
 	rm -rf tmp/isl ; mkdir tmp/isl ; cd tmp/isl ;\
 	$(XPATH) $(TMP)/$(ISL)/$(CFG) $(ISL0_CFG) &&\
+	$(XPATH) $(MAKE) -j$(CORES) && $(XPATH) $(MAKE) install-strip
+
+ISL_CFG =
+
+isl: $(ROOT)/lib/libisl.a
+$(ROOT)/lib/libisl.a: $(TMP)/$(ISL)/README
+	rm -rf tmp/mpc ; mkdir tmp/mpc ; cd tmp/mpc ;\
+	$(XPATH) $(TMP)/$(ISL)/$(TFG) $(ISL_CFG) &&\
 	$(XPATH) $(MAKE) -j$(CORES) && $(XPATH) $(MAKE) install-strip
