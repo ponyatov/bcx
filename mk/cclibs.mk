@@ -2,30 +2,41 @@ CCLIBS_CFG  = --enable-static --disable-shared
 CCLIBS_WITH = --with-gmp=$(CROSS) --with-mpfr=$(CROSS) --with-mpc=$(CROSS) \
 				--with-isl=$(CROSS) --disable-isl-version-check
 
-GMP_CFG     = $(CCLIBS_CFG) $(CCLIBS_WITH)
-MPFR_CFG    = $(CCLIBS_CFG) $(CCLIBS_WITH)
-MPC_CFG     = $(CCLIBS_CFG) $(CCLIBS_WITH)
-ISL_CFG     = $(CCLIBS_CFG) --with-gmp-prefix=$(CROSS)
+GMP0_CFG    = $(CCLIBS_CFG) $(CCLIBS_WITH)
+MPFR0_CFG   = $(CCLIBS_CFG) $(CCLIBS_WITH)
+MPC0_CFG    = $(CCLIBS_CFG) $(CCLIBS_WITH)
+ISL0_CFG    = $(CCLIBS_CFG) --with-gmp-prefix=$(CROSS)
 
-.PHONY: cclibs gmp mpfr mpc isl
-cclibs:        gmp mpfr mpc isl
+.PHONY: cclibs gmp0 mpfr0 mpc0 isl0
+cclibs:        gmp0 mpfr0 mpc0 isl0
 
-gmp: $(CROSS)/lib/libgmp.a
+gmp0: $(CROSS)/lib/libgmp.a
 $(CROSS)/lib/libgmp.a:   $(TMP)/$(GMP)/README
-	cd $(TMP)/$(GMP);   ./$(CFG) $(GMP_CFG) &&\
-	$(MAKE) -j$(CORES) && $(MAKE) install-strip
+	rm -rf tmp/gmp ; mkdir tmp/gmp ; cd tmp/gmp ;\
+	$(XPATH) $(TMP)/$(GMP)/$(CFG) $(GMP0_CFG) &&\
+	$(XPATH) $(MAKE) -j$(CORES) && $(XPATH) $(MAKE) install-strip
 
-mpfr: $(CROSS)/lib/libmpfr.a
+GMP_CFG = --prefix=$(ROOT)/gmp
+gmp: $(ROOT)/lib/libgmp.a
+$(ROOT)/lib/libgmp.a: $(TMP)/$(GMP)/README
+	rm -rf tmp/gmp ; mkdir tmp/gmp ; cd tmp/gmp ;\
+	$(XPATH) $(TMP)/$(GMP)/$(TFG) $(GMP_CFG) &&\
+	$(XPATH) $(MAKE) -j$(CORES) && $(XPATH) $(MAKE) install-strip
+
+mpfr0: $(CROSS)/lib/libmpfr.a
 $(CROSS)/lib/libmpfr.a: $(TMP)/$(MPFR)/README
-	cd $(TMP)/$(MPFR);  ./$(CFG) $(MPFR_CFG) &&\
-	$(MAKE) -j$(CORES) && $(MAKE) install-strip
+	rm -rf tmp/mpfr ; mkdir tmp/mpfr ; cd tmp/mpfr ;\
+	$(XPATH) $(TMP)/$(MPFR)/$(CFG) $(MPFR0_CFG) &&\
+	$(XPATH) $(MAKE) -j$(CORES) && $(XPATH) $(MAKE) install-strip
 
-mpc: $(CROSS)/lib/libmpc.a
+mpc0: $(CROSS)/lib/libmpc.a
 $(CROSS)/lib/libmpc.a:  $(TMP)/$(MPC)/README
-	cd $(TMP)/$(MPC);   ./$(CFG) $(MPC_CFG) &&\
-	$(MAKE) -j$(CORES) && $(MAKE) install-strip
+	rm -rf tmp/mpc ; mkdir tmp/mpc ; cd tmp/mpc ;\
+	$(XPATH) $(TMP)/$(MPC)/$(CFG) $(MPC0_CFG) &&\
+	$(XPATH) $(MAKE) -j$(CORES) && $(XPATH) $(MAKE) install-strip
 
-isl: $(CROSS)/lib/libisl.a
+isl0: $(CROSS)/lib/libisl.a
 $(CROSS)/lib/libisl.a:  $(TMP)/$(ISL)/README
-	cd $(TMP)/$(ISL);   ./$(CFG) $(ISL_CFG) &&\
-	$(MAKE) -j$(CORES) && $(MAKE) install-strip
+	rm -rf tmp/isl ; mkdir tmp/isl ; cd tmp/isl ;\
+	$(XPATH) $(TMP)/$(ISL)/$(CFG) $(ISL0_CFG) &&\
+	$(XPATH) $(MAKE) -j$(CORES) && $(XPATH) $(MAKE) install-strip

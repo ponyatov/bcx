@@ -47,8 +47,10 @@ S  = $(C) $(H) $(F) $(CM) $(MK)
 CFLAGS += -I$(INC) -I$(TMP)
 TCFLAGS += $(CFLAGS)
 
-CFG  = configure --prefix=$(CROSS) --disable-nls
-CCFG = configure --prefix=$(ROOT)  --disable-nls
+LIBS_CFG = --enable-static --enable-shared
+
+CFG   = configure --prefix=$(CROSS) --disable-nls
+TFG   = configure --prefix=$(ROOT)  --disable-nls --host=$(TARGET) $(LIBS_CFG)
 XPATH = PATH=$(CROSS)/bin:$(PATH)
 
 # package

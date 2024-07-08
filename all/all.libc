@@ -35,6 +35,9 @@ UCLIBC_HAS_IPV6=n
 UCLIBC_USE_NETLINK=y
 UCLIBC_HAS_RESOLVER_SUPPORT=y
 
+# gmp reqs
+UCLIBC_SUSV4_LEGACY=y
+
 # WARNINGS="-Wno-implicit-function-declaration -Wno-int-conversion"
 UCLIBC_LINUX_SPECIFIC=y
 
