@@ -31,7 +31,7 @@ cross: cclibs0 $(CROSS)/bin/$(TARGET)-g++
 $(CROSS)/bin/$(TARGET)-g++: $(TMP)/$(GCC)/README
 	rm -rf $(TMP)/gcc-build ; mkdir $(TMP)/gcc-build ; cd $(TMP)/gcc-build ;\
 	$(XPATH) $(TMP)/$(GCC)/$(CFG) $(GCC_CFG)
-	$(MAKE) gcc
+	$(MAKE) gcc gpp
 
 .PHONY: gcc
 gcc:

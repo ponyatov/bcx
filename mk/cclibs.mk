@@ -47,6 +47,14 @@ $(CROSS)/lib/libmpc.a:  $(TMP)/$(MPC)/README
 	$(XPATH) $(TMP)/$(MPC)/$(CFG) $(MPC0_CFG) &&\
 	$(XPATH) $(MAKE) -j$(CORES) && $(XPATH) $(MAKE) install-strip
 
+MPC_CFG =
+
+mpc: $(ROOT)/lib/libmpc.a
+$(ROOT)/lib/libmpc.a: $(TMP)/$(MPC)/README
+	rm -rf tmp/mpc ; mkdir tmp/mpc ; cd tmp/mpc ;\
+	$(XPATH) $(TMP)/$(MPC)/$(TFG) $(MPC_CFG) &&\
+	$(XPATH) $(MAKE) -j$(CORES) && $(XPATH) $(MAKE) install-strip
+
 isl0: $(CROSS)/lib/libisl.a
 $(CROSS)/lib/libisl.a:  $(TMP)/$(ISL)/README
 	rm -rf tmp/isl ; mkdir tmp/isl ; cd tmp/isl ;\
