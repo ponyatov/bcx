@@ -1,4 +1,4 @@
-# [[FORTH/FORTH|FORTH]] inspired
+# FORTH
 
 - [Starting FORTH](https://www.forth.com/starting-forth/)
 - [Thinking Forth](https://thinking-forth.sourceforge.net/)

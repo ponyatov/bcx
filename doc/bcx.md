@@ -1,4 +1,5 @@
-# `bcx` 0.0.1
+# bcx
+0.0.1
 ![logo](logo.png)
 ## Bytecode Compiler/eXecutor
 

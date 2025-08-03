@@ -96,9 +96,4 @@ extern void yyerror(const char *msg);  ///< syntax error callback
 #include "bcx.yacc.hpp"
 /// @}
 
-/// @defgroup gui gui
-/// @{
-#ifdef SDL2
 #include "gui.hpp"
-#endif  // SDL2
-/// @}
