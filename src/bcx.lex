@@ -1,5 +1,5 @@
 %{
-#include "bc.hpp"
+#include "bcx.hpp"
 char* yyfile = nullptr;
 %}
 

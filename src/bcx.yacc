@@ -1,5 +1,5 @@
 %{
-#include "bc.hpp"
+#include "bcx.hpp"
 %}
 
 %defines %union { char c; std::string* s; int n; float f; }

@@ -15,6 +15,8 @@ file(GLOB C
      cpu/src/*.c*  cpu/${CPU}/src/*.c*
     arch/src/*.c* arch/${ARCH}/src/*.c*
       os/src/*.c*   os/${OS}/src/*.c*
+    # libs
+    lib/src/*.c* lib/*/src/*.c*
 )
 
 file(GLOB H
@@ -25,6 +27,8 @@ file(GLOB H
      cpu/inc/*.h*  cpu/${CPU}/inc/*.h*
     arch/inc/*.h* arch/${ARCH}/inc/*.h*
       os/inc/*.h*   os/${OS}/inc/*.h*
+    # libs
+    lib/inc/*.h* lib/*/inc/*.h*
 )
 
 file(GLOB INC
@@ -36,5 +40,7 @@ file(GLOB INC
      cpu/inc  cpu/${CPU}/inc
     arch/inc arch/${ARCH}/inc
       os/inc   os/${OS}/inc
+    # libs
+    lib/inc lib/*/inc
 )
 include_directories(${INC})

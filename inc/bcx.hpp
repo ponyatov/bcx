@@ -93,5 +93,12 @@ extern char *yyfile;                   ///< current file name
 extern FILE *yyin;                     ///< current file handler
 extern int yyparse();                  ///< syntax parser (bison)
 extern void yyerror(const char *msg);  ///< syntax error callback
-#include "bc.yacc.hpp"
+#include "bcx.yacc.hpp"
+/// @}
+
+/// @defgroup gui gui
+/// @{
+#ifdef SDL2
+#include "gui.hpp"
+#endif  // SDL2
 /// @}
