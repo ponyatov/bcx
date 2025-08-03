@@ -21,8 +21,12 @@ add_executable(${CMAKE_PROJECT_NAME}
     ${CP} ${HP} ${OP}   # parsers
 )
 
-# target_link_libraries(${CMAKE_PROJECT_NAME} -static)
-
 include(install)        # target install
 include(cross)          # cross compiler binaries: elf/dfu
 include(clean)          # project clean-up (remove generated & temp files)
+
+target_link_libraries(${CMAKE_PROJECT_NAME}
+    # -static
+    # PRIVATE
+    ${SDL2_LIBRARIES}
+)

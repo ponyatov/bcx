@@ -1,1 +1,5 @@
 find_package(SDL2 REQUIRED)
+if(SDL2_FOUND)
+    message(STATUS "Found SDL2 " ${SDL2_LIBRARIES})
+    add_definitions(SDL2)
+endif()
