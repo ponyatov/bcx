@@ -5,8 +5,8 @@
         "IBM.output-colorizer",
         // formatters
         "xaver.clang-format",
-        "foxundermoon.shell-format",
         "esbenp.prettier-vscode",
+        "foxundermoon.shell-format",
         // Linux
         "ms-vscode-remote.remote-ssh",
         "coolbear.systemd-unit-file",
@@ -18,5 +18,7 @@
         "ms-vscode.cmake-tools",
         // parser
         "daohong-emilio.yash",
+        // FORTH
+        "fttx.language-forth",
     ]
 }

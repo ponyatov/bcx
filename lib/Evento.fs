@@ -1,12 +1,14 @@
 //! generic embedded project generation script in F#
 
 // project metainfo
-let APP   = "bc"
-let TITLE = "bytecode compiler"
+let APP   = "bcx"
+let TITLE = "Bytecode Compiler/eXecutor"
 
 let ABOUT = "
-- portable
+- FORTH-inspired portable VM
 - very small and easy assembly-like language
+- scripting and command line REPL engine
+- embedded systems: microcontrollers and embedded Linux
 "
 
 // mostly constant metainfo
@@ -35,7 +37,8 @@ let mkdir (path: string) : unit =
 
 let NewLines = List.reduce (fun a b -> $"{a}\n{b}")
 
-let spawn cmd = cmd;
+let meld path = $"meld {path} ~/em/{path} &"
+let spawn cmd = cmd
 
 // env
 let USER = Environment.UserName
@@ -50,7 +53,7 @@ let README:unit = //
     File.WriteAllText ("README.md",$"# ![](doc/logo.png) `{APP}` {VERSION}
 ## {TITLE}
 
-(c) {AUTHOR} <{EMAIL}> {YEAR} {LICENSE}
+(c) {AUTHOR} <<{EMAIL}>> {YEAR} {LICENSE}
 
 github: {GITHUB}
 {ABOUT}")
@@ -90,16 +93,15 @@ node_modules/
 """)
 
 // github repo
-let SHELL = $"cd {CWD}"
-let INIT = "git init"
-let CHECKOUT = $"git checkout --orphan {USER}"
-let RC = "ln -fs ../rc rc"
-let GH   = $"git remote add gh git@github.com:ponyatov/{app}.git"
-let FLIC = $"git remote add flic git@gitflic.ru:dponyatov/{app}.git"
-let CLONE = $"git clone -o gh git@github.com:ponyatov/{app}.git {HOME}/{APP}"
-let GITGUI = $"git gui &"
-let PULL = $"git pull -v gh {USER}"
-let COMMIT = $"git add -A ; git commit -am \".\" ; git push -v -u gh {USER} ; pp"
+spawn $"git clone -o gh git@github.com:ponyatov/{app}.git {HOME}/{APP} ; cd {HOME}/{APP}"
+spawn $"git remote add gh git@github.com:ponyatov/{app}.git"
+spawn $"git remote add flic git@gitflic.ru:dponyatov/{app}.git"
+spawn "git remote -v"
+spawn $"git checkout --orphan {USER}"
+spawn "ln -fs ../rc rc"
+spawn $"git gui &"
+spawn $"git add -A ; git commit -am \".\" ; git push -v -u gh {USER} ; pp"
+let COMMIT = "git add -A ; git commit -am \".\" ; pp"
 
 let bin:unit = //
     for d in ["bin"; "tmp"; "ref"] do
@@ -113,20 +115,41 @@ let doc:unit = //
 
 let doxy: unit = //
     mkdir "doc"
+    let LOGO = "cp ~/icons/control64.png doc/logo.png"
+    let DOXY = "doxygen -l ; mv DoxygenLayout.xml doc/"
+    meld "doc/DoxygenLayout.xml"
     File.WriteAllText (".doxygen",$"PROJECT_NAME           = \"{APP}\"
 PROJECT_BRIEF          = \"{TITLE}\"
 PROJECT_LOGO           = doc/logo.png
 ")
-    let LOGO = "cp ~/icons/control64.png doc/logo.png"
-    let DOXY = "doxygen -l ; mv DoxygenLayout.xml doc/"
-    let DOTX = "meld .doxygen ~/em/.doxygen"
+    meld ".doxygen"
 
 let lib:unit = //
     mkdir "lib"
-    File.WriteAllText($"lib/{app}.ini", "// line comment\n")
+    File.WriteAllText($"lib/{app}.ini", """#!/usr/bin/env shebang
+
+# line comment
+/* block comment */
+
+# numbers:
+-01 +02.30 -4e+5 0xDeadBeef 0o750 0b1101
+
+:init
+    nop halt
+    jmp init
+    call forward
+
+:forward
+    ret
+
+# booleans
+true false
+""")
 
 let cpp: unit = //
-    mkdir "inc"
+    mkdir "inc" ; touch $"inc/{app}.hpp"
+    mkdir "src" ; File.WriteAllText ($"src/{app}.cpp",$"#include \"{app}.hpp\"\n")
+    // 
     File.WriteAllText ($"inc/{app}.hpp",$"#pragma once
 
 #include <stdlib.h>
@@ -196,15 +219,12 @@ let cargo_config:unit = //
 target = "x86_64-unknown-linux-gnu"
 jobs = 2
 
-[profile.dev]
-incremental = true
-
 [target.x86_64-unknown-linux-gnu]
-features = ["pc","i5","x86_64","linux"]
+# features = ["pc","i5","x86_64","linux"]
 linker   = "x86_64-linux-gnu-gcc"
 
 [target.aarch64-unknown-linux-gnu]
-features = ["pi800","rk3399","aarch64","linux"]
+# features = ["pi800","rk3399","aarch64","linux"]
 linker   = "aarch64-linux-gnu-gcc"
 
 [target.armv7-unknown-linux-gnueabihf]
@@ -255,59 +275,35 @@ registry = "sparse+https://mirrors.ustc.edu.cn/crates.io-index/"
 [source.tsinghua]
 registry = "sparse+https://mirrors.tuna.tsinghua.edu.cn/crates.io-index/"
 """)
-    let CFG = "meld .cargo/config.toml ~/em/.cargo/config.toml"
+    meld ".cargo/config.toml"
 
-let rsbin name = //
-    $"\n[[bin]]\npath = \"src/{name}.rs\"\nname = \"{name}\"\n"
-let rslib name = //
-    $"\n[lib]\npath = \"src/{name}.rs\"\nname = \"{name}\"\n"
-    // crate-type = [\"cdylib\"]\n
+let rsmain: unit = //
+    mkdir "src"
+    touch "src/config.rs"
+    File.WriteAllText ("src/lib.rs",$"pub mod {app};\n")
+    touch $"src/{app}.rs"
+    let main = """
+fn main() {
+    let argv: Vec<String> = std::env::args().collect();
+    let _argc = argv.len();
+    arg(0, &argv[0]);
+    for (i, argv) in argv.iter().enumerate().skip(1) {
+        arg(i, argv);
+    }
+}
+"""
+    let arg = """fn arg(argc: usize, argv: &str) {
+    eprintln!("argv[{argc}] = {argv:?}");
+}
+"""
+    File.WriteAllText ("src/main.rs",$"mod config;\nmod {app};\n{main}\n{arg}")
 
-let workspace name =
-    mkdir name ; mkdir $"{name}/src"
-    let descr = match name with
-                | "config" -> "shared configuration"
-                | "vm" -> "virtual machine"
-                | "server" -> "local-host backend"
-                | "firmware" -> "MCU firmware"
-                | _ -> ""
-    let libin = match name with
-                | "server" -> rsbin name
-                | _ -> rslib name
-    let deps = match name with 
-                | "config" -> "const_format = \"0.2\"\n"
-                | _ -> "config = {path=\"../config\"}\n"
-    File.WriteAllText ($"{name}/src/{name}.rs",$"//! {descr}\n//\n")
-    File.WriteAllText ( $"{name}/Cargo.toml", $"\
-[package]
-name        =  \"{name}\"
-version     =  \"{VERSION}\"
-description =  \"{TITLE} /{descr}/\"
-authors     = [\"{AUTHOR} <{EMAIL}>\"]
-license     =  \"{LICENSE}\"
-repository  =  \"{GITHUB}\"
-edition     =  \"2024\"
-{libin}
-[dependencies]
-{deps}
-")
-workspace "config"
-
-let config: uint = //
-    workspace "config"
-let server: uint = //
-    workspace "server"
-let firmware: uint = //
-    workspace "firmware"
-let vm: uint = //
-    workspace "vm"
+let rserver: unit = //
+    File.WriteAllText ("src/server.rs",$"mod config;\nmod {app};\n")
 
 let rust: unit = //
+    rsmain
     cargo_config
-    mkdir "src"
-    touch "src/lib.rs"
-    File.WriteAllText ( "src/main.rs",
-        "fn main() { println!(\"Hello, world!\"); }\n")
     File.WriteAllText ( "Cargo.toml", $"\
 [package]
 name        =  \"{app}\"
@@ -318,25 +314,47 @@ license     =  \"{LICENSE}\"
 repository  =  \"{GITHUB}\"
 edition     =  \"2024\"
 
-[workspace]
-members  = [\"config\",\"server\",\"firmware\",\"vm\"]
-resolver = \"2\"
+[[bin]]
+name = \"server\"
+path = \"src/server.rs\"
+
+[[bin]]
+name = \"main\"
+path = \"src/main.rs\"
+
+[lib]
+name        =  \"lib{app}\"
+path        =  \"src/lib.rs\"
+crate-type  = [\"cdylib\"]
 
 [dependencies]
 const_format = \"0.2\"
+nom          = \"8.0\"
 
 [target.'cfg(all(target_os = \"linux\"))'.dependencies]
-libc = \"0.2\"
+libc    = \"0.2\"
+memmap2 = \"0.9\"
+sdl2    = {version = \"0.38\", features = [\"ttf\",\"image\"], optional = true}
 
 [target.'cfg(all(target_arch = \"arm\", target_os = \"none\"))'.dependencies]
-cortex-m = \"0.7\"
-cortex-m-rt = \"0.7\"
+cortex-m          = \"0.7\"
+cortex-m-rt       = \"0.7\"
 panic-semihosting = \"0.6\"
+
+[features]
+
+# hw
+pc              = [\"i5\"]
+# cpu
+i5              = [\"x86_64\"]
+# arch
+x86_64          = [\"linux\"]
+# os
+linux           = []
+# gui variant
+sdl             = [\"dep:sdl2\"]
 ")
-    config
-    server
-    firmware
-    vm
+    meld "Cargo.toml"
 
 let html:unit = //
     mkdir "static"
@@ -346,7 +364,6 @@ let html:unit = //
     touch "static/index.html"
     touch "static/css.css"
     touch "static/js.js"
-    touch $"src/{app}.ts"
 
 let src:unit = //
     cpp
@@ -452,6 +469,7 @@ let vscode:unit = //
     for j in jsons do
         File.WriteAllText($".vscode/{j}.json","{\n}\n")
     settings ; tasks
+    meld ".vscode"
 
 let settings:unit = //
     File.WriteAllText ( ".vscode/settings.json","""{
@@ -464,9 +482,9 @@ let settings:unit = //
     },
     "files.associations": {
         "*.mk": "makefile", "*.make": "makefile",
-        "*.s": "arm", "*.s.fix": "arm", "*.S": "arm",
         "*.ld": "linkerscript", "*.ld.fix": "linkerscript",
         "*.ioc": "properties", "*.ocd": "properties",
+        "*.s": "arm", "*.s.fix": "arm", "*.S": "arm",
         "*.kernel": "properties", "*.config": "properties",
         "*.service": "systemd-unit-file",
         "requirements.*": "properties",
@@ -482,11 +500,13 @@ let settings:unit = //
     "editor.detectIndentation": false,
     "editor.rulers": [80],
     "editor.lineNumbers": "on",
-    "editor.formatOnSave":  false,
+    "editor.formatOnSave": false,
     "workbench.tree.indent": 24,
     "editor.fontSize": 14,
     "explorer.autoReveal": false,
     "terminal.integrated.copyOnSelection": true,
+    "files.autoSave": "afterDelay",
+    "files.autoSaveDelay": 2222,
     // "git.enabled": false,
 }
 """)
@@ -528,7 +548,7 @@ let tasks:unit = //
 }
 """)
 
-let MELD = "meld .vscode ~/em/.vscode"
+meld ".vscode"
 
 let dirs:unit = //
     bin
@@ -540,12 +560,12 @@ let dirs:unit = //
 
 let mk: unit = //
     mkdir "mk"
-    let makes = ["var";"version";"dir";"cross";"tool";"src";"all";"format";"rule";"doc";"rust";"python";"ts";"gz";"install";"merge";"ai"]
+    let makes = ["var";"version";"dir";"cross";"tool";"src";"all";"format";"rule";"doc";"rust";"python";"ts";"gz";"ref";"install";"merge";"ai"]
     for m in makes do
         touch $"mk/{m}.mk"
     File.WriteAllText("Makefile",
         makes |> List.map (fun m -> $"include mk/{m}.mk") |> NewLines)
-    let MK = $"meld mk ~/em/mk"
+    meld "mk"
 
 let cmake: unit = //
     touch "CMakeLists.txt"
@@ -559,7 +579,7 @@ let cmake: unit = //
         touch $"cmake/{cm}.cmake"
     let TXT = "cp ~/em/CMakeLists.txt CMakeLists.txt"
     let PRESET = "meld CMakePresets.json ~/em/CMakePresets.json"
-    let CMK = "meld cmake ~/em/cmake"
+    meld "cmake"
 
 let apt:unit = //
     File.WriteAllText ("apt.Debian","""git make curl
@@ -602,9 +622,9 @@ let prettierrc:unit = //
 
 let editorconfig:unit = //
     File.WriteAllText (".editorconfig","""# fantomas config
-indent_size = 4
-max_line_length = 80
-end_of_line = lf
+indent_size          = 4
+max_line_length      = 80
+end_of_line          = lf
 insert_final_newline = true
 """)
 
@@ -674,6 +694,6 @@ let package:unit = //
     \"license\": \"{LICENSE}\"
 }}
 ")
-    // npm i -g deno typescript
+    spawn "npm i -g deno typescript"
 
-COMMIT
+spawn COMMIT
