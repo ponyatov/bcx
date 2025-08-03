@@ -394,7 +394,7 @@ let hw:unit = //
         // ("esp8266","lx106"); ("esp32","lx106");
         ] do
             mkdir $"hw/{hw}"
-            File.WriteAllText ($"hw/{hw}/{hw}.mk",$"CPU = {cpu}")
+            File.WriteAllText ($"hw/{hw}/{hw}.mk",$"CPU = {cpu}\n")
             touch $"hw/{hw}/{hw}.cmake"
             mkdir $"hw/{hw}/inc"
             mkdir $"hw/{hw}/src"
@@ -412,7 +412,7 @@ let cpu:unit = //
         // ("lx106","xtensa");
         ] do
             mkdir $"cpu/{cpu}"
-            File.WriteAllText ($"cpu/{cpu}/{cpu}.mk",$"ARCH = {arch}")
+            File.WriteAllText ($"cpu/{cpu}/{cpu}.mk",$"ARCH = {arch}\n")
             touch $"cpu/{cpu}/{cpu}.cmake"
             mkdir $"cpu/{cpu}/inc"
             mkdir $"cpu/{cpu}/src"
@@ -560,7 +560,7 @@ let dirs:unit = //
 
 let mk: unit = //
     mkdir "mk"
-    let makes = ["var";"version";"dir";"cross";"tool";"src";"all";"format";"rule";"doc";"rust";"python";"ts";"gz";"ref";"install";"merge";"ai"]
+    let makes = ["var";"version";"dir";"cross";"tool";"src";"all";"format";"rule";"doc";"rust";"python";"gz";"ref";"install";"merge";"ai"]
     for m in makes do
         touch $"mk/{m}.mk"
     File.WriteAllText("Makefile",

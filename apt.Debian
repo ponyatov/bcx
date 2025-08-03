@@ -2,3 +2,4 @@ git make curl
 code meld doxygen clang-format
 g++ cmake gdb gdb-multiarch
 flex bison libreadline-dev
+libsdl2-dev libsdl2-ttf-dev libsdl2-image-dev
