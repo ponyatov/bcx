@@ -41,7 +41,7 @@ typedef int32_t cell;   ///< single integer (32-bit for MCU)
 /// @defgroup memory memory
 /// @ingroup vm
 /// @{
-extern __attribute__((section(".bcx")))
+extern __attribute__((section(".data.bcx")))
 byte M[Msz];     ///< main memory, @ref byte s
 extern addr Cp;  ///< compiler pointer
 extern addr Ip;  ///< instruction pointer
