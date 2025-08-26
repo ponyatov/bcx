@@ -72,3 +72,29 @@ foreach(RAGEL_FILE ${R})
         ARGS                -C -G2 -o ${RAGEL_CPP} ${RAGEL_FILE}
     )
 endforeach()
+
+find_program(BINPAC_EXECUTABLE binpac)
+
+file(GLOB P
+    RELATIVE ${CMAKE_SOURCE_DIR}
+    src/*.binpac
+    lib/src/*.binpac lib/*/src/*.binpac
+)
+
+if(BINPAC_EXECUTABLE)
+    foreach(BINPAC_FILE ${P})
+        string(REGEX REPLACE ".+\/(.+)\.binpac$" "${CMAKE_BINARY_DIR}/\\1.binpac.cc"
+            BINPAC_CC           ${BINPAC_FILE})
+        string(REGEX REPLACE ".+\/(.+)\.binpac$" "${CMAKE_BINARY_DIR}/\\1.binpac.h"
+            BINPAC_H            ${BINPAC_FILE})
+        list(APPEND CP          ${BINPAC_CC})
+        list(APPEND HP          ${BINPAC_H})
+        add_custom_command(
+            OUTPUT              ${BINPAC_CC} ${BINPAC_H}
+            DEPENDS             ${BINPAC_FILE}
+            WORKING_DIRECTORY   ${CMAKE_SOURCE_DIR}
+            COMMAND             ${BINPAC_EXECUTABLE}
+            ARGS                ${BINPAC_FILE}
+        )
+    endforeach()
+endif()
