@@ -1,0 +1,3 @@
+#include "cli.hpp"
+
+cell dec(char *val) { return atoi(val); }

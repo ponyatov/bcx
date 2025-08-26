@@ -1,0 +1,3 @@
+#include "os.hpp"
+
+float num(char *val) { return atof(val); }

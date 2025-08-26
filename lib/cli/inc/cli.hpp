@@ -14,7 +14,6 @@
 /// @defgroup parser parser
 /// @ingroup cli
 /// @{
-
 extern int yylex();   ///< lexer (`flex`)
 extern int yylineno;  ///< current line
 extern char *yyfile;  ///< current file name
@@ -34,6 +33,15 @@ extern void yyerror(const char *msg);  ///< syntax error callback
         yylval.t = new C(yytext); \
         return X;                 \
     }
+
+/// @name number parsers
+/// @{
+extern float num(char *val);  ///< @returns float
+extern cell dec(char *val);   ///< @returns decimal
+extern cell hex(char *val);   ///< @returns hexadecimal
+extern cell oct(char *val);   ///< @returns octal
+extern cell bin(char *val);   ///< @returns binary
+/// @}
 /// @}
 
 #endif  // _CLI_HPP_
