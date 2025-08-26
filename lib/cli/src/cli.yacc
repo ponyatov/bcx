@@ -9,8 +9,8 @@
 %%
 syntax: | syntax ex
 
-ex: INT     { fprintf(stderr,"int:%i\n",$1); }
-  | HEX     { fprintf(stderr,"hex:%f\n",$1); }
-  | OCT     { fprintf(stderr,"oct:%f\n",$1); }
-  | BIN     { fprintf(stderr,"bin:%f\n",$1); }
-  | NUM     { fprintf(stderr,"num:%f\n",$1); }
+ex: NUM     { fprintf(stderr,"num:%e\n",$1); }
+  | INT     { fprintf(stderr,"num:%i\n",$1); }
+  | HEX     { fprintf(stderr,"hex:%x\n",$1); }
+  | OCT     { fprintf(stderr,"oct:%o\n",$1); }
+  | BIN     { fprintf(stderr,"bin:%b\n",$1); }

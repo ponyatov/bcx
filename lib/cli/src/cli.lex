@@ -24,7 +24,7 @@ n [0-9]
 {s}?{n}+\.{n}+          {yylval.f = num(yytext); return NUM;}   // float
 {s}?{n}+                {yylval.n = dec(yytext); return INT;}   // integer
 0x[0-9a-fA-F]+          {yylval.n = hex(yytext); return HEX;}   // hexadecimal
-0o[0-7]+                {yylval.n = hex(yytext); return OCT;}   // octal
-0b[01]+                 {yylval.n = hex(yytext); return BIN;}   // binary
+0o[0-7]+                {yylval.n = oct(yytext); return OCT;}   // octal
+0b[01]+                 {yylval.n = bin(yytext); return BIN;}   // binary
 
 .           {yyerror("");}                          // any undetected char
