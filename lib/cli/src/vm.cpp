@@ -1,6 +1,4 @@
 #include "vm.hpp"
-
-#include "libc.hpp"
 #include "os.hpp"
 
 byte M[Msz];
@@ -14,7 +12,7 @@ byte Dp = 0;
 bool trace = true;
 
 void nop() {
-    if (trace) fprintf(stderr, "nop");
+    if (trace) fprintf(stderr, "nop\n");
 }
 
 void halt() {
@@ -23,31 +21,31 @@ void halt() {
 }
 
 void dump() {
-    if (trace) fprintf(stderr, "dump");
+    if (trace) fprintf(stderr, "dump\n");
     fprintf(stderr, "\n[ ");
     for (uint i = 0; i < Dp; i++) fprintf(stderr, "%i ", D[i]);
     fprintf(stderr, "\t]\n");
 }
 
 void dot() {
-    if (trace) fprintf(stderr, "dot");
+    if (trace) fprintf(stderr, "dot\n");
     Dp = 0;
 }
 
 void dup() {
-    if (trace) fprintf(stderr, "dup");
+    if (trace) fprintf(stderr, "dup\n");
     assert(Dp >= 1);
     push(top());
 }
 
 void drop() {
-    if (trace) fprintf(stderr, "drop");
+    if (trace) fprintf(stderr, "drop\n");
     assert(Dp >= 1);
     pop();
 }
 
 void swap() {
-    if (trace) fprintf(stderr, "swap");
+    if (trace) fprintf(stderr, "swap\n");
     assert(Dp >= 2);
     cell b = pop();
     cell a = pop();
@@ -56,7 +54,7 @@ void swap() {
 }
 
 void over() {
-    if (trace) fprintf(stderr, "over");
+    if (trace) fprintf(stderr, "over\n");
     assert(Dp >= 2);
     cell b = pop();
     cell a = pop();
@@ -66,7 +64,7 @@ void over() {
 }
 
 void rot() {
-    if (trace) fprintf(stderr, "rot");
+    if (trace) fprintf(stderr, "rot\n");
     assert(Dp >= 3);
     cell c = pop();
     cell b = pop();
@@ -77,7 +75,7 @@ void rot() {
 }
 
 void mrot() {
-    if (trace) fprintf(stderr, "mrot");
+    if (trace) fprintf(stderr, "mrot\n");
     assert(Dp >= 3);
     cell c = pop();
     cell b = pop();
@@ -88,7 +86,7 @@ void mrot() {
 }
 
 void pick() {
-    if (trace) fprintf(stderr, "pick");
+    if (trace) fprintf(stderr, "pick\n");
     assert(Dp >= 2);
     uint8_t i = pop();
     assert(i >= 0 && i < Dp);
@@ -96,7 +94,7 @@ void pick() {
 }
 
 void depth() {
-    if (trace) fprintf(stderr, "depth");
+    if (trace) fprintf(stderr, "depth\n");
     push(Dp);
 }
 
@@ -116,7 +114,7 @@ cell top() {
 }
 
 void init() {
-    if (trace) fprintf(stderr, "init");
+    if (trace) fprintf(stderr, "init\n");
     bcHeader* header = (bcHeader*)M;
     char bcx[4] = "bcx";
     strcpy(header->magic, bcx);
@@ -138,7 +136,7 @@ void save() {
     sync_();
     if (trace) fprintf(stderr, "save\n");
     FILE* bc;
-    assert(bc = fopen("tmp/bc.bc", "wb"));
-    fwrite(M, 1, Msz, bc);
+    assert(bc = fopen(("tmp/" APP ".bcx"), "wb"));
+    fwrite(M, 1, Cp, bc);
     fclose(bc);
 }

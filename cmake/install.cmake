@@ -10,7 +10,8 @@ file(CREATE_LINK ${BIN_OUTPUT_NAME}${CMAKE_EXECUTABLE_SUFFIX}
 add_custom_command(
   TARGET ${CMAKE_PROJECT_NAME}
   POST_BUILD
+  WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
   COMMAND $<TARGET_FILE:${CMAKE_PROJECT_NAME}> lib/${CMAKE_PROJECT_NAME}.ini
-  COMMAND objdump -C tmp/bc.bc > tmp/bc.bc.hex
+  COMMAND hexdump -C tmp/${CMAKE_PROJECT_NAME}.bcx > tmp/${CMAKE_PROJECT_NAME}.bcx.hex
   COMMENT "build preloaded bytecode"
 )
