@@ -58,7 +58,7 @@ extern byte Dp;      ///< @ref D top pointer
 /// hybernation, @ref save bytecode file dump, or cross-node migration
 struct bcHeader {
     /// signature
-    const char magic[4] = "bcx";
+    char magic[4] = "bcx";
     /// max @ref M size, bytes
     uint32_t max = Msz;
     /// @ref Cp initial value
@@ -66,6 +66,8 @@ struct bcHeader {
     /// @brief @ref Ip initial value (entry point)
     /// @details
     addr Ip = 0;
+    /// @brief max @ref R size (check <= @ref Rp)
+    addr Rp = 0;
     /// @brief LFA of last defined word in FORTH vocabulary
     /// @details =0 in case of no vocabulary compiled
     addr latest = 0;

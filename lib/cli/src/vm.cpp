@@ -116,22 +116,25 @@ cell top() {
 }
 
 void init() {
-    const char signature = "bcx";
-    memcpy(M, signature, sizeof(bcHeader::magic));
+    if (trace) fprintf(stderr, "init");
+    bcHeader* header = (bcHeader*)M;
+    char bcx[4] = "bcx";
+    strcpy(header->magic, bcx);
     sync_();
 }
 
 void sync_() {
-    if (trace) fprintf(stderr, "sync");
+    if (trace) fprintf(stderr, "sync\n");
     bcHeader* header = (bcHeader*)M;
+    header->max = Msz;
     header->Cp = Cp;
     header->Ip = Ip;
     header->latest = 0;  // no vocabulary
 }
 
 void save() {
-    if (trace) fprintf(stderr, "save");
     sync_();
+    if (trace) fprintf(stderr, "save\n");
     FILE* bc;
     assert(bc = fopen("tmp/bc.bc", "wb"));
     fwrite(M, 1, Msz, bc);
