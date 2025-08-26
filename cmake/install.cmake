@@ -13,5 +13,7 @@ add_custom_command(
   WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
   COMMAND $<TARGET_FILE:${CMAKE_PROJECT_NAME}> lib/${CMAKE_PROJECT_NAME}.ini
   COMMAND hexdump -C tmp/${CMAKE_PROJECT_NAME}.bcx > tmp/${CMAKE_PROJECT_NAME}.bcx.hex
+  COMMAND objcopy -I binary -O elf64-x86-64 -B i386:x86-64 --rename-section .data=.bcx,alloc,load,data,contents tmp/${CMAKE_PROJECT_NAME}.bcx tmp/${CMAKE_PROJECT_NAME}.bcx.o
+  COMMAND objdump -x tmp/${CMAKE_PROJECT_NAME}.bcx.o > tmp/${CMAKE_PROJECT_NAME}.bcx.o.dump
   COMMENT "build preloaded bytecode"
 )
