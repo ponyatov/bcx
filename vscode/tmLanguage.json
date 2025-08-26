@@ -123,6 +123,6 @@
         "number": {
             "name": "constant.numeric.bcx",
             "match": "[+-]?(0x[0-9A-Fa-f]+|0b[01]+|[0-9]+)([eE][+-]?[0-9]+)?"
-        }.
+        }
     }
 }
