@@ -67,7 +67,9 @@ struct bcHeader {
     /// @details
     addr Ip = 0;
     /// @brief max @ref R size (check <= @ref Rp)
-    addr Rp = 0;
+    addr Rmax = 0;
+    /// @brief max @ref D size (check <= @ref Dp)
+    addr Dmax = 0;
     /// @brief LFA of last defined word in FORTH vocabulary
     /// @details =0 in case of no vocabulary compiled
     addr latest = 0;

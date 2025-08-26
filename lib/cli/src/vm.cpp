@@ -129,6 +129,8 @@ void sync_() {
     header->max = Msz;
     header->Cp = Cp;
     header->Ip = Ip;
+    header->Rmax = Rsz;
+    header->Dmax = Dsz;
     header->latest = 0;  // no vocabulary
 }
 
