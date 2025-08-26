@@ -12,12 +12,16 @@ n [0-9]
 %x STACK
 
 %%
-"#!"[^\n]+  {}                  // shebang
-"//"[^\n]+  {}                  // line comment
-[ \t\r\n]+  {}                  // drop spaces
+"#!"[^\n]+  {}                                      // shebang
+"//"[^\n]+  {}                                      // line comment
+[ \t\r\n]+  {}                                      // drop spaces
 
-"("         {BEGIN(STACK  );}   // start stack notation
-<STACK>")"  {BEGIN(INITIAL);}   // end stack notation
-<STACK>.    {}                  // ignore any chars
+"("         {BEGIN(STACK  );}                       // start stack notation
+<STACK>")"  {BEGIN(INITIAL);}                       // end stack notation
+<STACK>.    {}                                      // ignore any chars
 
-.           {yyerror("");}      // any undetected char
+{s}?{n}+[eE]{s}?{n}+    {yylval.f = atof(yytext); return NUM;}  // float
+{s}?{n}+\.{n}+          {yylval.f = atof(yytext); return NUM;}  // float
+{s}?{n}+                {yylval.n = atoi(yytext); return INT;}  // integer
+
+.           {yyerror("");}                          // any undetected char
