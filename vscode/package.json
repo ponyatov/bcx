@@ -1,0 +1,45 @@
+{
+    "name"       : "bcx",
+    "displayName": "bcx",
+    "description": "Byte Code eXecution engine",
+    "version"    : "0.0.1",
+    "icon"       : "logo.png",
+    "publisher"  : "dponyatov",
+    "license"    : "MIT",
+    "engines": {
+        "vscode": "^1.90.0"
+    },
+    "categories": [
+        "Programming Languages", "Debuggers"
+    ],
+    "keywords": [
+        "bytecode", "FORTH", "CLI", "REPL", "script", "interpreter"
+    ],
+    "bugs": {
+        "url": "https://github.com/ponyatov/bcx/issue"
+    },
+    "homepage": "https://github.com/ponyatov/bcx",
+    "repository": {
+        "type": "git",
+        "url" : "https://github.com/ponyatov/bcx/tree/dponyatov/vscode"
+    },
+    "activationEvents": [
+        "workspaceContains:lib/*.ini",
+        "workspaceContains:lib/*.f"
+    ],
+    "extensionDependencies": [
+    ],
+    "main": "extension.js",
+    "contributes": {
+        "languages": [{
+            "id"           :  "bcx",
+            "extensions"   : [".ini", ".f"],
+            "configuration":  "languageConfiguration.json"
+        }],
+        "grammars": [{
+            "language" : "bcx",
+            "scopeName": "source.bcx",
+            "path"     : "tmLanguage.json"
+        }]
+    }
+}
