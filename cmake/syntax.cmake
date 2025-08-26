@@ -75,14 +75,14 @@ endforeach()
 
 find_program(BINPAC_EXECUTABLE binpac)
 
-file(GLOB P
+file(GLOB B
     RELATIVE ${CMAKE_SOURCE_DIR}
     src/*.binpac
     lib/src/*.binpac lib/*/src/*.binpac
 )
 
 if(BINPAC_EXECUTABLE)
-    foreach(BINPAC_FILE ${P})
+    foreach(BINPAC_FILE ${B})
         string(REGEX REPLACE ".+\/(.+)\.binpac$" "${CMAKE_BINARY_DIR}/\\1.binpac.cc"
             BINPAC_CC           ${BINPAC_FILE})
         string(REGEX REPLACE ".+\/(.+)\.binpac$" "${CMAKE_BINARY_DIR}/\\1.binpac.h"
