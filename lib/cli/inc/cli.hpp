@@ -37,10 +37,10 @@ extern void yyerror(const char *msg);  ///< syntax error callback
 /// @name number parsers
 /// @{
 extern float num(char *val);  ///< @returns float
-extern cell dec(char *val);   ///< @returns decimal
-extern cell hex(char *val);   ///< @returns hexadecimal
-extern cell oct(char *val);   ///< @returns octal
-extern cell bin(char *val);   ///< @returns binary
+extern   int dec(char *val);  ///< @returns decimal
+extern   int hex(char *val);  ///< @returns hexadecimal
+extern   int oct(char *val);  ///< @returns octal
+extern   int bin(char *val);  ///< @returns binary
 /// @}
 /// @}
 

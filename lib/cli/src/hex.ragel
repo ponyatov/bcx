@@ -14,14 +14,14 @@ static char* te  = nullptr;  ///< token end
 static int  resn =    0;     ///< result number
 static bool sign = true;     ///< +sign flag
 
-static cell hex(char* p, char* pe) {
+static int hex(char* p, char* pe) {
     eof = pe; resn = 0; sign = true;
     %%write init;
     %%write exec;
     if (sign) return +resn; else return -resn;
 }
 
-cell hex(char *s) { return hex(s,s+strlen(s)); }
+int hex(char *s) { return hex(s,s+strlen(s)); }
 
 %%{
     hex := |*

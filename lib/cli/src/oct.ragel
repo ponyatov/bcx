@@ -21,7 +21,7 @@ static int oct(char* p, char* pe) {
     if (sign) return +resn; else return -resn;
 }
 
-cell oct(char *s) { return oct(s,s+strlen(s)); }
+int oct(char *s) { return oct(s,s+strlen(s)); }
 
 %%{
     oct := |*
