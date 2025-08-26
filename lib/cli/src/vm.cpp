@@ -36,30 +36,56 @@ void dot() {
 
 void dup() {
     if (trace) fprintf(stderr, "dup");
+    push(top());
 }
 
 void drop() {
     if (trace) fprintf(stderr, "drop");
+    pop();
 }
 
 void swap() {
     if (trace) fprintf(stderr, "swap");
+    cell b = pop();
+    cell a = pop();
+    push(b);
+    push(a);
 }
 
 void over() {
     if (trace) fprintf(stderr, "over");
+    cell b = pop();
+    cell a = pop();
+    push(a);
+    push(b);
+    push(a);
 }
 
 void rot() {
     if (trace) fprintf(stderr, "rot");
+    cell c = pop();
+    cell b = pop();
+    cell a = pop();
+    push(b);
+    push(c);
+    push(a);
 }
 
 void mrot() {
-    if (trace) fprintf(stderr, "dup");
+    if (trace) fprintf(stderr, "mrot");
+    cell c = pop();
+    cell b = pop();
+    cell a = pop();
+    push(c);
+    push(a);
+    push(b);
 }
 
 void pick() {
     if (trace) fprintf(stderr, "pick");
+    assert(Dp >= 2);
+    cell i = pop();
+    push(D[Dp - 1 - i]);
 }
 
 void depth() {

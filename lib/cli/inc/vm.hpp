@@ -68,14 +68,14 @@ enum class Op {
     lits = 0x06,  ///< `06 ( -- s )`@ref lits
     litb = 0x07,  ///< `07 ( -- b )`@ref litb
     dot = 0x10,   ///< `10 ( -- )`
-    dup,          ///< `( -- )`
-    drop,         ///< `( -- )`
-    swap,         ///< `( -- )`
-    over,         ///< `( -- )`
-    rot,          ///< `( -- )`
-    mrot,         ///< `( -- )`
-    pick,         ///< `( -- )`
-    depth,        ///< `( -- )`
+    dup,          ///< `( a -- a a )`
+    drop,         ///< `( a b -- a )`
+    swap,         ///< `( a b -- b a )`
+    over,         ///< `( a b -- a b a )`
+    rot,          ///< `( a b c -- b c a )`
+    mrot,         ///< `( a b c -- c a b )`
+    pick,         ///< `( ... i -- ... D[i] )`
+    depth,        ///< `( -- Dp )`
     dump = 0x70,  ///< `70 ( -- )`
 };
 
