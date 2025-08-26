@@ -4,8 +4,8 @@
 #include "os.hpp"
 
 byte M[Msz];
-addr Cp = 0;
-addr Ip = 0;
+addr Cp = sizeof(bcHeader);
+addr Ip = 0xFFFF;  // uninitialized fake value breaks if not configured
 addr R[Rsz];
 byte Rp = 0;
 cell D[Dsz];
@@ -113,4 +113,27 @@ cell pop() {
 cell top() {
     assert(Dp > 0);
     return D[Dp - 1];
+}
+
+void init() {
+    const char signature = "bcx";
+    memcpy(M, signature, sizeof(bcHeader::magic));
+    sync_();
+}
+
+void sync_() {
+    if (trace) fprintf(stderr, "sync");
+    bcHeader* header = (bcHeader*)M;
+    header->Cp = Cp;
+    header->Ip = Ip;
+    header->latest = 0;  // no vocabulary
+}
+
+void save() {
+    if (trace) fprintf(stderr, "save");
+    sync_();
+    FILE* bc;
+    assert(bc = fopen("tmp/bc.bc", "wb"));
+    fwrite(M, 1, Msz, bc);
+    fclose(bc);
 }

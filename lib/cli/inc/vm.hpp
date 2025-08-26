@@ -46,10 +46,30 @@ extern addr Cp;      ///< compiler pointer
 extern addr Ip;      ///< instruction pointer
 
 extern addr R[Rsz];  ///< return stack, @ref addr esses
-extern byte Rp;      /// @ref R pointer
+extern byte Rp;      ///< @ref R top pointer
 
 extern cell D[Dsz];  ///< data stack, @ref cell s
-extern byte Dp;      ///< @ref D pointer
+extern byte Dp;      ///< @ref D top pointer
+
+/// @brief @ref M / bytecode image header
+/// @details contains initial registers and memory allocations
+///
+/// actual registers values must be @ref sync_ ed into memory image before
+/// hybernation, @ref save bytecode file dump, or cross-node migration
+struct bcHeader {
+    /// signature
+    const char magic[4] = "bcx";
+    /// max @ref M size, bytes
+    uint32_t max = Msz;
+    /// @ref Cp initial value
+    addr Cp = 0;
+    /// @brief @ref Ip initial value (entry point)
+    /// @details
+    addr Ip = 0;
+    /// @brief LFA of last defined word in FORTH vocabulary
+    /// @details =0 in case of no vocabulary compiled
+    addr latest = 0;
+};
 /// @}
 
 /// @defgroup command command
@@ -77,10 +97,18 @@ enum class Op {
     pick,         ///< `( ... i -- ... D[i] )`
     depth,        ///< `( -- Dp )`
     dump = 0x70,  ///< `70 ( -- )`
+    init = 0xF0,  ///< `F0 ( -- )` @ref init
+    sync,         ///< `F0 ( -- )` @ref sync_
+    save          ///< `F1 ( -- )` @ref save
 };
 
-extern void nop();   ///< `( -- )` do nothing (empty command)
-extern void halt();  ///< `( -- )` stop system
+/// @name system control
+
+extern void nop();    ///< `( -- )` do nothing (empty command)
+extern void halt();   ///< `( -- )` stop system
+extern void init();   ///< `( -- )` init bytecode engine
+extern void sync_();  ///< `( -- )` sync registers into @ref bcHeader
+extern void save();   ///< `( -- )` dump @ref M bytecode dump into `tmp/dump.bc`
 
 /// @name flow control
 
