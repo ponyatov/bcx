@@ -36,16 +36,19 @@ void dot() {
 
 void dup() {
     if (trace) fprintf(stderr, "dup");
+    assert(Dp >= 1);
     push(top());
 }
 
 void drop() {
     if (trace) fprintf(stderr, "drop");
+    assert(Dp >= 1);
     pop();
 }
 
 void swap() {
     if (trace) fprintf(stderr, "swap");
+    assert(Dp >= 2);
     cell b = pop();
     cell a = pop();
     push(b);
@@ -54,6 +57,7 @@ void swap() {
 
 void over() {
     if (trace) fprintf(stderr, "over");
+    assert(Dp >= 2);
     cell b = pop();
     cell a = pop();
     push(a);
@@ -63,6 +67,7 @@ void over() {
 
 void rot() {
     if (trace) fprintf(stderr, "rot");
+    assert(Dp >= 3);
     cell c = pop();
     cell b = pop();
     cell a = pop();
@@ -73,6 +78,7 @@ void rot() {
 
 void mrot() {
     if (trace) fprintf(stderr, "mrot");
+    assert(Dp >= 3);
     cell c = pop();
     cell b = pop();
     cell a = pop();
@@ -84,7 +90,8 @@ void mrot() {
 void pick() {
     if (trace) fprintf(stderr, "pick");
     assert(Dp >= 2);
-    cell i = pop();
+    uint8_t i = pop();
+    assert(i >= 0 && i < Dp);
     push(D[Dp - 1 - i]);
 }
 
