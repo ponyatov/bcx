@@ -92,9 +92,9 @@ if(BINPAC_EXECUTABLE)
         add_custom_command(
             OUTPUT              ${BINPAC_CC} ${BINPAC_H}
             DEPENDS             ${BINPAC_FILE}
-            WORKING_DIRECTORY   ${CMAKE_SOURCE_DIR}
+            WORKING_DIRECTORY   ${CMAKE_BINARY_DIR}
             COMMAND             ${BINPAC_EXECUTABLE}
-            ARGS                ${BINPAC_FILE}
+            ARGS                ${CMAKE_SOURCE_DIR}/${BINPAC_FILE}
         )
     endforeach()
 endif()
