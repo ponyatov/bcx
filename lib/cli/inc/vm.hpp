@@ -27,8 +27,10 @@
 /// Erlang-like isolated processes each of them should be very compact and
 /// release all its dynamic memory in a single @ref vm operation.
 ///
-/// For @ref D data stack the 32-bit signed integer assumed enought for e real
-/// use cases even on a large x86_64 machines.
+/// For @ref D data stack the 32-bit signed integer assumed enought for a real
+/// use cases even on a large x86_64 machines. Here we agree with early Java ME
+/// design considerations, but cutted down to Cortex-M0 devices (Java or eJS are
+/// ugly fat even on Cortex-M4).
 /// @{
 #include <stdint.h>
 typedef uint8_t byte;   ///< single byte
