@@ -4,8 +4,7 @@
 #ifndef _OS_HPP_
 #define _OS_HPP_
 
-#include <stdio.h>
-#include <stdlib.h>
+#include "libc.hpp"
 
 #ifdef LINUX
 #include "linux.hpp"

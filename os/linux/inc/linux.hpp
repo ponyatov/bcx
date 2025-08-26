@@ -5,10 +5,10 @@
 #ifndef _LINUX_HPP_
 #define _LINUX_HPP_
 
-#include <unistd.h>
 #include <fcntl.h>
 #include <sys/mman.h>
 #include <sys/stat.h>
+#include <unistd.h>
 
 /// @defgroup main main
 /// @ingroup core
@@ -25,6 +25,8 @@ extern int main(int argc, char *argv[]);
 /// @param[in] argc argument index (0 = program/firmware name)
 /// @param[in] argv argument string value
 extern void arg(int argc, char *argv);
+
+/// @}
 
 #endif  // _LINUX_HPP_
 /// @}
