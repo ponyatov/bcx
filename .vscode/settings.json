@@ -12,7 +12,6 @@
         "*.s": "arm", "*.s.fix": "arm", "*.S": "arm",
         "*.kernel": "properties", "*.config": "properties",
         "*.service": "systemd-unit-file",
-        "*.binpac": "binpac",
         "*.ini": "bcx", "*.f": "bcx"
     },
 

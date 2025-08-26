@@ -41,9 +41,10 @@ typedef int32_t cell;   ///< single integer (32-bit for MCU)
 /// @defgroup memory memory
 /// @ingroup vm
 /// @{
-extern byte M[Msz];  ///< main memory, @ref byte s
-extern addr Cp;      ///< compiler pointer
-extern addr Ip;      ///< instruction pointer
+extern __attribute__((section(".bcx")))
+byte M[Msz];     ///< main memory, @ref byte s
+extern addr Cp;  ///< compiler pointer
+extern addr Ip;  ///< instruction pointer
 
 extern addr R[Rsz];  ///< return stack, @ref addr esses
 extern byte Rp;      ///< @ref R top pointer
@@ -59,17 +60,22 @@ extern byte Dp;      ///< @ref D top pointer
 struct bcHeader {
     /// signature
     char magic[4] = "bcx";
+
     /// max @ref M size, bytes
     uint32_t max = Msz;
-    /// @ref Cp initial value
+    /// @ref Cp initial value (heap bottom)
     addr Cp = 0;
     /// @brief @ref Ip initial value (entry point)
     /// @details
+    /// - set on latest defined `:label`
+    /// - or can be changed with `.entry label` directive
     addr Ip = 0;
+
     /// @brief max @ref R size (check <= @ref Rp)
     addr Rmax = 0;
     /// @brief max @ref D size (check <= @ref Dp)
     addr Dmax = 0;
+
     /// @brief LFA of last defined word in FORTH vocabulary
     /// @details =0 in case of no vocabulary compiled
     addr latest = 0;
