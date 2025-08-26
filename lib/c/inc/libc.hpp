@@ -1,5 +1,5 @@
 /// @defgroup libc libc
-/// @ingroup os
+/// @ingroup lib
 
 #ifndef _LIBC_HPP_
 #define _LIBC_HPP_

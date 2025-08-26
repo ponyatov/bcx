@@ -1,6 +1,5 @@
 /// @defgroup linux linux
 /// @ingroup os
-/// @{
 
 #ifndef _LINUX_HPP_
 #define _LINUX_HPP_
@@ -11,7 +10,7 @@
 #include <unistd.h>
 
 /// @defgroup main main
-/// @ingroup core
+/// @ingroup linux
 /// @{
 
 #ifdef POSIX
@@ -29,4 +28,3 @@ extern void arg(int argc, char *argv);
 /// @}
 
 #endif  // _LINUX_HPP_
-/// @}
