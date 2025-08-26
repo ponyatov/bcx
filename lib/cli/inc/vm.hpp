@@ -60,10 +60,57 @@ extern byte Dp;      ///< @ref D pointer
 enum class Op {
     nop = 0x00,   ///< `00 ( -- )` @ref nop
     halt = 0xFF,  ///< `0F ( -- )` @ref halt
+    jmp = 0x01,   ///< `01 ( -- )` @ref jmp
+    qjmp = 0x02,  ///< `02 ( -- )` @ref qjmp
+    call = 0x03,  ///< `03 (R: -- addr )` @ref call
+    ret = 0x04,   ///< `04 (R: -- )` @ref ret
+    lit = 0x05,   ///< `05 ( -- n )`@ref lit
+    lits = 0x06,  ///< `06 ( -- s )`@ref lits
+    litb = 0x07,  ///< `07 ( -- b )`@ref litb
+    dot = 0x10,   ///< `10 ( -- )`
+    dup,          ///< `( -- )`
+    drop,         ///< `( -- )`
+    swap,         ///< `( -- )`
+    over,         ///< `( -- )`
+    rot,          ///< `( -- )`
+    mrot,         ///< `( -- )`
+    pick,         ///< `( -- )`
+    depth,        ///< `( -- )`
+    dump = 0x70,  ///< `70 ( -- )`
 };
 
 extern void nop();   ///< `( -- )` do nothing (empty command)
 extern void halt();  ///< `( -- )` stop system
+
+/// @name flow control
+
+extern void jmp();   ///< `( -- )` unconditional jump
+extern void jz();    ///< `( bool -- )` jump if `false`
+extern void call();  ///< `( -- )`
+extern void ret();   ///< `( -- )`
+
+/// @name data stack literals
+extern void lit();   ///< `( -- )`
+extern void lits();  ///< `( -- )`
+extern void litb();  ///< `( -- )`
+
+/// @name data stack ops
+extern void dot();    ///< `( ... -- )` clean @ref D stack
+extern void dup();    ///< `( -- )`
+extern void drop();   ///< `( -- )`
+extern void swap();   ///< `( -- )`
+extern void over();   ///< `( -- )`
+extern void rot();    ///< `( -- )`
+extern void mrot();   ///< `( -- )`
+extern void pick();   ///< `( -- )`
+extern void depth();  ///< `( -- )`
+
+extern void push(cell n);  //< `( -- n )`
+extern cell pop();         //< `( n -- )`
+extern cell top();         //< `( n -- n )`
+
+/// @name debug
+extern void dump();  ///< `( -- )` dump @ref vm state
 /// @}
 
 extern bool trace;  ///< tracing mode flag
