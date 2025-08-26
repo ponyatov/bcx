@@ -26,9 +26,7 @@ int bin(char *s) { return bin(s,s+strlen(s)); }
 %%{
     bin := |*
         [_]   => {};
-        [0-9] => { resn = resn << 4 | (ts[0] - '0' + 0x0); };
-        [a-f] => { resn = resn << 4 | (ts[0] - 'a' + 0xA); };
-        [A-F] => { resn = resn << 4 | (ts[0] - 'A' + 0xA); };
+        [01]  => { resn = resn << 1 | (ts[0] - '0' + 0x0); };
         any   => { yyerror("bin:bin"); };
     *|;
 

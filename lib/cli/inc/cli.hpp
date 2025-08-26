@@ -14,20 +14,23 @@
 /// @defgroup parser parser
 /// @ingroup cli
 /// @{
-extern int yylex();   ///< lexer (`flex`)
-extern int yylineno;  ///< current line
-extern char *yyfile;  ///< current file name
+extern int yylex();                    ///< lexer (`flex`)
+extern int yylineno;                   ///< current line
+extern char *yyfile;                   ///< current file name
 #ifdef LEMON
-extern int yyin;  ///< current file handler
+extern int   yyin;                     ///< current file handler
 #else
-extern FILE *yyin;  ///< current file handler
-#endif                                 // LEMON
+extern FILE *yyin;                     ///< current file handler
+#endif // LEMON
 extern char *yytext;                   ///< token lexeme value
 extern int yyparse();                  ///< parser (`bison`)
 extern void yyerror(const char *msg);  ///< syntax error callback
 
 #include "cli.yacc.hpp"
 
+/// @brief construct token `(Class,ID)`
+/// @param[in] C class name: calls `C(char*)` constructor
+/// @param[in] X .yacc token identifier
 #define TOKEN(C, X)               \
     {                             \
         yylval.t = new C(yytext); \
