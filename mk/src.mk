@@ -35,3 +35,6 @@ S += $(wildcard lib/*.ini) $(wildcard lib/*.f)
 
 # Python
 P += $(wildcard src/*.py) $(wildcard scripts/*.py)
+
+# precompiled bytecode
+B += $(wildcard tmp/*.bcx)

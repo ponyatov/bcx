@@ -8,12 +8,10 @@ file(CREATE_LINK ${BIN_OUTPUT_NAME}${CMAKE_EXECUTABLE_SUFFIX}
     ${CMAKE_INSTALL_PREFIX}/${CMAKE_PROJECT_NAME} SYMBOLIC)
 
 add_custom_command(
-  TARGET ${CMAKE_PROJECT_NAME}
-  POST_BUILD
-  WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
-  COMMAND $<TARGET_FILE:${CMAKE_PROJECT_NAME}> lib/${CMAKE_PROJECT_NAME}.ini
-  COMMAND hexdump -C tmp/${CMAKE_PROJECT_NAME}.bcx > tmp/${CMAKE_PROJECT_NAME}.bcx.hex
-  COMMAND objcopy -I binary -O elf64-x86-64 -B i386:x86-64 --rename-section .data=.bcx,alloc,load,data,contents tmp/${CMAKE_PROJECT_NAME}.bcx tmp/${CMAKE_PROJECT_NAME}.bcx.o
-  COMMAND objdump -x tmp/${CMAKE_PROJECT_NAME}.bcx.o > tmp/${CMAKE_PROJECT_NAME}.bcx.o.dump
-  COMMENT "build preloaded bytecode"
+    TARGET ${CMAKE_PROJECT_NAME}
+    POST_BUILD
+    WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
+    COMMAND $<TARGET_FILE:${CMAKE_PROJECT_NAME}> lib/${CMAKE_PROJECT_NAME}.ini
+    COMMAND hexdump -C tmp/${CMAKE_PROJECT_NAME}.bcx > tmp/${CMAKE_PROJECT_NAME}.bcx.hex
+    COMMENT "build preloaded bytecode"
 )
