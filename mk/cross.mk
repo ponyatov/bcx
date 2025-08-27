@@ -1,4 +1,8 @@
 HW ?= pc
+# HW ?= qemu386
+# HW ?= iskra
+# HW ?= l496disco
+# HW ?= f429disco
 
 include   hw/$(HW)/$(HW).mk
 include  cpu/$(CPU)/$(CPU).mk

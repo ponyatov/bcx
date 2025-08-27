@@ -3,6 +3,7 @@ include mk/version.mk
 include mk/dir.mk
 include mk/pkg.mk
 include mk/cross.mk
+include mk/boot.mk
 include mk/tool.mk
 include mk/src.mk
 include mk/cfg.mk
