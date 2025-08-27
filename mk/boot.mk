@@ -3,6 +3,8 @@ ISOLINUX += $(ROOT)/isolinux/isohdpfx.bin
 ISOLINUX += $(ROOT)/isolinux/isohdppx.bin
 ISOLINUX += $(ROOT)/isolinux/isolinux.bin
 ISOLINUX += $(ROOT)/isolinux/ldlinux.c32
+ISOLINUX += $(ROOT)/isolinux/libutil.c32
+ISOLINUX += $(ROOT)/isolinux/menu.c32
 ISOLINUX += $(ROOT)/isolinux/ls.c32
 
 .PHONY: isolinux
