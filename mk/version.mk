@@ -13,3 +13,4 @@ GDB_VER      = 16.3
 
 # LINUX_VER  = 6.12.43
 LINUX_VER    = 6.16.3
+UCLIBC_VER   = 1.0.54
