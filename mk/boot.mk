@@ -3,6 +3,7 @@ ISOLINUX += $(ROOT)/isolinux/isohdpfx.bin
 ISOLINUX += $(ROOT)/isolinux/isohdppx.bin
 ISOLINUX += $(ROOT)/isolinux/isolinux.bin
 ISOLINUX += $(ROOT)/isolinux/ldlinux.c32
+ISOLINUX += $(ROOT)/isolinux/ls.c32
 
 .PHONY: isolinux
 isolinux: $(ISOLINUX)
@@ -11,6 +12,8 @@ $(ROOT)/isolinux/isolinux.cfg:
 	mkdir $(dir $@) ; touch $@
 $(ROOT)/isolinux/%: /usr/lib/ISOLINUX/%
 	cp $< $@
+# $(ROOT)/isolinux/%: /usr/lib/syslinux/modules/efi64/%
+# 	cp $< $@
 $(ROOT)/isolinux/%: /usr/lib/syslinux/modules/bios/%
 	cp $< $@
 
