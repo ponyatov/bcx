@@ -10,4 +10,8 @@
 #include "linux.hpp"
 #endif  // LINUX
 
+#ifdef MINGW
+#include "mingw.hpp"
+#endif
+
 #endif  // _OS_HPP_

@@ -7,10 +7,6 @@
 #include "os.hpp"
 #include "vm.hpp"
 
-/// @defgroup core core
-/// @ingroup vm
-/// @brief Object Graph core
-
 /// @defgroup parser parser
 /// @ingroup cli
 /// @{

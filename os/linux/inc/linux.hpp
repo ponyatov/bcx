@@ -1,5 +1,6 @@
 /// @defgroup linux linux
 /// @ingroup os
+/// @{
 
 #ifndef _LINUX_HPP_
 #define _LINUX_HPP_
@@ -13,12 +14,10 @@
 /// @ingroup linux
 /// @{
 
-#ifdef POSIX
 /// @brief POSIX entry point
 /// @param[in] argc arguments count
 /// @param[in] argv arguments array (`argv[0]` = program/firmware name)
 extern int main(int argc, char *argv[]);
-#endif  // POSIX
 
 /// @brief callback for processing command line / boot loader arguments
 /// @param[in] argc argument index (0 = program/firmware name)
@@ -28,3 +27,4 @@ extern void arg(int argc, char *argv);
 /// @}
 
 #endif  // _LINUX_HPP_
+/// @}
