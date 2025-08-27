@@ -26,3 +26,7 @@ GCC_URL      = $(YANDEX_MIRROR)/gcc/$(GCC)
 GDB          = gdb-$(GDB_VER)
 GDB_GZ       = $(GDB).tar.xz
 GDB_URL      = $(YANDEX_MIRROR)/gdb
+
+LINUX          = linux-$(LINUX_VER)
+LINUX_GZ       = $(LINUX).tar.xz
+LINUX_URL      = https://cdn.kernel.org/pub/linux/kernel/v6.x

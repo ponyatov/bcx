@@ -32,8 +32,8 @@ $(CROSS)/.gitignore: bin/.gitignore
 $(ROOT)/.gitignore: bin/.gitignore
 	mkdir -p $(dir $@) ; cp $< $@
 
-TLD = $(CROSS)/bin/$(TARGET)-ld
-TCC = $(CROSS)/bin/$(TARGET)-gcc
+TLD = $(CROSS)/$(TARGET)/bin/$(TARGET)-ld
+TCC = $(CROSS)/$(TARGET)/bin/$(TARGET)-gcc
 
 .PHONY: binutils
 
@@ -44,7 +44,7 @@ BINUTILS_CFG += --enable-lto --disable-multilib
 binutils: $(TLD)
 $(TLD): $(CROSS)/src/$(BINUTILS)/README
 	rm -rf $(TMP)/$(BINUTILS) ; mkdir $(TMP)/$(BINUTILS) ; cd $(TMP)/$(BINUTILS) ;\
-	$(XPATH) $(CROSS)/src/$(BINUTILS)/$(CFG) $(BINUTILS_CFG) &&\
+	$(XPATH) $(dir $<)/$(CFG) $(BINUTILS_CFG) &&\
 	$(MAKE) -j$(CORES) && $(MAKE) install-strip
 
 .PHONY: gcc0
@@ -55,7 +55,7 @@ GCC0_CFG += --without-headers --with-newlib
 gcc0: $(TCC)
 $(TCC): $(CROSS)/src/$(GCC)/README
 	rm -rf $(TMP)/$(GCC) ; mkdir $(TMP)/$(GCC) ; cd $(TMP)/$(GCC) ;\
-	$(XPATH) $(CROSS)/src/$(GCC)/$(CFG) $(GCC0_CFG)
+	$(XPATH) $(dir $<)/$(CFG) $(GCC0_CFG)
 	cd $(TMP)/$(GCC) ; $(XPATH) $(MAKE) -j$(CORES) all-gcc
 # 	cd $(TMP)/$(GCC) ; $(XPATH) $(MAKE) install-gcc
 # 	cd $(TMP)/$(GCC) ; $(MAKE) all-target-libgcc

@@ -25,3 +25,7 @@ $(DISTR)/$(GCC_GZ):
 GZ += $(DISTR)/$(GDB_GZ)
 $(DISTR)/$(GDB_GZ):
 	$(CURL) $@ $(GDB_URL)/$(GDB_GZ)
+
+GZ += $(DISTR)/$(LINUX_GZ)
+$(DISTR)/$(LINUX_GZ):
+	$(CURL) $@ $(LINUX_URL)/$(LINUX_GZ)
