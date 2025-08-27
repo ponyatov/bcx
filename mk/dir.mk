@@ -9,4 +9,5 @@ REF       = $(CWD)/ref
 #
 ROOT      = $(CWD)/root
 BOOT      = $(ROOT)/boot
-DISTR    ?= $(HOME)/distr/gz
+CROSS     = $(HOME)/cross
+DISTR     = $(CROSS)/gz

@@ -1,5 +1,6 @@
 HW ?= pc
 # HW ?= qemu386
+# HW ?= a7n8x
 # HW ?= iskra
 # HW ?= l496disco
 # HW ?= f429disco
@@ -8,8 +9,6 @@ include   hw/$(HW)/$(HW).mk
 include  cpu/$(CPU)/$(CPU).mk
 include arch/$(ARCH)/$(ARCH).mk
 include   os/$(OS)/$(OS).mk
-
-CROSS = $(HOME)/cross/$(TARGET)
 
 ELF = bin/$(BINFILE).elf
 DFU = bin/$(BINFILE).dfu
@@ -23,8 +22,8 @@ dfu: $(DFU)
 $(DFU): $(ELF)
 	~/elf2dfuse/bin/elf2dfuse $< $@
 
-XPATH = PATH=$(CROSS)/bin:$(PATH)
-CFG   = configure --prefix=$(CROSS)
+XPATH = PATH=$(CROSS)/$(TARGET)/bin:$(PATH)
+CFG   = configure --prefix=$(CROSS)/$(TARGET)
 
 .PHONY: cross
 cross: $(CROSS)/.gitignore $(ROOT)/.gitignore binutils gcc0
@@ -43,9 +42,9 @@ BINUTILS_CFG += --with-sysroot=$(ROOT) --with-native-system-header-dir=/include
 BINUTILS_CFG += --enable-lto --disable-multilib
 
 binutils: $(TLD)
-$(TLD): $(HOME)/src/$(BINUTILS)/README
+$(TLD): $(CROSS)/src/$(BINUTILS)/README
 	rm -rf $(TMP)/$(BINUTILS) ; mkdir $(TMP)/$(BINUTILS) ; cd $(TMP)/$(BINUTILS) ;\
-	$(XPATH) $(HOME)/src/$(BINUTILS)/$(CFG) $(BINUTILS_CFG) &&\
+	$(XPATH) $(CROSS)/src/$(BINUTILS)/$(CFG) $(BINUTILS_CFG) &&\
 	$(MAKE) -j$(CORES) && $(MAKE) install-strip
 
 .PHONY: gcc0
@@ -54,9 +53,9 @@ GCC0_CFG += $(BINUTILS_CFG) --enable-languages="c"
 GCC0_CFG += --without-headers --with-newlib
 
 gcc0: $(TCC)
-$(TCC): $(HOME)/src/$(GCC)/README
+$(TCC): $(CROSS)/src/$(GCC)/README
 	rm -rf $(TMP)/$(GCC) ; mkdir $(TMP)/$(GCC) ; cd $(TMP)/$(GCC) ;\
-	$(XPATH) $(HOME)/src/$(GCC)/$(CFG) $(GCC0_CFG)
+	$(XPATH) $(CROSS)/src/$(GCC)/$(CFG) $(GCC0_CFG)
 	cd $(TMP)/$(GCC) ; $(XPATH) $(MAKE) -j$(CORES) all-gcc
 # 	cd $(TMP)/$(GCC) ; $(XPATH) $(MAKE) install-gcc
 # 	cd $(TMP)/$(GCC) ; $(MAKE) all-target-libgcc
