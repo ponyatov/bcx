@@ -34,3 +34,7 @@ LINUX_URL    = https://cdn.kernel.org/pub/linux/kernel/v6.x
 UCLIBC       = uClibc-ng-$(UCLIBC_VER)
 UCLIBC_GZ    = $(UCLIBC).tar.xz
 UCLIBC_URL   = https://downloads.uclibc-ng.org/releases/$(UCLIBC_VER)
+
+BB           = busybox-$(BB_VER)
+BB_GZ        = $(BB).tar.gz
+BB_URL       = https://github.com/mirror/busybox/archive/refs/tags

@@ -33,3 +33,7 @@ $(DISTR)/$(LINUX_GZ):
 GZ += $(DISTR)/$(UCLIBC_GZ)
 $(DISTR)/$(UCLIBC_GZ):
 	$(CURL) $@ $(UCLIBC_URL)/$(UCLIBC_GZ)
+
+GZ += $(DISTR)/$(BB_GZ)
+$(DISTR)/$(BB_GZ):
+	$(CURL) $@ $(BB_URL)/$(BB_VER).tar.gz

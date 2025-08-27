@@ -12,3 +12,4 @@ REF += $(CROSS)/src/$(GDB)/README
 
 REF += $(CROSS)/src/$(LINUX)/README
 REF += $(CROSS)/src/$(UCLIBC)/README
+REF += $(CROSS)/src/$(BB)/README
