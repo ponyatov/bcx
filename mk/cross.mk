@@ -13,7 +13,7 @@ XPATH = PATH=$(CROSS)/bin:$(PATH)
 CFG   = configure --prefix=$(CROSS)
 
 .PHONY: cross
-cross: $(CROSS)/.gitignore $(ROOT)/.gitignore binutils
+cross: $(CROSS)/.gitignore $(ROOT)/.gitignore binutils gcc0
 $(CROSS)/.gitignore: bin/.gitignore
 	mkdir -p $(dir $@) ; cp $< $@
 $(ROOT)/.gitignore: bin/.gitignore
