@@ -2,6 +2,11 @@
     "version": 6,
     "buildPresets": [
         {
+            "name"            :  "l496disco",
+            "configurePreset" :  "l496disco",
+            "targets"         : ["all","install"]
+        },
+        {
             "name"            :  "linux",
             "configurePreset" :  "linux",
             "targets"         : ["all","install"]
@@ -20,6 +25,25 @@
                 "CMAKE_BUILD_TYPE"        : "Debug",
                 "CMAKE_VERBOSE_MAKEFILE"  :  false
             }
+        },
+        {
+            "name"            : "cortexm",
+            "inherits"        : "common",
+            "hidden"          : true,
+            "toolchainFile"   : "${sourceDir}/cmake/arm-none-eabi.cmake",
+            "cacheVariables"  : {"OS":"none"}
+        },
+        {
+            "name"            : "cortexm4",
+            "inherits"        : "cortexm",
+            "hidden"          : true,
+            "cacheVariables"  : {"ARCH":"cortexm4"}
+        },
+        {
+            "name"            : "l496disco",
+            "inherits"        : "cortexm4",
+            "cacheVariables"  : {"HW" :"l496disco",
+                                "CPU":"stm32l496ag", "SERIES": "STM32L4"}
         },
         {
             "name"            : "pc",
