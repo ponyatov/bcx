@@ -7,6 +7,11 @@
             "targets"         : ["all","install"]
         },
         {
+            "name"            :  "f429disco",
+            "configurePreset" :  "f429disco",
+            "targets"         : ["all","install"]
+        },
+        {
             "name"            :  "linux",
             "configurePreset" :  "linux",
             "targets"         : ["all","install"]
@@ -42,14 +47,26 @@
         {
             "name"            : "l496disco",
             "inherits"        : "cortexm4",
-            "cacheVariables"  : {"HW" :"l496disco",
-                                "CPU":"stm32l496ag", "SERIES": "STM32L4"}
+            "cacheVariables"  : {"HW":"l496disco", "CPU":"stm32l496ag"}
+        },
+        {
+            "name"            : "f429disco",
+            "inherits"        : "cortexm4",
+            "cacheVariables"  : {"HW":"f429disco", "CPU":"stm32f429zi"}
         },
         {
             "name"            : "pc",
             "inherits"        : "common",
             "hidden"          : true,
             "cacheVariables"  : {"HW":"pc", "CPU":"i5", "ARCH":"x86_64"}
+        },
+        {
+            "name"            : "mingw32",
+            "inherits"        : "pc",
+            "displayName"     : "i686-w64-mingw32",
+            "description"     : "mingw/32",
+            "toolchainFile"   : "${sourceDir}/cmake/i686-w64-mingw32.cmake",
+            "cacheVariables"  : {"ARCH":"i386", "OS":"mingw"}
         },
         {
             "name"            : "linux",

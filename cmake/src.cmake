@@ -17,6 +17,12 @@ file(GLOB C
       os/src/*.c*   os/${OS}/src/*.c*
     # libs
     lib/src/*.c* lib/*/src/*.c*
+    # CortexM/CubeMX
+    hw/${HW}/Core/Src/*.c*
+    hw/${HW}/Drivers/*xx_HAL_Driver/Src/*.c*
+    hw/${HW}/USB_DEVICE/App/*.c* hw/${HW}/USB_DEVICE/Target/*.c*
+    hw/${HW}/Middlewares/ST/STM32_USB_Device_Library/Core/Src/*.c*
+    hw/${HW}/Middlewares/ST/STM32_USB_Device_Library/Class/CDC/Src/*.c*
 )
 
 file(GLOB H
@@ -29,6 +35,14 @@ file(GLOB H
       os/inc/*.h*   os/${OS}/inc/*.h*
     # libs
     lib/inc/*.h* lib/*/inc/*.h*
+    # CortexM/CubeMX
+    hw/${HW}/Core/Inc/*.h*
+    hw/${HW}/Drivers/CMSIS/Include/*.h*
+    hw/${HW}/Drivers/*xx_HAL_Driver/Inc/*.h*
+    hw/${HW}/Drivers/CMSIS/Device/ST/*xx/Include/*.h*
+    hw/${HW}/USB_DEVICE/App/*.h* hw/${HW}/USB_DEVICE/Target/*.h*
+    hw/${HW}/Middlewares/ST/STM32_USB_Device_Library/Core/Inc/*.h*
+    hw/${HW}/Middlewares/ST/STM32_USB_Device_Library/Class/CDC/Inc/*.h*
 )
 
 file(GLOB INC
@@ -42,5 +56,13 @@ file(GLOB INC
       os/inc   os/${OS}/inc
     # libs
     lib/inc lib/*/inc
+    # CortexM/CubeMX
+    hw/${HW}/Core/Inc
+    hw/${HW}/Drivers/CMSIS/Include
+    hw/${HW}/Drivers/*xx_HAL_Driver/Inc
+    hw/${HW}/Drivers/CMSIS/Device/ST/*xx/Include
+    hw/${HW}/USB_DEVICE/App hw/${HW}/USB_DEVICE/Target
+    hw/${HW}/Middlewares/ST/STM32_USB_Device_Library/Core/Inc
+    hw/${HW}/Middlewares/ST/STM32_USB_Device_Library/Class/CDC/Inc
 )
 include_directories(${INC})

@@ -20,6 +20,7 @@ MEMORY
     FLASH (r x) : ORIGIN = 0x8000000 , LENGTH = 1024K
     RAM   (rwx) : ORIGIN = 0x20000000, LENGTH =  256K
     CCM   (rwx) : ORIGIN = 0x10000000, LENGTH =   64K
+    XRAM  (rwx) : ORIGIN = 0x60000000, LENGTH =    8M   /* bank 2 rw SDRAM  */
 }
 
 /* Define output sections */
@@ -59,8 +60,8 @@ SECTIONS
     . = ALIGN(8);
   } >FLASH
 
-  .ARM.extab   : 
-  { 
+  .ARM.extab   :
+  {
   . = ALIGN(8);
   *(.ARM.extab* .gnu.linkonce.armextab.*)
   . = ALIGN(8);
@@ -81,7 +82,7 @@ SECTIONS
     PROVIDE_HIDDEN (__preinit_array_end = .);
 	. = ALIGN(8);
   } >FLASH
-  
+
   .init_array :
   {
 	. = ALIGN(8);
@@ -106,19 +107,33 @@ SECTIONS
   _sidata = LOADADDR(.data);
 
   /* Initialized data sections goes into RAM, load LMA copy after code */
-  .data : 
+  .data :
   {
     . = ALIGN(8);
     _sdata = .;        /* create a global symbol at data start */
-    *(.data)           /* .data sections */
+    *(.data)           /* .data  sections */
     *(.data*)          /* .data* sections */
 
     . = ALIGN(8);
     _edata = .;        /* define a global symbol at data end */
   } > RAM AT> FLASH
 
-  
-  /* Uninitialized data section */
+  /* used by the startup to initialize CCMRAM */
+  _siccm = LOADADDR(.ccm);
+
+  /* Initialized data goes into CCMRAM, load LMA copy after code */
+  .ccm :
+  {
+    . = ALIGN(8);
+    _sccm = .;        /* create a global symbol at ccm start */
+    *(.ccm)           /* .ccm  sections */
+    *(.ccm*)          /* .ccm* sections */
+
+    . = ALIGN(8);
+    _eccm = .;        /* define a global symbol at ccm end */
+  } > CCM AT> FLASH
+
+/* Uninitialized data section */
   . = ALIGN(4);
   .bss :
   {
@@ -144,6 +159,22 @@ SECTIONS
     . = . + _Min_Stack_Size;
     . = ALIGN(8);
   } > RAM
+
+  /* EXTRAM (bank1) section, code must be located here explicitly        */
+  /* Example: extern int foo(void) __attribute__ ((section (".xram"))); */
+  _sixram = LOADADDR(.xram);
+  .xram :
+  {
+    . = ALIGN(8);
+    _sxram = .;
+    *(.xtext)
+    *(.xtext*)
+    . = ALIGN(8);
+    *(.xram)
+    *(.xram*)
+    . = ALIGN(8);
+    _exram = .;
+  } > XRAM AT> FLASH
 
   /* Remove information from the standard libraries */
   /DISCARD/ :

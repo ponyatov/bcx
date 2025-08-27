@@ -12,8 +12,8 @@
 extern Pin PB13;
 extern Pin PA5;
 
-extern LED LD2;  ///< `PB13` green / active high
-extern LED LD3;  ///< `PA5`  green / active low
+extern LED LD2(PB13);  ///< `PB13` green / active high
+extern LED LD3(PA5);  ///< `PA5`  green / active low
 #define LED1 LD2
 
 /// @}
