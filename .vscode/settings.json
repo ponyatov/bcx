@@ -4,6 +4,7 @@
     },
     "files.watcherExclude": {
         "bin/**": true, "ref/**": true, "tmp/**": true,
+        "cross/**": true
     },
     "files.associations": {
         "*.mk": "makefile", "*.make": "makefile",
