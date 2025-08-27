@@ -6,7 +6,10 @@ set(CMAKE_EXECUTABLE_SUFFIX ".elf")
 
 include(any_toolchain)
 
-add_compile_definitions(CORTEX)
+add_compile_definitions(
+    CORTEX
+    HAVE_INITFINI_ARRAY
+)
 
 add_compile_options(
     -mthumb
