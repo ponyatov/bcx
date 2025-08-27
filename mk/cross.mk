@@ -42,5 +42,8 @@ GCC0_CFG += --without-headers --with-newlib
 gcc0: $(TCC)
 $(TCC): $(HOME)/src/$(GCC)/README
 	rm -rf $(TMP)/$(GCC) ; mkdir $(TMP)/$(GCC) ; cd $(TMP)/$(GCC) ;\
-	$(XPATH) $(HOME)/src/$(GCC)/$(CFG) $(GCC0_CFG) &&\
-	$(MAKE) -j$(CORES) all-gcc && $(MAKE) install-gcc
+	$(XPATH) $(HOME)/src/$(GCC)/$(CFG) $(GCC0_CFG)
+	cd $(TMP)/$(GCC) ; $(XPATH) $(MAKE) -j$(CORES) all-gcc
+# 	cd $(TMP)/$(GCC) ; $(XPATH) $(MAKE) install-gcc
+# 	cd $(TMP)/$(GCC) ; $(MAKE) all-target-libgcc
+# 	cd $(TMP)/$(GCC) ; $(MAKE) install-target-libgcc
