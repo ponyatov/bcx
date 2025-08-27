@@ -8,7 +8,7 @@ include(any_toolchain)
 
 add_compile_definitions(
     CORTEX
-    HAVE_INITFINI_ARRAY
+    HAVE_INIT_FINI HAVE_INITFINI_ARRAY
 )
 
 add_compile_options(
