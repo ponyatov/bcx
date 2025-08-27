@@ -9,6 +9,18 @@ include  cpu/$(CPU)/$(CPU).mk
 include arch/$(ARCH)/$(ARCH).mk
 include   os/$(OS)/$(OS).mk
 
+ELF = bin/$(BINFILE).elf
+DFU = bin/$(BINFILE).dfu
+
+.PHONY: elf
+elf: $(ELF)
+	$(QEMU) $(QEMU_CFG) -gdb tcp::3333 -S -kernel $<
+
+.PHONY: dfu
+dfu: $(DFU)
+$(DFU): $(ELF)
+	~/elf2dfuse/bin/elf2dfuse $< $@
+
 XPATH = PATH=$(CROSS)/bin:$(PATH)
 CFG   = configure --prefix=$(CROSS)
 
