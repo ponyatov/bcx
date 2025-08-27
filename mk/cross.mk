@@ -9,6 +9,8 @@ include  cpu/$(CPU)/$(CPU).mk
 include arch/$(ARCH)/$(ARCH).mk
 include   os/$(OS)/$(OS).mk
 
+CROSS = $(HOME)/cross/$(TARGET)
+
 ELF = bin/$(BINFILE).elf
 DFU = bin/$(BINFILE).dfu
 

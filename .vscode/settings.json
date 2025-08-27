@@ -3,8 +3,7 @@
         "doc/html": true, "**/node_modules/**": true,
     },
     "files.watcherExclude": {
-        "bin/**": true, "ref/**": true, "tmp/**": true,
-        "cross/**": true
+        "bin/**": true, "ref/**": true, "tmp/**": true
     },
     "files.associations": {
         "*.mk": "makefile", "*.make": "makefile",
