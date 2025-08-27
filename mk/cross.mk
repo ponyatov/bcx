@@ -30,7 +30,17 @@ BINUTILS_CFG += --enable-lto --disable-multilib
 
 binutils: $(TLD)
 $(TLD): $(HOME)/src/$(BINUTILS)/README
-	rm -rf $(TMP)/$(BINUTILS) ; mkdir $(TMP)/$(BINUTILS) ;\
-	cd $(TMP)/$(BINUTILS) ;\
+	rm -rf $(TMP)/$(BINUTILS) ; mkdir $(TMP)/$(BINUTILS) ; cd $(TMP)/$(BINUTILS) ;\
 	$(XPATH) $(HOME)/src/$(BINUTILS)/$(CFG) $(BINUTILS_CFG) &&\
 	$(MAKE) -j$(CORES) && $(MAKE) install-strip
+
+.PHONY: gcc0
+
+GCC0_CFG += $(BINUTILS_CFG) --enable-languages="c"
+GCC0_CFG += --without-headers --with-newlib
+
+gcc0: $(TCC)
+$(TCC): $(HOME)/src/$(GCC)/README
+	rm -rf $(TMP)/$(GCC) ; mkdir $(TMP)/$(GCC) ; cd $(TMP)/$(GCC) ;\
+	$(XPATH) $(HOME)/src/$(GCC)/$(CFG) $(GCC0_CFG) &&\
+	$(MAKE) -j$(CORES) all-gcc && $(MAKE) install-gcc
