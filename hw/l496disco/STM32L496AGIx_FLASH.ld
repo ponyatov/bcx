@@ -163,7 +163,7 @@ SECTIONS
   /* EXTRAM (bank1) section, code must be located here explicitly        */
   /* Example: extern int foo(void) __attribute__ ((section (".xram"))); */
   _sixram = LOADADDR(.xram);
-  .xram :
+  .xram (NOLOAD):
   {
     . = ALIGN(8);
     _sxram = .;
