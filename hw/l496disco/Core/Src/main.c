@@ -18,16 +18,9 @@
 /* USER CODE END Header */
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
-#include "adc.h"
 #include "dcmi.h"
 #include "dfsdm.h"
-#include "i2c.h"
 #include "usart.h"
-#include "quadspi.h"
-#include "sai.h"
-#include "sdmmc.h"
-#include "spi.h"
-#include "usb_device.h"
 #include "gpio.h"
 #include "fmc.h"
 
@@ -59,7 +52,6 @@
 
 /* Private function prototypes -----------------------------------------------*/
 void SystemClock_Config(void);
-void PeriphCommonClock_Config(void);
 /* USER CODE BEGIN PFP */
 
 /* USER CODE END PFP */
@@ -92,32 +84,16 @@ int main(void)
   /* Configure the system clock */
   SystemClock_Config();
 
-  /* Configure the peripherals common clocks */
-  PeriphCommonClock_Config();
-
   /* USER CODE BEGIN SysInit */
 
   /* USER CODE END SysInit */
 
   /* Initialize all configured peripherals */
   MX_GPIO_Init();
-  MX_ADC1_Init();
-  MX_ADC2_Init();
-  MX_ADC3_Init();
   MX_DCMI_Init();
   MX_DFSDM1_Init();
   MX_FMC_Init();
-  MX_I2C1_Init();
-  MX_I2C2_Init();
-  MX_LPUART1_UART_Init();
-  MX_USART1_UART_Init();
   MX_USART2_UART_Init();
-  MX_QUADSPI_Init();
-  MX_SAI1_Init();
-  MX_SDMMC1_SD_Init();
-  MX_SPI1_Init();
-  MX_SPI2_Init();
-  MX_USB_DEVICE_Init();
   /* USER CODE BEGIN 2 */
 
   /* USER CODE END 2 */
@@ -149,16 +125,10 @@ void SystemClock_Config(void)
     Error_Handler();
   }
 
-  /** Configure LSE Drive Capability
-  */
-  HAL_PWR_EnableBkUpAccess();
-  __HAL_RCC_LSEDRIVE_CONFIG(RCC_LSEDRIVE_LOW);
-
   /** Initializes the RCC Oscillators according to the specified parameters
   * in the RCC_OscInitTypeDef structure.
   */
-  RCC_OscInitStruct.OscillatorType = RCC_OSCILLATORTYPE_LSE|RCC_OSCILLATORTYPE_MSI;
-  RCC_OscInitStruct.LSEState = RCC_LSE_ON;
+  RCC_OscInitStruct.OscillatorType = RCC_OSCILLATORTYPE_MSI;
   RCC_OscInitStruct.MSIState = RCC_MSI_ON;
   RCC_OscInitStruct.MSICalibrationValue = 0;
   RCC_OscInitStruct.MSIClockRange = RCC_MSIRANGE_6;
@@ -184,40 +154,6 @@ void SystemClock_Config(void)
   RCC_ClkInitStruct.APB2CLKDivider = RCC_HCLK_DIV1;
 
   if (HAL_RCC_ClockConfig(&RCC_ClkInitStruct, FLASH_LATENCY_4) != HAL_OK)
-  {
-    Error_Handler();
-  }
-
-  /** Enable MSI Auto calibration
-  */
-  HAL_RCCEx_EnableMSIPLLMode();
-}
-
-/**
-  * @brief Peripherals Common Clock Configuration
-  * @retval None
-  */
-void PeriphCommonClock_Config(void)
-{
-  RCC_PeriphCLKInitTypeDef PeriphClkInit = {0};
-
-  /** Initializes the peripherals clock
-  */
-  PeriphClkInit.PeriphClockSelection = RCC_PERIPHCLK_SAI1|RCC_PERIPHCLK_USB
-                              |RCC_PERIPHCLK_SDMMC1|RCC_PERIPHCLK_ADC;
-  PeriphClkInit.Sai1ClockSelection = RCC_SAI1CLKSOURCE_PLLSAI1;
-  PeriphClkInit.AdcClockSelection = RCC_ADCCLKSOURCE_PLLSAI1;
-  PeriphClkInit.UsbClockSelection = RCC_USBCLKSOURCE_PLLSAI1;
-  PeriphClkInit.Sdmmc1ClockSelection = RCC_SDMMC1CLKSOURCE_PLLSAI1;
-  PeriphClkInit.PLLSAI1.PLLSAI1Source = RCC_PLLSOURCE_MSI;
-  PeriphClkInit.PLLSAI1.PLLSAI1M = 1;
-  PeriphClkInit.PLLSAI1.PLLSAI1N = 24;
-  PeriphClkInit.PLLSAI1.PLLSAI1P = RCC_PLLP_DIV2;
-  PeriphClkInit.PLLSAI1.PLLSAI1Q = RCC_PLLQ_DIV2;
-  PeriphClkInit.PLLSAI1.PLLSAI1R = RCC_PLLR_DIV2;
-  PeriphClkInit.PLLSAI1.PLLSAI1ClockOut = RCC_PLLSAI1_SAI1CLK|RCC_PLLSAI1_48M2CLK
-                              |RCC_PLLSAI1_ADC1CLK;
-  if (HAL_RCCEx_PeriphCLKConfig(&PeriphClkInit) != HAL_OK)
   {
     Error_Handler();
   }

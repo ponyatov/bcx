@@ -11,13 +11,11 @@ ISOLINUX += $(ROOT)/isolinux/ls.c32
 isolinux: $(ISOLINUX)
 
 $(ROOT)/isolinux/isolinux.cfg:
-	echo 'default    menu.c32'                              > $@
-	echo 'timeout    0'                                    >> $@
-	echo 'menu title $(APP)Linux'                          >> $@
-	echo 'label      $(BINFILE)'                           >> $@
-	echo 'menu       default'                              >> $@
-	echo 'kernel     /boot/bzImage'                        >> $@
-	echo 'append     root=LABEL=$(BINFILE) video=1440x900' >> $@
+	echo 'timeout    0'                       > $@
+	echo 'default    $(BINFILE)'             >> $@
+	echo 'label      $(BINFILE)'             >> $@
+	echo 'kernel     /boot/bzImage'          >> $@
+	echo 'append     root=LABEL=$(BINFILE) ' >> $@
 
 $(ROOT)/isolinux/%: /usr/lib/ISOLINUX/%
 	cp $< $@
@@ -40,4 +38,4 @@ $(ISO): $(ISOLINUX)
 
 .PHONY: qemu
 qemu: $(ISO)
-	$(QEMU) $(QEMU_CFG) -vga virtio -boot d -cdrom $<
+	$(QEMU) $(QEMU_CFG) -vga qxl -boot d -cdrom $<

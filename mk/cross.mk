@@ -73,12 +73,12 @@ linux: $(CROSS)/src/$(LINUX)/README
 # 	cat   os/linux/$(APP).kernel               >> $(dir $<).config
 # 	echo 'CONFIG_LOCALVERSION="-$(APP)_$(HW)"' >> $(dir $<).config
 # 	echo 'CONFIG_DEFAULT_HOSTNAME="$(APP)"'    >> $(dir $<).config
-# 	cd $(dir $<) ; $(XPATH) $(MAKE) \
-# 		ARCH=$(ARCH) CROSS_COMPILE=$(TARGET)- menuconfig
-# 	cd $(dir $<) ; $(XPATH) $(MAKE) \
-# 		ARCH=$(ARCH) CROSS_COMPILE=$(TARGET)- -j$(CORES) bzImage
+	cd $(dir $<) ; $(XPATH) $(MAKE) \
+		ARCH=$(ARCH) CROSS_COMPILE=$(TARGET)- menuconfig
+	cd $(dir $<) ; $(XPATH) $(MAKE) \
+		ARCH=$(ARCH) CROSS_COMPILE=$(TARGET)- -j$(CORES) bzImage
+	cp $(dir $<)/arch/$(ARCH)/boot/bzImage $(ROOT)/boot/bzImage
 # 	cd $(dir $<) ; $(XPATH) $(MAKE) \
 # 		ARCH=$(ARCH) CROSS_COMPILE=$(TARGET)- -j$(CORES) modules
-	cp $(dir $<)/arch/$(ARCH)/boot/bzImage $(ROOT)/boot/bzImage
 # 	cd $(dir $<) ; $(XPATH) $(MAKE) INSTALL_MOD_PATH=$(ROOT)/lib \
 # 		ARCH=$(ARCH) CROSS_COMPILE=$(TARGET)- -j$(CORES) modules_install
