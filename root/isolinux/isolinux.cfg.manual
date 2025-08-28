@@ -1,0 +1,24 @@
+default menu.c32
+timeout 0
+menu title bcxLinux
+
+label ask
+    kernel  /boot/bzImage
+    append  root=LABEL=bcxLinux vga=ask
+
+label normal
+    kernel  /boot/bzImage
+    append  root=LABEL=bcxLinux vga=normal
+
+label 640x480x24
+    kernel  /boot/bzImage
+    append  root=LABEL=bcxLinux vga=0x312
+
+label 800x600x24
+    kernel  /boot/bzImage
+    append  root=LABEL=bcxLinux vga=0x315
+
+label 240x320x24
+    menu    default
+    kernel  /boot/bzImage
+    append  root=LABEL=bcxLinux video=1440x900

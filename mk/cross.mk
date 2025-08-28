@@ -63,15 +63,22 @@ $(TCC): $(CROSS)/src/$(GCC)/README
 
 .PHONY: linux
 linux: $(CROSS)/src/$(LINUX)/README
-	rm -f $(dir $<).config
-	cd $(dir $<) ; $(XPATH) $(MAKE) \
-		ARCH=$(ARCH) CROSS_COMPILE=$(TARGET)- allnoconfig
-	cat os/linux/all.kernel                    >> $(dir $<).config
-	cat   hw/$(HW)/$(HW).kernel                >> $(dir $<).config
-	cat  cpu/$(CPU)/$(CPU).kernel              >> $(dir $<).config
-	cat arch/$(ARCH)/$(ARCH).kernel            >> $(dir $<).config
-	cat   os/linux/$(APP).kernel               >> $(dir $<).config
-	echo 'CONFIG_LOCALVERSION="-$(APP)_$(HW)"' >> $(dir $<).config
-	echo 'CONFIG_DEFAULT_HOSTNAME="$(APP)"'    >> $(dir $<).config
-	cd $(dir $<) ; $(XPATH) $(MAKE) \
-		ARCH=$(ARCH) CROSS_COMPILE=$(TARGET)- menuconfig
+# 	rm -f $(dir $<).config
+# 	cd $(dir $<) ; $(XPATH) $(MAKE) \
+# 		ARCH=$(ARCH) CROSS_COMPILE=$(TARGET)- allnoconfig
+# 	cat os/linux/all.kernel                    >> $(dir $<).config
+# 	cat   hw/$(HW)/$(HW).kernel                >> $(dir $<).config
+# 	cat  cpu/$(CPU)/$(CPU).kernel              >> $(dir $<).config
+# 	cat arch/$(ARCH)/$(ARCH).kernel            >> $(dir $<).config
+# 	cat   os/linux/$(APP).kernel               >> $(dir $<).config
+# 	echo 'CONFIG_LOCALVERSION="-$(APP)_$(HW)"' >> $(dir $<).config
+# 	echo 'CONFIG_DEFAULT_HOSTNAME="$(APP)"'    >> $(dir $<).config
+# 	cd $(dir $<) ; $(XPATH) $(MAKE) \
+# 		ARCH=$(ARCH) CROSS_COMPILE=$(TARGET)- menuconfig
+# 	cd $(dir $<) ; $(XPATH) $(MAKE) \
+# 		ARCH=$(ARCH) CROSS_COMPILE=$(TARGET)- -j$(CORES) bzImage
+# 	cd $(dir $<) ; $(XPATH) $(MAKE) \
+# 		ARCH=$(ARCH) CROSS_COMPILE=$(TARGET)- -j$(CORES) modules
+	cp $(dir $<)/arch/$(ARCH)/boot/bzImage $(ROOT)/boot/bzImage
+# 	cd $(dir $<) ; $(XPATH) $(MAKE) INSTALL_MOD_PATH=$(ROOT)/lib \
+# 		ARCH=$(ARCH) CROSS_COMPILE=$(TARGET)- -j$(CORES) modules_install
