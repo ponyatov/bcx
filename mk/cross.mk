@@ -73,12 +73,18 @@ linux: $(CROSS)/src/$(LINUX)/README
 # 	cat   os/linux/$(APP).kernel               >> $(dir $<).config
 # 	echo 'CONFIG_LOCALVERSION="-$(APP)_$(HW)"' >> $(dir $<).config
 # 	echo 'CONFIG_DEFAULT_HOSTNAME="$(APP)"'    >> $(dir $<).config
-	cd $(dir $<) ; $(XPATH) $(MAKE) \
-		ARCH=$(ARCH) CROSS_COMPILE=$(TARGET)- menuconfig
-	cd $(dir $<) ; $(XPATH) $(MAKE) \
-		ARCH=$(ARCH) CROSS_COMPILE=$(TARGET)- -j$(CORES) bzImage
-	cp $(dir $<)/arch/$(ARCH)/boot/bzImage $(ROOT)/boot/bzImage
+# 	cd $(dir $<) ; $(XPATH) $(MAKE) \
+# 		ARCH=$(ARCH) CROSS_COMPILE=$(TARGET)- menuconfig
+# 	cd $(dir $<) ; $(XPATH) $(MAKE) \
+# 		ARCH=$(ARCH) CROSS_COMPILE=$(TARGET)- -j$(CORES) bzImage
+# 	cp $(dir $<)/arch/$(ARCH)/boot/bzImage $(ROOT)/boot/bzImage
 # 	cd $(dir $<) ; $(XPATH) $(MAKE) \
 # 		ARCH=$(ARCH) CROSS_COMPILE=$(TARGET)- -j$(CORES) modules
-# 	cd $(dir $<) ; $(XPATH) $(MAKE) INSTALL_MOD_PATH=$(ROOT)/lib \
-# 		ARCH=$(ARCH) CROSS_COMPILE=$(TARGET)- -j$(CORES) modules_install
+	cd $(dir $<) ; $(XPATH) $(MAKE) INSTALL_MOD_PATH=$(ROOT)/lib \
+		ARCH=$(ARCH) CROSS_COMPILE=$(TARGET)- modules_install
+
+.PHONY: uclibc
+
+uclibc: $(CROSS)/src/$(UCLIBC)
+	cd $(dir $<) ; $(XPATH) $(MAKE) \
+		ARCH=$(ARCH) CROSS_COMPILE=$(TARGET)- menuconfig

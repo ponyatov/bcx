@@ -15,7 +15,7 @@ $(ROOT)/isolinux/isolinux.cfg:
 	echo 'default    $(BINFILE)'             >> $@
 	echo 'label      $(BINFILE)'             >> $@
 	echo 'kernel     /boot/bzImage'          >> $@
-	echo 'append     root=LABEL=$(BINFILE) ' >> $@
+	echo 'append     root=/dev/sr0 ' >> $@
 
 $(ROOT)/isolinux/%: /usr/lib/ISOLINUX/%
 	cp $< $@
