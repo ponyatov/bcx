@@ -47,10 +47,10 @@ $(TLD): $(CROSS)/src/$(BINUTILS)/README
 	$(XPATH) $(dir $<)/$(CFG) $(BINUTILS_CFG) &&\
 	$(MAKE) -j$(CORES) && $(MAKE) install-strip
 
-.PHONY: gcc0
+.PHONY: gcc0 $(TCC)
 
 GCC0_CFG += $(BINUTILS_CFG) --enable-languages="c"
-GCC0_CFG += --without-headers --with-newlib
+GCC0_CFG += --disable-threads --without-headers --with-newlib
 
 gcc0: $(TCC)
 $(TCC): $(CROSS)/src/$(GCC)/README
@@ -80,11 +80,28 @@ linux: $(CROSS)/src/$(LINUX)/README
 # 	cp $(dir $<)/arch/$(ARCH)/boot/bzImage $(ROOT)/boot/bzImage
 # 	cd $(dir $<) ; $(XPATH) $(MAKE) \
 # 		ARCH=$(ARCH) CROSS_COMPILE=$(TARGET)- -j$(CORES) modules
-	cd $(dir $<) ; $(XPATH) $(MAKE) INSTALL_MOD_PATH=$(ROOT)/lib \
-		ARCH=$(ARCH) CROSS_COMPILE=$(TARGET)- modules_install
+# 	cd $(dir $<) ; $(XPATH) $(MAKE) INSTALL_MOD_PATH=$(ROOT)/lib \
+# 		ARCH=$(ARCH) CROSS_COMPILE=$(TARGET)- modules_install
+	cd $(dir $<) ; $(XPATH) $(MAKE) INSTALL_HDR_PATH=$(ROOT)/usr \
+		ARCH=$(ARCH) CROSS_COMPILE=$(TARGET)- headers_install
 
 .PHONY: uclibc
 
-uclibc: $(CROSS)/src/$(UCLIBC)
+uclibc: $(CROSS)/src/$(UCLIBC)/README
+	rm -f $(dir $<).config
+	cd $(dir $<) ; $(XPATH) $(MAKE) \
+		ARCH=$(ARCH) CROSS_COMPILE=$(TARGET)- allnoconfig
+	cat  os/linux/all.uclibc            >> $(dir $<).config
+	echo 'KERNEL_HEADERS="$(ROOT)/usr/include"' >> $(dir $<).config
+	echo 'RUNTIME_PREFIX="$(ROOT)/lib/runtime"' >> $(dir $<).config
+	echo 'DEVEL_PREFIX="$(ROOT)/lib/devel"' >> $(dir $<).config
 	cd $(dir $<) ; $(XPATH) $(MAKE) \
 		ARCH=$(ARCH) CROSS_COMPILE=$(TARGET)- menuconfig
+	cd $(dir $<) ; $(XPATH) $(MAKE) \
+		ARCH=$(ARCH) CROSS_COMPILE=$(TARGET)- -j$(CORES)
+
+.PHONY: initrd $(ROOT)/boot/initrd.cpio
+initrd: $(ROOT)/boot/initrd.cpio
+$(ROOT)/boot/initrd.cpio:
+	cd $(dir $@)/.. ;\
+	find . | egrep -v './(isolinux|boot)' | cpio --quiet -H newc -o | gzip -9 -n > $@
