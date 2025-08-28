@@ -54,9 +54,24 @@ GCC0_CFG += --without-headers --with-newlib
 
 gcc0: $(TCC)
 $(TCC): $(CROSS)/src/$(GCC)/README
-# 	rm -rf $(TMP)/$(GCC) ; mkdir $(TMP)/$(GCC) ; cd $(TMP)/$(GCC) ;\
-# 	$(XPATH) $(dir $<)/$(CFG) $(GCC0_CFG)
+	rm -rf $(TMP)/$(GCC) ; mkdir $(TMP)/$(GCC) ; cd $(TMP)/$(GCC) ;\
+	$(XPATH) $(dir $<)/$(CFG) $(GCC0_CFG)
 	cd $(TMP)/$(GCC) ; $(XPATH) $(MAKE) -j$(CORES) all-gcc
-# 	cd $(TMP)/$(GCC) ; $(XPATH) $(MAKE) install-gcc
-# 	cd $(TMP)/$(GCC) ; $(MAKE) all-target-libgcc
-# 	cd $(TMP)/$(GCC) ; $(MAKE) install-target-libgcc
+	cd $(TMP)/$(GCC) ; $(XPATH) $(MAKE) install-gcc
+# 	cd $(TMP)/$(GCC) ; $(XPATH) $(MAKE) all-target-libgcc
+# 	cd $(TMP)/$(GCC) ; $(XPATH) $(MAKE) install-target-libgcc
+
+.PHONY: linux
+linux: $(CROSS)/src/$(LINUX)/README
+	rm -f $(dir $<).config
+	cd $(dir $<) ; $(XPATH) $(MAKE) \
+		ARCH=$(ARCH) CROSS_COMPILE=$(TARGET)- allnoconfig
+	cat os/linux/all.kernel                    >> $(dir $<).config
+	cat   hw/$(HW)/$(HW).kernel                >> $(dir $<).config
+	cat  cpu/$(CPU)/$(CPU).kernel              >> $(dir $<).config
+	cat arch/$(ARCH)/$(ARCH).kernel            >> $(dir $<).config
+	cat   os/linux/$(APP).kernel               >> $(dir $<).config
+	echo 'CONFIG_LOCALVERSION="-$(APP)_$(HW)"' >> $(dir $<).config
+	echo 'CONFIG_DEFAULT_HOSTNAME="$(APP)"'    >> $(dir $<).config
+	cd $(dir $<) ; $(XPATH) $(MAKE) \
+		ARCH=$(ARCH) CROSS_COMPILE=$(TARGET)- menuconfig
