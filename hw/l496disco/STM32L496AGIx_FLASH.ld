@@ -20,7 +20,7 @@ MEMORY
     FLASH (r x) : ORIGIN = 0x8000000 , LENGTH = 1024K
     RAM   (rwx) : ORIGIN = 0x20000000, LENGTH =  256K
     CCM   (rwx) : ORIGIN = 0x10000000, LENGTH =   64K
-    XRAM  (rwx) : ORIGIN = 0x60000000, LENGTH =    8M   /* bank 2 rw SDRAM  */
+    XRAM  (rwx) : ORIGIN = 0x60000000, LENGTH =    1M   /* bank 2 rw SDRAM  */
 }
 
 /* Define output sections */
@@ -133,7 +133,7 @@ SECTIONS
     _eccm = .;        /* define a global symbol at ccm end */
   } > CCM AT> FLASH
 
-/* Uninitialized data section */
+  /* Uninitialized data section */
   . = ALIGN(4);
   .bss :
   {

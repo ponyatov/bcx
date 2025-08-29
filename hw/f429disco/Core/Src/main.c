@@ -18,15 +18,14 @@
 /* USER CODE END Header */
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
-#include "spi.h"
-#include "tim.h"
 #include "usart.h"
 #include "gpio.h"
 #include "fmc.h"
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
-
+#include <stdio.h>
+#include <string.h>
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -58,7 +57,7 @@ void SystemClock_Config(void);
 
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
-
+uint8_t X[1024 * 1024] __attribute__((section(".xram")));
 /* USER CODE END 0 */
 
 /**
@@ -91,8 +90,6 @@ int main(void)
   /* Initialize all configured peripherals */
   MX_GPIO_Init();
   MX_FMC_Init();
-  MX_SPI5_Init();
-  MX_TIM1_Init();
   MX_USART1_UART_Init();
   /* USER CODE BEGIN 2 */
 
@@ -100,11 +97,25 @@ int main(void)
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
-  while (1)
-  {
+  char hello[] = "Hello\n";
+//   HAL_UART_Transmit(&huart1, (uint8_t*)hello, sizeof(hello), HAL_MAX_DELAY);
+//   HAL_Delay(1000);
+  while (1) {
     /* USER CODE END WHILE */
-
-    /* USER CODE BEGIN 3 */
+      uint32_t start_time = HAL_GetTick();
+      //
+      uint8_t byte;
+      uint32_t addr;
+      for (addr = 0; addr < sizeof(X); addr++) {
+          X[addr] = (uint8_t)(addr % 0x100);
+          byte = X[addr];
+      }
+      //
+      uint32_t elapsed_time = HAL_GetTick() - start_time;
+      char time_msg[32];
+      sprintf(time_msg, "test time: %lu ms\n", elapsed_time);
+      HAL_UART_Transmit(&huart1, (uint8_t *)time_msg, strlen(time_msg),
+                        HAL_MAX_DELAY);
   }
   /* USER CODE END 3 */
 }
