@@ -143,7 +143,7 @@ int main(void)
   MX_FMC_Init();
   MX_USART1_UART_Init();
   /* USER CODE BEGIN 2 */
-
+  radzio_SDRAM_init();
   /* USER CODE END 2 */
 
   /* Infinite loop */
