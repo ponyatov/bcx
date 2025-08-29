@@ -1,6 +1,6 @@
---- STM32F429ZITx_FLASH.ld	2025-08-29 16:47:19.644750470 +0400
-+++ STM32F429ZITx_FLASH.ld.fix	2025-08-29 16:49:13.692747925 +0400
-@@ -1,69 +1,25 @@
+--- STM32F429ZITx_FLASH.ld	2025-08-29 17:16:57.204710807 +0400
++++ STM32F429ZITx_FLASH.ld.fix	2025-08-29 17:15:39.052712551 +0400
+@@ -1,69 +1,26 @@
  /*
  ******************************************************************************
 -**
@@ -71,47 +71,151 @@
 -RAM (xrw)      : ORIGIN = 0x20000000, LENGTH = 192K
 -CCMRAM (xrw)      : ORIGIN = 0x10000000, LENGTH = 64K
 -FLASH (rx)      : ORIGIN = 0x8000000, LENGTH = 2048K
-+FLASH  (r x) : ORIGIN = 0x8000000 , LENGTH = 2048K
-+RAM    (rwx) : ORIGIN = 0x20000000, LENGTH =  192K
-+CCMRAM (rwx) : ORIGIN = 0x10000000, LENGTH =   64K
++    FLASH (r x) : ORIGIN = 0x8000000 , LENGTH = 2048K
++    RAM   (rwx) : ORIGIN = 0x20000000, LENGTH =  192K
++    CCM   (rwx) : ORIGIN = 0x10000000, LENGTH =   64K
++    XRAM  (rwx) : ORIGIN = 0xD0000000, LENGTH =    8M   /* bank 2 rw SDRAM  */
  }
  
  /* Define output sections */
-@@ -116,6 +72,7 @@
+@@ -72,15 +29,15 @@
+   /* The startup code goes first into FLASH */
+   .isr_vector :
+   {
+-    . = ALIGN(4);
++    . = ALIGN(8);
+     KEEP(*(.isr_vector)) /* Startup code */
+-    . = ALIGN(4);
++    . = ALIGN(8);
+   } >FLASH
+ 
+   /* The program code and other data goes into FLASH */
+   .text :
+   {
+-    . = ALIGN(4);
++    . = ALIGN(8);
+     *(.text)           /* .text sections (code) */
+     *(.text*)          /* .text* sections (code) */
+     *(.glue_7)         /* glue arm to thumb code */
+@@ -90,63 +47,79 @@
+     KEEP (*(.init))
+     KEEP (*(.fini))
+ 
+-    . = ALIGN(4);
++    . = ALIGN(8);
+     _etext = .;        /* define a global symbols at end of code */
+   } >FLASH
+ 
+   /* Constant data goes into FLASH */
+   .rodata :
+   {
+-    . = ALIGN(4);
++    . = ALIGN(8);
+     *(.rodata)         /* .rodata sections (constants, strings, etc.) */
+     *(.rodata*)        /* .rodata* sections (constants, strings, etc.) */
+-    . = ALIGN(4);
++    . = ALIGN(8);
+   } >FLASH
+ 
+-  .ARM.extab   : { *(.ARM.extab* .gnu.linkonce.armextab.*) } >FLASH
++  .ARM.extab   :
++  {
++  . = ALIGN(8);
++  *(.ARM.extab* .gnu.linkonce.armextab.*)
++  . = ALIGN(8);
++  } >FLASH
+   .ARM : {
++	. = ALIGN(8);
+     __exidx_start = .;
+     *(.ARM.exidx*)
+     __exidx_end = .;
++	. = ALIGN(8);
+   } >FLASH
+ 
+   .preinit_array     :
+   {
++	. = ALIGN(8);
+     PROVIDE_HIDDEN (__preinit_array_start = .);
      KEEP (*(.preinit_array*))
      PROVIDE_HIDDEN (__preinit_array_end = .);
++	. = ALIGN(8);
    } >FLASH
 +
    .init_array :
    {
++	. = ALIGN(8);
      PROVIDE_HIDDEN (__init_array_start = .);
-@@ -123,6 +80,7 @@
+     KEEP (*(SORT(.init_array.*)))
      KEEP (*(.init_array*))
      PROVIDE_HIDDEN (__init_array_end = .);
++	. = ALIGN(8);
    } >FLASH
 +
    .fini_array :
    {
++	. = ALIGN(8);
      PROVIDE_HIDDEN (__fini_array_start = .);
-@@ -144,7 +102,7 @@
+     KEEP (*(SORT(.fini_array.*)))
+     KEEP (*(.fini_array*))
+     PROVIDE_HIDDEN (__fini_array_end = .);
++	. = ALIGN(8);
+   } >FLASH
  
-     . = ALIGN(4);
+   /* used by the startup to initialize data */
+   _sidata = LOADADDR(.data);
+ 
+   /* Initialized data sections goes into RAM, load LMA copy after code */
+-  .data : 
++  .data :
+   {
+-    . = ALIGN(4);
++    . = ALIGN(8);
+     _sdata = .;        /* create a global symbol at data start */
+-    *(.data)           /* .data sections */
++    *(.data)           /* .data  sections */
+     *(.data*)          /* .data* sections */
+ 
+-    . = ALIGN(4);
++    . = ALIGN(8);
      _edata = .;        /* define a global symbol at data end */
 -  } > AT> FLASH
 +  } > RAM AT> FLASH
  
-   _siccmram = LOADADDR(.ccmram);
+-  _siccmram = LOADADDR(.ccmram);
++  /* used by the startup to initialize CCMRAM */
++  _siccm = LOADADDR(.ccm);
  
-@@ -163,7 +121,7 @@
-     
-     . = ALIGN(4);
-     _eccmram = .;       /* create a global symbol at ccmram end */
+   /* CCM-RAM section 
+   * 
+@@ -154,18 +127,17 @@
+   * If initialized variables will be placed in this section,
+   * the startup code needs to be modified to copy the init-values.  
+   */
+-  .ccmram :
++  .ccm :
+   {
+-    . = ALIGN(4);
+-    _sccmram = .;       /* create a global symbol at ccmram start */
+-    *(.ccmram)
+-    *(.ccmram*)
+-    
+-    . = ALIGN(4);
+-    _eccmram = .;       /* create a global symbol at ccmram end */
 -  } >CCMRAM AT> FLASH
-+  } > CCMRAM AT> FLASH
++    . = ALIGN(8);
++    _sccm = .;        /* create a global symbol at ccm start */
++    *(.ccm)           /* .ccm  sections */
++    *(.ccm*)          /* .ccm* sections */
++
++    . = ALIGN(8);
++    _eccm = .;        /* define a global symbol at ccm end */
++  } > CCM AT> FLASH
  
-   
+-  
    /* Uninitialized data section */
-@@ -180,7 +138,7 @@
+   . = ALIGN(4);
+   .bss :
+@@ -180,7 +152,7 @@
      . = ALIGN(4);
      _ebss = .;         /* define a global symbol at bss end */
      __bss_end__ = _ebss;
@@ -120,14 +224,29 @@
  
    /* User_heap_stack section, used to check that there is enough RAM left */
    ._user_heap_stack :
-@@ -191,18 +149,13 @@
+@@ -191,18 +163,29 @@
      . = . + _Min_Heap_Size;
      . = . + _Min_Stack_Size;
      . = ALIGN(8);
 -  } >
--
--  
 +  } > RAM
+ 
+-  
++  /* EXTRAM (bank1) section, code must be located here explicitly        */
++  /* Example: extern int foo(void) __attribute__ ((section (".xram"))); */
++  _sixram = LOADADDR(.xram);
++  .xram (NOLOAD):
++  {
++    . = ALIGN(8);
++    _sxram = .;
++    *(.xtext)
++    *(.xtext*)
++    . = ALIGN(8);
++    *(.xram)
++    *(.xram*)
++    . = ALIGN(8);
++    _exram = .;
++  } > XRAM AT> FLASH
  
    /* Remove information from the standard libraries */
    /DISCARD/ :

@@ -152,8 +152,21 @@ int main(void)
 //   HAL_UART_Transmit(&huart1, (uint8_t*)hello, sizeof(hello), HAL_MAX_DELAY);
 //   HAL_Delay(1000);
   while (1) {
-    /* USER CODE END WHILE */
-
+      uint32_t start_time = HAL_GetTick();
+      //
+      uint8_t byte;
+      uint32_t addr;
+      for (addr = 0; addr < sizeof(X); addr++) {
+          X[addr] = (uint8_t)(addr % 0x100);
+          byte = X[addr];
+      }
+      //
+      uint32_t elapsed_time = HAL_GetTick() - start_time;
+      char time_msg[32];
+      sprintf(time_msg, "test time: %lu ms\n", elapsed_time);
+      HAL_UART_Transmit(&huart1, (uint8_t *)time_msg, strlen(time_msg),
+                        HAL_MAX_DELAY);
+      /* USER CODE END WHILE */
     /* USER CODE BEGIN 3 */
   }
   /* USER CODE END 3 */
