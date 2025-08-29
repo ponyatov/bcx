@@ -58,6 +58,57 @@ void SystemClock_Config(void);
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
 uint8_t X[1024 * 1024] __attribute__((section(".xram")));
+
+// https://en.radzio.dxp.pl/stm32f429idiscovery/sdram.html
+
+#define TMRD(x) (x << 0)  /* Load Mode Register to Active */
+#define TXSR(x) (x << 4)  /* Exit Self-refresh delay */
+#define TRAS(x) (x << 8)  /* Self refresh time */
+#define TRC(x) (x << 12)  /* Row cycle delay */
+#define TWR(x) (x << 16)  /* Recovery delay */
+#define TRP(x) (x << 20)  /* Row precharge delay */
+#define TRCD(x) (x << 24) /* Row to column delay */
+
+void radzio_SDRAM_init(void) {
+  volatile uint32_t tmp;
+  // Enable clock for FMC
+  RCC->AHB3ENR |= RCC_AHB3ENR_FMCEN;
+  // Initialization step 1
+  FMC_Bank5_6->SDCR[0] =
+      FMC_SDCR1_SDCLK_1 | FMC_SDCR1_RBURST | FMC_SDCR1_RPIPE_1;
+  FMC_Bank5_6->SDCR[1] =
+      FMC_SDCR1_NR_0 | FMC_SDCR1_MWID_0 | FMC_SDCR1_NB | FMC_SDCR1_CAS;
+  // Initialization step 2
+  FMC_Bank5_6->SDTR[0] = TRC(7) | TRP(2);
+  FMC_Bank5_6->SDTR[1] = TMRD(2) | TXSR(7) | TRAS(4) | TWR(2) | TRCD(2);
+  // Initialization step 3
+  while (FMC_Bank5_6->SDSR & FMC_SDSR_BUSY)
+    ;
+  FMC_Bank5_6->SDCMR = 1 | FMC_SDCMR_CTB2 | (1 << 5);
+  // Initialization step 4
+  for (tmp = 0; tmp < 1000000; tmp++)
+    ;
+  // Initialization step 5
+  while (FMC_Bank5_6->SDSR & FMC_SDSR_BUSY)
+    ;
+  FMC_Bank5_6->SDCMR = 2 | FMC_SDCMR_CTB2 | (1 << 5);
+  // Initialization step 6
+  while (FMC_Bank5_6->SDSR & FMC_SDSR_BUSY)
+    ;
+  FMC_Bank5_6->SDCMR = 3 | FMC_SDCMR_CTB2 | (4 << 5);
+  // Initialization step 7
+  while (FMC_Bank5_6->SDSR & FMC_SDSR_BUSY)
+    ;
+  FMC_Bank5_6->SDCMR = 4 | FMC_SDCMR_CTB2 | (1 << 5) | (0x231 << 9);
+  // Initialization step 8
+  while (FMC_Bank5_6->SDSR & FMC_SDSR_BUSY)
+    ;
+  FMC_Bank5_6->SDRTR |= (683 << 1);
+  while (FMC_Bank5_6->SDSR & FMC_SDSR_BUSY)
+    ;
+}
+
+
 /* USER CODE END 0 */
 
 /**
@@ -102,20 +153,8 @@ int main(void)
 //   HAL_Delay(1000);
   while (1) {
     /* USER CODE END WHILE */
-      uint32_t start_time = HAL_GetTick();
-      //
-      uint8_t byte;
-      uint32_t addr;
-      for (addr = 0; addr < sizeof(X); addr++) {
-          X[addr] = (uint8_t)(addr % 0x100);
-          byte = X[addr];
-      }
-      //
-      uint32_t elapsed_time = HAL_GetTick() - start_time;
-      char time_msg[32];
-      sprintf(time_msg, "test time: %lu ms\n", elapsed_time);
-      HAL_UART_Transmit(&huart1, (uint8_t *)time_msg, strlen(time_msg),
-                        HAL_MAX_DELAY);
+
+    /* USER CODE BEGIN 3 */
   }
   /* USER CODE END 3 */
 }
@@ -132,7 +171,7 @@ void SystemClock_Config(void)
   /** Configure the main internal regulator output voltage
   */
   __HAL_RCC_PWR_CLK_ENABLE();
-  __HAL_PWR_VOLTAGESCALING_CONFIG(PWR_REGULATOR_VOLTAGE_SCALE3);
+  __HAL_PWR_VOLTAGESCALING_CONFIG(PWR_REGULATOR_VOLTAGE_SCALE1);
 
   /** Initializes the RCC Oscillators according to the specified parameters
   * in the RCC_OscInitTypeDef structure.
@@ -142,10 +181,17 @@ void SystemClock_Config(void)
   RCC_OscInitStruct.PLL.PLLState = RCC_PLL_ON;
   RCC_OscInitStruct.PLL.PLLSource = RCC_PLLSOURCE_HSE;
   RCC_OscInitStruct.PLL.PLLM = 4;
-  RCC_OscInitStruct.PLL.PLLN = 72;
+  RCC_OscInitStruct.PLL.PLLN = 180;
   RCC_OscInitStruct.PLL.PLLP = RCC_PLLP_DIV2;
   RCC_OscInitStruct.PLL.PLLQ = 3;
   if (HAL_RCC_OscConfig(&RCC_OscInitStruct) != HAL_OK)
+  {
+    Error_Handler();
+  }
+
+  /** Activate the Over-Drive mode
+  */
+  if (HAL_PWREx_EnableOverDrive() != HAL_OK)
   {
     Error_Handler();
   }
@@ -156,10 +202,10 @@ void SystemClock_Config(void)
                               |RCC_CLOCKTYPE_PCLK1|RCC_CLOCKTYPE_PCLK2;
   RCC_ClkInitStruct.SYSCLKSource = RCC_SYSCLKSOURCE_PLLCLK;
   RCC_ClkInitStruct.AHBCLKDivider = RCC_SYSCLK_DIV1;
-  RCC_ClkInitStruct.APB1CLKDivider = RCC_HCLK_DIV2;
-  RCC_ClkInitStruct.APB2CLKDivider = RCC_HCLK_DIV1;
+  RCC_ClkInitStruct.APB1CLKDivider = RCC_HCLK_DIV4;
+  RCC_ClkInitStruct.APB2CLKDivider = RCC_HCLK_DIV2;
 
-  if (HAL_RCC_ClockConfig(&RCC_ClkInitStruct, FLASH_LATENCY_2) != HAL_OK)
+  if (HAL_RCC_ClockConfig(&RCC_ClkInitStruct, FLASH_LATENCY_5) != HAL_OK)
   {
     Error_Handler();
   }
