@@ -14,15 +14,8 @@ target_compile_definitions(stm32cubemx INTERFACE
 
 target_include_directories(stm32cubemx INTERFACE
     ../../Core/Inc
-    ../../USB_HOST/App
-    ../../USB_HOST/Target
     ../../Drivers/STM32F4xx_HAL_Driver/Inc
     ../../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy
-    ../../Middlewares/Third_Party/FreeRTOS/Source/include
-    ../../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS
-    ../../Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F
-    ../../Middlewares/ST/STM32_USB_Host_Library/Core/Inc
-    ../../Middlewares/ST/STM32_USB_Host_Library/Class/CDC/Inc
     ../../Drivers/CMSIS/Device/ST/STM32F4xx/Include
     ../../Drivers/CMSIS/Include
 )
@@ -30,7 +23,6 @@ target_include_directories(stm32cubemx INTERFACE
 target_sources(stm32cubemx INTERFACE
     ../../Core/Src/main.c
     ../../Core/Src/gpio.c
-    ../../Core/Src/freertos.c
     ../../Core/Src/crc.c
     ../../Core/Src/dma2d.c
     ../../Core/Src/fmc.c
@@ -42,11 +34,7 @@ target_sources(stm32cubemx INTERFACE
     ../../Core/Src/stm32f4xx_it.c
     ../../Core/Src/stm32f4xx_hal_msp.c
     ../../Core/Src/stm32f4xx_hal_timebase_tim.c
-    ../../USB_HOST/Target/usbh_conf.c
-    ../../USB_HOST/Target/usbh_platform.c
-    ../../USB_HOST/App/usb_host.c
-    ../../Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_hcd.c
-    ../../Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_ll_usb.c
+    ../../Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_crc.c
     ../../Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_rcc.c
     ../../Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_rcc_ex.c
     ../../Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_flash.c
@@ -60,7 +48,6 @@ target_sources(stm32cubemx INTERFACE
     ../../Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_cortex.c
     ../../Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal.c
     ../../Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_exti.c
-    ../../Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_crc.c
     ../../Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_dma2d.c
     ../../Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_ll_fmc.c
     ../../Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_sdram.c
@@ -74,21 +61,6 @@ target_sources(stm32cubemx INTERFACE
     ../../Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_tim_ex.c
     ../../Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_uart.c
     ../../Core/Src/system_stm32f4xx.c
-    ../../Middlewares/Third_Party/FreeRTOS/Source/croutine.c
-    ../../Middlewares/Third_Party/FreeRTOS/Source/event_groups.c
-    ../../Middlewares/Third_Party/FreeRTOS/Source/list.c
-    ../../Middlewares/Third_Party/FreeRTOS/Source/queue.c
-    ../../Middlewares/Third_Party/FreeRTOS/Source/stream_buffer.c
-    ../../Middlewares/Third_Party/FreeRTOS/Source/tasks.c
-    ../../Middlewares/Third_Party/FreeRTOS/Source/timers.c
-    ../../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS/cmsis_os.c
-    ../../Middlewares/Third_Party/FreeRTOS/Source/portable/MemMang/heap_4.c
-    ../../Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c
-    ../../Middlewares/ST/STM32_USB_Host_Library/Core/Src/usbh_core.c
-    ../../Middlewares/ST/STM32_USB_Host_Library/Core/Src/usbh_ctlreq.c
-    ../../Middlewares/ST/STM32_USB_Host_Library/Core/Src/usbh_ioreq.c
-    ../../Middlewares/ST/STM32_USB_Host_Library/Core/Src/usbh_pipes.c
-    ../../Middlewares/ST/STM32_USB_Host_Library/Class/CDC/Src/usbh_cdc.c
     ../../Core/Src/sysmem.c
     ../../Core/Src/syscalls.c
     ../../startup_stm32f429xx.s
