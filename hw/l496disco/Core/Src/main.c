@@ -59,7 +59,7 @@ void SystemClock_Config(void);
 
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
-uint8_t M[1024 * 1024] __attribute__((section(".xram")));
+uint8_t X[1024 * 1024] __attribute__((section(".xram")));
 /* USER CODE END 0 */
 
 /**
@@ -101,26 +101,26 @@ int main(void)
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
-  while (1)
-  {
-    /* USER CODE END WHILE */
-    char hello[] = "Hello\n";
-    uint32_t start_time = HAL_GetTick();
-    // 
-    HAL_UART_Transmit(&huart2, (uint8_t*)hello, sizeof(hello), HAL_MAX_DELAY);  
-    // HAL_Delay(1000);
-    //
-    uint8_t byte;
-    uint32_t addr;
-    for (addr = 0; addr < sizeof(M); addr++) {
-        M[addr] = (uint8_t)(addr % 0x100);
-        byte = M[addr];
-    }
-    //
-    uint32_t elapsed_time = HAL_GetTick() - start_time;
-    char time_msg[32];
-    sprintf(time_msg, "Elapsed time: %lu ms\n", elapsed_time);
-    HAL_UART_Transmit(&huart2, (uint8_t*)time_msg, strlen(time_msg), HAL_MAX_DELAY);  }
+  char hello[] = "Hello\n";
+  // HAL_UART_Transmit(&huart2, (uint8_t*)hello, sizeof(hello), HAL_MAX_DELAY);
+  // HAL_Delay(1000);
+  while (1) {
+      /* USER CODE END WHILE */
+      uint32_t start_time = HAL_GetTick();
+      //
+      uint8_t byte;
+      uint32_t addr;
+      for (addr = 0; addr < sizeof(X); addr++) {
+          X[addr] = (uint8_t)(addr % 0x100);
+          byte = X[addr];
+      }
+      //
+      uint32_t elapsed_time = HAL_GetTick() - start_time;
+      char time_msg[32];
+      sprintf(time_msg, "test time: %lu ms\n", elapsed_time);
+      HAL_UART_Transmit(&huart2, (uint8_t *)time_msg, strlen(time_msg),
+                        HAL_MAX_DELAY);
+  }
   /* USER CODE END 3 */
 }
 
