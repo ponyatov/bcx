@@ -17,10 +17,10 @@ _Min_Stack_Size = 0x400;          /* required amount of stack */
 /* Specify the memory areas */
 MEMORY
 {
-    FLASH (r x) : ORIGIN = 0x8000000 , LENGTH = 2048K
+    FLASH (r x) : ORIGIN = 0x8000000 , LENGTH =    2M
     RAM   (rwx) : ORIGIN = 0x20000000, LENGTH =  192K
     CCM   (rwx) : ORIGIN = 0x10000000, LENGTH =   64K
-    XRAM  (rwx) : ORIGIN = 0xD0000000, LENGTH =    8M   /* bank 2 rw SDRAM  */
+    XRAM  (rwx) : ORIGIN = 0xD0000000, LENGTH =    8M
 }
 
 /* Define output sections */
@@ -170,15 +170,12 @@ SECTIONS
   _sixram = LOADADDR(.xram);
   .xram (NOLOAD):
   {
-    . = ALIGN(8);
-    _sxram = .;
-    *(.xtext)
-    *(.xtext*)
-    . = ALIGN(8);
-    *(.xram)
-    *(.xram*)
-    . = ALIGN(8);
-    _exram = .;
+    . = ALIGN(0x10);
+    _sxram = .;       /* create a global symbol at xram start */
+    KEEP (*(.xram ))
+    KEEP (*(.xram*))
+    . = ALIGN(0x10);
+    _exram = .;       /* create a global symbol at xram end */
   } > XRAM AT> FLASH
 
   /* Remove information from the standard libraries */
