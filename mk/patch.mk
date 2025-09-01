@@ -10,6 +10,7 @@ all:
 	dos2unix $(FILES)
 	$(MAKE) -f $(MAKEFILE_LIST) $(FIXES)
 %.fix: %
-	meld $< $@
+	cp $@ $<
+# 	meld $< $@
 # 	patch -u $< $<.patch && touch $@
 # rm Core/Src/syscalls.c
