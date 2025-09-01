@@ -97,17 +97,18 @@ int main(void)
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
-  char hello[] = "Hello\n";
-  // HAL_UART_Transmit(&huart2, (uint8_t*)hello, sizeof(hello), HAL_MAX_DELAY);
+  // char msg[] = "Hello\n";
+  // HAL_UART_Transmit(&huart2, (uint8_t*)msg, sizeof(msg), HAL_MAX_DELAY);
   // HAL_Delay(1000);
   while (1) {
       uint32_t start_time = HAL_GetTick();
       //
-      uint8_t byte;
+      uint8_t fill, byte;
       uint32_t addr;
-      for (addr = 0; addr < sizeof(X); addr++) {
-          X[addr] = (uint8_t)(addr % 0x100);
+      for (addr = 0, fill = 0; addr < sizeof(X); addr++, fill++) {
+          X[addr] = fill;
           byte = X[addr];
+          if (byte != fill) Error_Handler();
       }
       //
       uint32_t elapsed_time = HAL_GetTick() - start_time;
@@ -184,6 +185,9 @@ void Error_Handler(void)
 {
   /* USER CODE BEGIN Error_Handler_Debug */
   /* User can add his own implementation to report the HAL error return state */
+  char msg[] = "Error_Handler()\n";
+  HAL_UART_Transmit(&huart2, (uint8_t*)msg, sizeof(msg), HAL_MAX_DELAY);
+  HAL_Delay(1000);
   __disable_irq();
   while (1)
   {
