@@ -92,7 +92,7 @@ int main(void)
   MX_FMC_Init();
   MX_USART1_UART_Init();
   /* USER CODE BEGIN 2 */
-  radzio_SDRAM_init();
+  BSP_SDRAM_Init();
   /* USER CODE END 2 */
 
   /* Infinite loop */
@@ -116,8 +116,8 @@ int main(void)
       sprintf(time_msg, "test time: %lu ms\n", elapsed_time);
       HAL_UART_Transmit(&huart1, (uint8_t *)time_msg, strlen(time_msg),
                         HAL_MAX_DELAY);
-    /* USER CODE END WHILE */
-    /* USER CODE BEGIN 3 */
+      /* USER CODE END WHILE */
+      /* USER CODE BEGIN 3 */
   }
   /* USER CODE END 3 */
 }
