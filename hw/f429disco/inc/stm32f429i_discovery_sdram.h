@@ -78,7 +78,9 @@ extern "C" {
 /**
   * @brief  FMC SDRAM Memory clock period
   */
-#define SDCLOCK_PERIOD          FMC_SDRAM_CLOCK_PERIOD_2    /* Default configuration used with LCD */
+#define FMC_SDRAM_CLOCK_PERIOD_1                (0x00000400U)
+#define SDCLOCK_PERIOD          FMC_SDRAM_CLOCK_PERIOD_1
+// #define SDCLOCK_PERIOD          FMC_SDRAM_CLOCK_PERIOD_2    /* Default configuration used with LCD */
 /* #define SDCLOCK_PERIOD       FMC_SDRAM_CLOCK_PERIOD_3 */
 
 /**
