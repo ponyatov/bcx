@@ -2,7 +2,9 @@
 
 #include <stdint.h>
 
-#define Xsz (1024 * 1024)
+#define Xsz (1024 * 1024 * 8)
+// #define Xsz (1024 * 1024)
+// #define Xsz (1024 * 128)
 extern uint8_t X[Xsz];
 extern void radzio_SDRAM_init(void);
 
