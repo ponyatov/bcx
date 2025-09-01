@@ -23,13 +23,12 @@ target_include_directories(stm32cubemx INTERFACE
 target_sources(stm32cubemx INTERFACE
     ../../Core/Src/main.c
     ../../Core/Src/gpio.c
-    ../../Core/Src/dcmi.c
     ../../Core/Src/dfsdm.c
     ../../Core/Src/fmc.c
     ../../Core/Src/usart.c
     ../../Core/Src/stm32l4xx_it.c
     ../../Core/Src/stm32l4xx_hal_msp.c
-    ../../Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal_dcmi.c
+    ../../Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal_dfsdm.c
     ../../Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal.c
     ../../Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal_rcc.c
     ../../Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal_rcc_ex.c
@@ -45,7 +44,6 @@ target_sources(stm32cubemx INTERFACE
     ../../Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal_pwr_ex.c
     ../../Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal_cortex.c
     ../../Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal_exti.c
-    ../../Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal_dfsdm.c
     ../../Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_ll_fmc.c
     ../../Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal_sram.c
     ../../Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal_tim.c

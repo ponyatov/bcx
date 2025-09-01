@@ -18,7 +18,6 @@
 /* USER CODE END Header */
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
-#include "dcmi.h"
 #include "dfsdm.h"
 #include "usart.h"
 #include "gpio.h"
@@ -91,7 +90,6 @@ int main(void)
 
   /* Initialize all configured peripherals */
   MX_GPIO_Init();
-  MX_DCMI_Init();
   MX_DFSDM1_Init();
   MX_FMC_Init();
   MX_USART2_UART_Init();
@@ -119,7 +117,8 @@ int main(void)
       sprintf(time_msg, "test time: %lu ms\n", elapsed_time);
       HAL_UART_Transmit(&huart2, (uint8_t *)time_msg, strlen(time_msg),
                         HAL_MAX_DELAY);
-      /* USER CODE END WHILE */
+    /* USER CODE END WHILE */
+
     /* USER CODE BEGIN 3 */
   }
   /* USER CODE END 3 */
