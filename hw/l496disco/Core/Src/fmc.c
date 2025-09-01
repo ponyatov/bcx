@@ -71,12 +71,12 @@ void MX_FMC_Init(void)
   Timing.DataLatency = 17;
   Timing.AccessMode = FMC_ACCESS_MODE_A;
   /* ExtTiming */
-  ExtTiming.AddressSetupTime = 15;
-  ExtTiming.AddressHoldTime = 15;
-  ExtTiming.DataSetupTime = 255;
-  ExtTiming.BusTurnAroundDuration = 15;
-  ExtTiming.CLKDivision = 16;
-  ExtTiming.DataLatency = 17;
+  ExtTiming.AddressSetupTime = 1;//15;
+  ExtTiming.AddressHoldTime = 1;//15;
+  ExtTiming.DataSetupTime = 1;//255;
+  ExtTiming.BusTurnAroundDuration = 1;//15;
+  ExtTiming.CLKDivision = 1;//16;
+  ExtTiming.DataLatency = 1;//17;
   ExtTiming.AccessMode = FMC_ACCESS_MODE_A;
 
   if (HAL_SRAM_Init(&hsram1, &Timing, &ExtTiming) != HAL_OK)
