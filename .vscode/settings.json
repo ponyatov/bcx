@@ -1,6 +1,8 @@
 {
     "files.exclude": {
         "doc/html": true, "**/node_modules/**": true,
+        "hw/f429disco/**":true,
+        // "hw/l496disco/**":true,
     },
     "files.watcherExclude": {
         "bin/**": true, "ref/**": true, "tmp/**": true

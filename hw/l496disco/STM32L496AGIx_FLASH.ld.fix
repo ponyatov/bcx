@@ -60,7 +60,7 @@ SECTIONS
     . = ALIGN(8);
   } >FLASH
 
-  .ARM.extab   :
+  .ARM.extab :
   {
   . = ALIGN(8);
   *(.ARM.extab* .gnu.linkonce.armextab.*)
