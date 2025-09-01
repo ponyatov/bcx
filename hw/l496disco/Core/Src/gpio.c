@@ -69,6 +69,7 @@
      PA8   ------> LPTIM2_OUT
      PC9   ------> SDMMC1_D1
      PC8   ------> SDMMC1_D0
+     PC7   ------> S_DATAIN3DFSDM1
      PF10   ------> ADC3_IN13
      PC4   ------> ADCx_IN13
      PB11   ------> QUADSPI_BK1_NCS
@@ -76,6 +77,7 @@
      PG7   ------> LPUART1_TX
      PC0   ------> ADCx_IN1
      PC1   ------> ADCx_IN2
+     PC2   ------> S_CKOUTDFSDM1
      PC3   ------> ADCx_IN4
      PA5   ------> SPI1_SCK
      PB0   ------> QUADSPI_BK1_IO1
@@ -93,6 +95,7 @@
      PA1   ------> ADCx_IN6
      PB10   ------> SAI1_SCK_A
      PH8   ------> DCMI_HSYNC
+     PB12   ------> S_DATAIN1DFSDM1
 */
 void MX_GPIO_Init(void)
 {
@@ -308,6 +311,14 @@ void MX_GPIO_Init(void)
   GPIO_InitStruct.Alternate = GPIO_AF14_LPTIM2;
   HAL_GPIO_Init(DCMI_CLK_GPIO_Port, &GPIO_InitStruct);
 
+  /*Configure GPIO pins : PCPin PCPin */
+  GPIO_InitStruct.Pin = DATIN3_Pin|DF_CKOUT_Pin;
+  GPIO_InitStruct.Mode = GPIO_MODE_AF_PP;
+  GPIO_InitStruct.Pull = GPIO_NOPULL;
+  GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
+  GPIO_InitStruct.Alternate = GPIO_AF6_DFSDM1;
+  HAL_GPIO_Init(GPIOC, &GPIO_InitStruct);
+
   /*Configure GPIO pin : PtPin */
   GPIO_InitStruct.Pin = ARD_A3_Pin;
   GPIO_InitStruct.Mode = GPIO_MODE_ANALOG;
@@ -399,6 +410,14 @@ void MX_GPIO_Init(void)
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
   GPIO_InitStruct.Alternate = GPIO_AF13_SAI1;
   HAL_GPIO_Init(GPIOB, &GPIO_InitStruct);
+
+  /*Configure GPIO pin : PtPin */
+  GPIO_InitStruct.Pin = DFDATIN1_Pin;
+  GPIO_InitStruct.Mode = GPIO_MODE_AF_PP;
+  GPIO_InitStruct.Pull = GPIO_NOPULL;
+  GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
+  GPIO_InitStruct.Alternate = GPIO_AF6_DFSDM1;
+  HAL_GPIO_Init(DFDATIN1_GPIO_Port, &GPIO_InitStruct);
 
   /*Configure GPIO pin : PtPin */
   GPIO_InitStruct.Pin = LED1_Pin;
