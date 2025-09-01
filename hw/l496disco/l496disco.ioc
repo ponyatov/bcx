@@ -2,6 +2,9 @@
 CAD.formats=
 CAD.pinconfig=
 CAD.provider=
+FMC.ExtendedMode1=FMC_EXTENDED_MODE_ENABLE
+FMC.ExtendedMode2=FMC_EXTENDED_MODE_ENABLE
+FMC.IPParameters=ExtendedMode1,ExtendedMode2
 File.Version=6
 KeepUserPlacement=false
 Mcu.CPN=STM32L496AGI3

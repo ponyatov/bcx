@@ -36,6 +36,7 @@ void MX_FMC_Init(void)
   /* USER CODE END FMC_Init 0 */
 
   FMC_NORSRAM_TimingTypeDef Timing = {0};
+  FMC_NORSRAM_TimingTypeDef ExtTiming = {0};
 
   /* USER CODE BEGIN FMC_Init 1 */
 
@@ -55,7 +56,7 @@ void MX_FMC_Init(void)
   hsram1.Init.WaitSignalActive = FMC_WAIT_TIMING_BEFORE_WS;
   hsram1.Init.WriteOperation = FMC_WRITE_OPERATION_DISABLE;
   hsram1.Init.WaitSignal = FMC_WAIT_SIGNAL_DISABLE;
-  hsram1.Init.ExtendedMode = FMC_EXTENDED_MODE_DISABLE;
+  hsram1.Init.ExtendedMode = FMC_EXTENDED_MODE_ENABLE;
   hsram1.Init.AsynchronousWait = FMC_ASYNCHRONOUS_WAIT_DISABLE;
   hsram1.Init.WriteBurst = FMC_WRITE_BURST_DISABLE;
   hsram1.Init.ContinuousClock = FMC_CONTINUOUS_CLOCK_SYNC_ONLY;
@@ -70,8 +71,15 @@ void MX_FMC_Init(void)
   Timing.DataLatency = 17;
   Timing.AccessMode = FMC_ACCESS_MODE_A;
   /* ExtTiming */
+  ExtTiming.AddressSetupTime = 15;
+  ExtTiming.AddressHoldTime = 15;
+  ExtTiming.DataSetupTime = 255;
+  ExtTiming.BusTurnAroundDuration = 15;
+  ExtTiming.CLKDivision = 16;
+  ExtTiming.DataLatency = 17;
+  ExtTiming.AccessMode = FMC_ACCESS_MODE_A;
 
-  if (HAL_SRAM_Init(&hsram1, &Timing, NULL) != HAL_OK)
+  if (HAL_SRAM_Init(&hsram1, &Timing, &ExtTiming) != HAL_OK)
   {
     Error_Handler( );
   }
@@ -90,7 +98,7 @@ void MX_FMC_Init(void)
   hsram2.Init.WaitSignalActive = FMC_WAIT_TIMING_BEFORE_WS;
   hsram2.Init.WriteOperation = FMC_WRITE_OPERATION_ENABLE;
   hsram2.Init.WaitSignal = FMC_WAIT_SIGNAL_DISABLE;
-  hsram2.Init.ExtendedMode = FMC_EXTENDED_MODE_DISABLE;
+  hsram2.Init.ExtendedMode = FMC_EXTENDED_MODE_ENABLE;
   hsram2.Init.AsynchronousWait = FMC_ASYNCHRONOUS_WAIT_DISABLE;
   hsram2.Init.WriteBurst = FMC_WRITE_BURST_DISABLE;
   hsram2.Init.ContinuousClock = FMC_CONTINUOUS_CLOCK_SYNC_ONLY;
@@ -105,8 +113,15 @@ void MX_FMC_Init(void)
   Timing.DataLatency = 17;
   Timing.AccessMode = FMC_ACCESS_MODE_A;
   /* ExtTiming */
+  ExtTiming.AddressSetupTime = 1;//
+  ExtTiming.AddressHoldTime = 1;//
+  ExtTiming.DataSetupTime = 1;//
+  ExtTiming.BusTurnAroundDuration = 1;//
+  ExtTiming.CLKDivision = 1;//
+  ExtTiming.DataLatency = 1;//
+  ExtTiming.AccessMode = FMC_ACCESS_MODE_A;
 
-  if (HAL_SRAM_Init(&hsram2, &Timing, NULL) != HAL_OK)
+  if (HAL_SRAM_Init(&hsram2, &Timing, &ExtTiming) != HAL_OK)
   {
     Error_Handler( );
   }
