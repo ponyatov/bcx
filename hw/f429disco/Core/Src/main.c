@@ -97,9 +97,9 @@ int main(void)
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
-  char msg[] = "Hello\n";
-  HAL_UART_Transmit(&huart1, (uint8_t*)msg, sizeof(msg), HAL_MAX_DELAY);
-  HAL_Delay(1000);
+  //   char msg[] = "Hello\n";
+  //   HAL_UART_Transmit(&huart1, (uint8_t*)msg, sizeof(msg), HAL_MAX_DELAY);
+  //   HAL_Delay(1000);
   while (1) {
       uint32_t start_time = HAL_GetTick();
       //
