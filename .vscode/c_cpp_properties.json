@@ -20,7 +20,9 @@
             "configurationProvider": "ms-vscode.cmake-tools",
             "mergeConfigurations"  :  true,
             "includePath"          : ["${appInclude}", "${crossInclude}"],
-            "defines"              : ["HAVE_INIT_FINI","HAVE_INITFINI_ARRAY"]
+            "defines"              : ["HAVE_INIT_FINI","HAVE_INITFINI_ARRAY"
+                                      ,"F429DISCO","DATA_IN_ExtSDRAM"
+                                      ,"L496DISCO","DATA_IN_ExtPSRAM"]
             // "compilerPath"         : "/usr/bin/arm-none-eabi-g++",
             // "cStandard"            : "c11",
             // "cppStandard"          : "c++17",
