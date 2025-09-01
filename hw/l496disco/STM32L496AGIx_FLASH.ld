@@ -19,8 +19,9 @@ MEMORY
 {
     FLASH (r x) : ORIGIN = 0x8000000 , LENGTH =    1M
     RAM   (rwx) : ORIGIN = 0x20000000, LENGTH =  256K
+    SRAM2 (rwx) : ORIGIN = ORIGIN(RAM) + LENGTH(RAM), LENGTH = 64K /* CCM mapped */
     CCM   (rwx) : ORIGIN = 0x10000000, LENGTH =   64K
-    XRAM  (rwx) : ORIGIN = 0x60000000, LENGTH =    1M
+    XRAM  (rwx) : ORIGIN = 0x60000000, LENGTH =    1M   /* bank 2 rw PSRAM  */
 }
 
 /* Define output sections */
