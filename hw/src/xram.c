@@ -9,12 +9,12 @@
 
 #include "usart.h"
 
-uint8_t X[Xsz] __attribute__((section(".xram")));
+iocell X[Xsz] __attribute__((section(".xram")))  __attribute__((packed));
 
 extern void xram_test(void) {
     uint32_t start_time = HAL_GetTick();
     //
-    uint8_t fill;
+    iocell fill;
     uint32_t addr;
     // r/w test
     for (addr = 0, fill = 0; addr < sizeof(X); addr++, fill++) {
@@ -24,9 +24,6 @@ extern void xram_test(void) {
     for (addr = 0, fill = 0; addr < sizeof(X); addr++, fill++) {
         if (X[addr] != fill) Error_Handler();
     }
-    // for (addr = 0, fill = 0; addr < sizeof(X); addr++, fill++) {
-    //     if (X[addr] != fill) Error_Handler();
-    // }
     //
     uint32_t elapsed_time = HAL_GetTick() - start_time;
     char time_msg[32];
