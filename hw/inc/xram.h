@@ -2,11 +2,15 @@
 
 #include <stdint.h>
 
-#define Xsz (1024 * 1024 * 8)
-// #define Xsz (1024 * 1024)
+// #define Xsz (1024 * 1024 * 8)
+#define Xsz (1024 * 1024)
 // #define Xsz (1024 * 128)
+// #define Xsz 0x10
+
 extern uint8_t X[Xsz];
+
 extern void radzio_SDRAM_init(void);
+extern void xram_test(void);
 
 #ifdef F429DISCO
 #include "stm32f429i_discovery_sdram.h"

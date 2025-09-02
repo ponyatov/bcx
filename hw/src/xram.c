@@ -1,10 +1,39 @@
 #include "xram.h"
 
+#include <stdio.h>
+#include <string.h>
+
 #ifndef F429DISCO
 #error "stm32f4xx_hal.h"
 #endif  // F429DISCO
 
+#include "usart.h"
+
 uint8_t X[Xsz] __attribute__((section(".xram")));
+
+extern void xram_test(void) {
+    uint32_t start_time = HAL_GetTick();
+    //
+    uint8_t fill;
+    uint32_t addr;
+    // r/w test
+    for (addr = 0, fill = 0; addr < sizeof(X); addr++, fill++) {
+        X[addr] = fill;
+    }
+    // DRAM refresh test
+    for (addr = 0, fill = 0; addr < sizeof(X); addr++, fill++) {
+        if (X[addr] != fill) Error_Handler();
+    }
+    // for (addr = 0, fill = 0; addr < sizeof(X); addr++, fill++) {
+    //     if (X[addr] != fill) Error_Handler();
+    // }
+    //
+    uint32_t elapsed_time = HAL_GetTick() - start_time;
+    char time_msg[32];
+    sprintf(time_msg, "test time: %lu ms\n", elapsed_time);
+    HAL_UART_Transmit(&huart1, (uint8_t *)time_msg, strlen(time_msg),
+                      HAL_MAX_DELAY);
+}
 
 // // https://en.radzio.dxp.pl/stm32f429idiscovery/sdram.html
 

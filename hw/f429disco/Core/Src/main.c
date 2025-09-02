@@ -24,8 +24,6 @@
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
-#include <stdio.h>
-#include <string.h>
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -101,22 +99,8 @@ int main(void)
   //   HAL_UART_Transmit(&huart1, (uint8_t*)msg, sizeof(msg), HAL_MAX_DELAY);
   //   HAL_Delay(1000);
   while (1) {
-      uint32_t start_time = HAL_GetTick();
-      //
-      uint8_t fill, byte;
-      uint32_t addr;
-      for (addr = 0, fill = 0; addr < sizeof(X); addr++, fill++) {
-          X[addr] = fill;
-          byte = X[addr];
-          if (byte != fill) Error_Handler();
-      }
-      //
-      uint32_t elapsed_time = HAL_GetTick() - start_time;
-      char time_msg[32];
-      sprintf(time_msg, "test time: %lu ms\n", elapsed_time);
-      HAL_UART_Transmit(&huart1, (uint8_t *)time_msg, strlen(time_msg),
-                        HAL_MAX_DELAY);
       /* USER CODE END WHILE */
+      xram_test();
       /* USER CODE BEGIN 3 */
   }
   /* USER CODE END 3 */
