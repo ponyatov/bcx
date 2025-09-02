@@ -9,7 +9,7 @@
 
 #include "usart.h"
 
-iocell X[Xsz] __attribute__((section(".xram")))  __attribute__((packed));
+iocell X[Xsz] __attribute__((section(".xram")));
 
 extern void xram_test(void) {
     uint32_t start_time = HAL_GetTick();
