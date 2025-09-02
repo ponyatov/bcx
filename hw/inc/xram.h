@@ -7,13 +7,13 @@ typedef uint16_t iocell;
 // typedef uint32_t iocell;
 // typedef uint64_t iocell;
 
-#define Xsz ((1024 * 128) / sizeof(iocell))
-// #define Xsz ((1024 * 1024) / sizeof(iocell))
-// #define Xsz (1024 * 1024 * (8 / sizeof(iocell)))
+// #define Xsz ((1024 * 128) / sizeof(iocell))
+#define Xsz ((1024 * 1024) / sizeof(iocell))
+// #define Xsz (1024 * 1024 * 8 / sizeof(iocell))
 
 extern iocell X[Xsz];
 
-extern void radzio_SDRAM_init(void);
+extern void xram_restart(void);
 extern void xram_test(void);
 
 #ifdef F429DISCO
