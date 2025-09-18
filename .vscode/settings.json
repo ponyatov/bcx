@@ -5,14 +5,14 @@
         "hw/l496disco/**":true,
     },
     "files.watcherExclude": {
-        "bin/**": true, "ref/**": true, "tmp/**": true
+        "bin/**": true, "tmp/**": true, "ref/**": true,
     },
     "files.associations": {
+        "*.kernel": "properties", "*.uclibc": "properties",
         "*.mk": "makefile", "*.make": "makefile",
         "*.ld": "linkerscript", "*.ld.fix": "linkerscript",
         "*.ioc": "properties", "*.ocd": "properties",
         "*.s": "arm", "*.s.fix": "arm", "*.S": "arm",
-        "*.kernel": "properties", "*.config": "properties",
         "*.service": "systemd-unit-file",
         "*.ini": "bcx", "*.f": "bcx"
     },

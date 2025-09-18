@@ -72,19 +72,20 @@ extern "C" {
 /**
   * @brief  FMC SDRAM CAS Latency
   */
+/* #define SDRAM_CAS_LATENCY    FMC_SDRAM_CAS_LATENCY_2 */
 #define SDRAM_CAS_LATENCY       FMC_SDRAM_CAS_LATENCY_3
 
 /**
   * @brief  FMC SDRAM Memory clock period
   */
 #define SDCLOCK_PERIOD          FMC_SDRAM_CLOCK_PERIOD_2    /* Default configuration used with LCD */
-// #define SDCLOCK_PERIOD       FMC_SDRAM_CLOCK_PERIOD_3
+/* #define SDCLOCK_PERIOD       FMC_SDRAM_CLOCK_PERIOD_3 */
 
 /**
   * @brief  FMC SDRAM Memory Read Burst feature
   */
-#define SDRAM_READBURST         FMC_SDRAM_RBURST_DISABLE    /* Default configuration used with LCD */
-// #define SDRAM_READBURST      FMC_SDRAM_RBURST_ENABLE
+//.#define SDRAM_READBURST         FMC_SDRAM_RBURST_DISABLE    /* Default configuration used with LCD */
+#define SDRAM_READBURST         FMC_SDRAM_RBURST_ENABLE     /* faster snad-alone XRAM */
 
 /**
   * @brief  FMC SDRAM Bank Remap

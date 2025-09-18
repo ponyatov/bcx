@@ -1,6 +1,6 @@
 {
     "version": 4,
-    "env":{
+    "env": {
         "appInclude": [
             "${workspaceFolder}/inc/**",
             "${workspaceFolder}/tmp/**",
@@ -25,9 +25,20 @@
                                     //   ,"L496DISCO","DATA_IN_ExtPSRAM"
                                     ]
             // "compilerPath"         : "/usr/bin/arm-none-eabi-g++",
-            // "cStandard"            : "c11",
+            // "cStandard"            : "c17",
             // "cppStandard"          : "c++17",
             // "intelliSenseMode"     : "gcc-arm"
+        },
+        {
+            "name": "mingw32",
+            "configurationProvider": "ms-vscode.cmake-tools",
+            "mergeConfigurations"  :  true,
+            "includePath"          : ["${appInclude}", "${crossInclude}"],
+            "defines"              : ["PC", "I686", "I386", "WIN32"],
+            "compilerPath"         : "/usr/bin/i686-w64-mingw32-g++",
+            "cStandard"            : "c17",
+            "cppStandard"          : "c++17",
+            "intelliSenseMode"     : "gcc-x64"
         },
         {
             "name": "linux",
@@ -36,7 +47,7 @@
             "includePath"          : ["${appInclude}", "${crossInclude}"],
             "defines"              : ["PC", "I5", "X86_64", "LINUX"],
             "compilerPath"         : "/usr/bin/x86_64-linux-gnu-g++",
-            "cStandard"            : "c11",
+            "cStandard"            : "c17",
             "cppStandard"          : "c++17",
             "intelliSenseMode"     : "gcc-x64"
         }
