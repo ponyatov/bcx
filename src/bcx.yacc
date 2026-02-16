@@ -2,7 +2,7 @@
     #include "app.hpp"
 %}
 
-%defines %union { char c; int n; op cmd; }
+%defines %union { char c; int n; uint8_t cmd; }
 
 %token COLON SEMICOLON
 
@@ -11,7 +11,7 @@
 %%
 syntax: COLON       { std::clog << ":colon\n"    ;}
       | SEMICOLON   { std::clog << "semicolon;\n";}
-      | CMD0        { std::clog << "cmd0:" << (int)$1 << "'n";}
+      | CMD0        { compile($1); dump(); }
 
 %%
 

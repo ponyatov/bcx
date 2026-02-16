@@ -18,6 +18,6 @@
 :           {return COLON    ;}
 ;           {return SEMICOLON;}
 
-jmp         {yylval.cmd = op::jmp; return CMD0;}
+jmp         {yylval.cmd = (byte)op::jmp; return CMD0;}
 
 .           {yyerror("");}  // syntax error on any undetected char

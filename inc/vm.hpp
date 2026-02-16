@@ -14,3 +14,18 @@ enum class op {
     halt = 0xff,
     jmp = 0x01,
 };
+
+/// @ref M size, @ref byte s
+#define Msz 0x10000
+/// @ref R size, @ref addr esses
+#define Rsz 0x100
+/// @ref D ize, @ref cell s
+#define Dsz 0x10
+
+extern byte M[Msz];  ///< main memory
+extern uint Cp;      ///< compiler pointer
+extern uint Ip;      ///< instruction pointer
+
+extern addr compile(byte b);
+
+extern void dump();

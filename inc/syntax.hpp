@@ -1,5 +1,7 @@
 #pragma once
 
+#include "app.hpp"
+
 extern int yylex();   ///< lexer
 extern FILE* yyin;    ///< input file handler
 extern char* yyfile;  ///< input file name

@@ -10,6 +10,7 @@ int main(int argc, char *argv[]) {
         fclose(yyin);
         yyfile = nullptr;
     }
+    dump();
     return vm();
 }
 
