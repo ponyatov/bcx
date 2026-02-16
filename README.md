@@ -7,5 +7,5 @@ github: https://github.com/ponyatov/bcx
 
 FORTH-like stack Virtual Machine
 - compact single-threaded
-- targets mostly for MCU & embedded systems
-- every process limited with 64K 16-bit memory (most MCU has 256K and less SRAM)
+- targets mostly for MCUs & embedded systems
+- every process limited with 64K 16-bit memory (most MCUs has 128K SRAM and lesser)
