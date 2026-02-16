@@ -1,2 +1,5 @@
 git make curl fzf
 code meld
+g++ cmake clang-format doxygen
+gdb valgrind cgroup-tools
+flex bison ragel libreadline-dev
