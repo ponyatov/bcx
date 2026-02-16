@@ -25,6 +25,7 @@
         "zixuanwang.linkerscript",
         "ms-vscode.vscode-serial-monitor",
         // "espressif.esp-idf-extension",
+        "fttx.language-forth",
         // Python
         "ms-python.python",
         "ms-python.autopep8",
