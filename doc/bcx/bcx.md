@@ -10,4 +10,8 @@ github: https://github.com/ponyatov/bcx
 - targets mostly for [[em/MCU|MCU]]s & [[Linux/embedded Linux|embedded Linux]] systems
 - every process limited with 64K 16-bit memory (most MCUs has 128K SRAM and lesser)
 
+![[bcx/bib]]
+
 ## [[bcx/stack|Почему стековая ВМ ?]]
+## [[bcx/Кросс-компилятор]]
+## [[bcx/Переносимость]]
