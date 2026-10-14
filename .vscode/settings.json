@@ -8,7 +8,7 @@
         "_build/**": true, "target/**": true,
     },
     "files.associations": {
-        "*.ini": "properties", "*.f": "properties"
+        "*.ini": "bcx", "*.f": "bcx"
     },
 
     // editor

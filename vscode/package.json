@@ -1,0 +1,186 @@
+{
+    "name": "bcx",
+    "displayName": "ByteCode eXecutor",
+    "description": "script language VM for embedded systems",
+    "version": "0.0.1",
+    "publisher": "dponyatov",
+    "license": "MIT",
+    "author": {
+        "name": "Dmitry Ponyatov",
+        "email": "dponyatov@gmail.com"
+    },
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/ponyatov/bcx"
+    },
+    "engines": {
+        "vscode": "^1.85.0"
+    },
+    "categories": [
+        "Programming Languages",
+        "Debuggers"
+    ],
+    "keywords": [
+        "bcx",
+        "bytecode",
+        "FORTH",
+        "VM",
+        "embedded",
+        "MCU",
+        "STM32",
+        "ESP32"
+    ],
+    "icon": "./logo.png",
+    "main": "./extension.js",
+    "activationEvents": [
+        "onLanguage:bcx",
+        "onDebugResolve:bcx",
+        "onDebugDynamicConfigurations:bcx"
+    ],
+    "contributes": {
+        "languages": [
+            {
+                "id": "bcx",
+                "aliases": [
+                    "bcx",
+                    "ByteCode eXecutor"
+                ],
+                "extensions": [
+                    ".bcx",
+                    ".ini",
+                    ".f"
+                ],
+                "configuration": "./languageConfiguration.json"
+            }
+        ],
+        "grammars": [
+            {
+                "language": "bcx",
+                "scopeName": "source.bcx",
+                "path": "./tmLanguage.json"
+            }
+        ],
+        "snippets": [
+            {
+                "language": "bcx",
+                "path": "./snippets.json"
+            }
+        ],
+        "debuggers": [
+            {
+                "type": "bcx",
+                "label": "bcx bytecode debugger",
+                "languages": [
+                    "bcx"
+                ],
+                "configurationAttributes": {
+                    "launch": {
+                        "required": [
+                            "program"
+                        ],
+                        "properties": {
+                            "program": {
+                                "type": "string",
+                                "description": "Path to the bytecode image (bcx.bin) to execute"
+                            },
+                            "target": {
+                                "type": "string",
+                                "enum": [
+                                    "host",
+                                    "stm32f030",
+                                    "stm32f103",
+                                    "esp32s3",
+                                    "rpi3"
+                                ],
+                                "default": "host",
+                                "description": "Execution target (host VM or MCU under gdb/openocd)"
+                            },
+                            "gdb": {
+                                "type": "string",
+                                "default": "gdb-multiarch",
+                                "description": "GDB executable used for MCU targets"
+                            },
+                            "openocd": {
+                                "type": "string",
+                                "default": "openocd",
+                                "description": "OpenOCD executable used for MCU targets"
+                            },
+                            "stopOnEntry": {
+                                "type": "boolean",
+                                "default": true
+                            }
+                        }
+                    }
+                },
+                "initialConfigurations": [
+                    {
+                        "type": "bcx",
+                        "request": "launch",
+                        "name": "bcx: launch (host)",
+                        "program": "${workspaceFolder}/bin/bcx.bin",
+                        "target": "host",
+                        "stopOnEntry": true
+                    },
+                    {
+                        "type": "bcx",
+                        "request": "launch",
+                        "name": "bcx: launch (pill103 / STM32F103)",
+                        "program": "${workspaceFolder}/bin/bcx.bin",
+                        "target": "stm32f103",
+                        "stopOnEntry": true
+                    }
+                ],
+                "configurationSnippets": [
+                    {
+                        "label": "bcx: launch (host)",
+                        "body": {
+                            "type": "bcx",
+                            "request": "launch",
+                            "name": "bcx: launch (host)",
+                            "program": "^\"\\${workspaceFolder}/bin/${workspaceFolderBaseName}\"",
+                            "target": "host"
+                        }
+                    }
+                ]
+            }
+        ],
+        "commands": [
+            {
+                "command": "bcx.compile",
+                "title": "bcx: compile current file to bytecode"
+            },
+            {
+                "command": "bcx.run",
+                "title": "bcx: run current bytecode on host VM"
+            },
+            {
+                "command": "bcx.flash",
+                "title": "bcx: flash firmware to target MCU"
+            }
+        ],
+        "taskDefinitions": [
+            {
+                "type": "bcx",
+                "required": [
+                    "action"
+                ],
+                "properties": {
+                    "action": {
+                        "type": "string",
+                        "enum": [
+                            "compile",
+                            "flash",
+                            "clean"
+                        ]
+                    }
+                }
+            }
+        ]
+    },
+    "scripts": {
+        "package": "vsce package"
+    },
+    "devDependencies": {
+        "@vscode/vsce": "^2.24.0"
+    }
+}
