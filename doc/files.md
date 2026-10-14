@@ -21,6 +21,7 @@ touch .vscode/c_cpp_properties.json
 
 ```
 .vscode/        project-local config for VSCode IDE
+vscode/         VSCode extension for bytecode-based projects (syntax,debug,..)
 bin/            target for for executable binaries/firmware images
 doc/            Obsidian vault (Wiki-like docs)
     html/       Doxygen-generated project reference
@@ -34,46 +35,9 @@ tmp/
 ref/
 ```
 
-## cross-compiler subtree
+## [[cross]]-C++ subtree
 
-```
-hw/
-    inc/
-        hw.hpp
-    pc/                 generic x86 PC
-    rpi3/               Raspberry Pi 3
-    dkc1                ESP32-S3-DevKitC-1
-    pill030             STM32F030F4P6
-    pill103             STM32F103C8T6
-cpu/
-    inc/
-        cpu.hpp
-    core2/              x86_64
-    i686/               i386 universal 32 bit
-    i486/               i386 for old hardware
-    stm32f030Ff4p       @ pill030
-    stm32f103c8t        @ pill103
-    esp32s3             @ dkc1
-arch/
-    inc/
-        arch.hpp
-    x86_64/             modern x86
-    i386/               PC104 & retro PC
-    armv7/              32-bit Raspberry
-    aarch64/
-    esp32s/             Tensilika/Xtensa
-    esp32c/             Risc-V
-os/
-    inc/
-        os.hpp
-    none/               bare-metal
-    linux/              desktop/server/embedded Linux
-    win/                Win7+ (MinGW)
-    rtos/               FreeRTOS variants
-lib/                    portable libraries
-    main/               POSIX entry point
-    vm/                 platform-independent VM parts
-    bc/                 bytecode compiler
-    cli/                command console
-    gui/                portable GUI
-```
+## build scripts
+
+### GNU [[make]]
+### [[CMake]]
