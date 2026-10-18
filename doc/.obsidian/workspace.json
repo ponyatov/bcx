@@ -11,11 +11,37 @@
             "id": "cd42972e449e4f92",
             "type": "leaf",
             "state": {
-              "type": "empty",
-              "state": {},
+              "type": "markdown",
+              "state": {
+                "file": "ESP32/TRM.md",
+                "mode": "source",
+                "source": true
+              },
               "icon": "lucide-file",
-              "title": "New tab"
-            }
+              "title": "TRM"
+            },
+            "group": "130b572716421851"
+          }
+        ]
+      },
+      {
+        "id": "9d168767d54369dc",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "c23dcc209fe4554d",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "ESP32/TRM.md",
+                "mode": "preview",
+                "source": true
+              },
+              "icon": "lucide-file",
+              "title": "TRM"
+            },
+            "group": "130b572716421851"
           }
         ]
       }
@@ -42,7 +68,7 @@
                 "searchQuery": ""
               },
               "icon": "lucide-folder-closed",
-              "title": "Files"
+              "title": "Файловый менеджер"
             }
           },
           {
@@ -172,15 +198,52 @@
   },
   "left-ribbon": {
     "hiddenItems": {
-      "switcher:Open quick switcher": false,
-      "graph:Open graph view": false,
-      "canvas:Create new canvas": false,
-      "daily-notes:Open today's daily note": false,
-      "templates:Insert template": false,
-      "command-palette:Open command palette": false,
-      "bases:Create new base": false
+      "switcher:Меню быстрого перехода": false,
+      "graph:Граф": false,
+      "canvas:Создать новый холст": false,
+      "daily-notes:Сегодняшняя заметка": false,
+      "templates:Вставить шаблон": false,
+      "command-palette:Открыть палитру команд": false,
+      "bases:Создать новую базу": false
     }
   },
   "active": "cd42972e449e4f92",
-  "lastOpenFiles": []
+  "lastOpenFiles": [
+    "ESP32/ESP32C.md",
+    "ESP32/TRM.md",
+    "ESP32/MDK.md",
+    "STM32/pill030.md",
+    "STM32/Cortex-M.md",
+    "bcx/Targets.md",
+    "cross/i686.md",
+    "Android/Android.md",
+    "Android",
+    "AVR/Mega.md",
+    "AVR/Arduino.md",
+    "AVR",
+    "embedded/PC104.md",
+    "cross/i386.md",
+    "Linux/x86_64.md",
+    "RPi/RPi.md",
+    "cross/aarch64.md",
+    "cross/armv7.md",
+    "RPi",
+    "Windows/Windows.md",
+    "Windows",
+    "STM32/DISCOVERY.md",
+    "ESP32/ESP32S.md",
+    "ESP32/Risc-V.md",
+    "ESP32/Xtensa.md",
+    "org/Tensilica.md",
+    "org",
+    "STM32/STM32F.md",
+    "STM32/pill.md",
+    "bcx/bcx.md",
+    "bcx/VM.md",
+    "VM",
+    "FORTH",
+    "Linux",
+    "embedded",
+    "bcx"
+  ]
 }

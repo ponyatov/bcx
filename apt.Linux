@@ -1,0 +1,2 @@
+libsdl2-dev libsdl2-ttf-dev libsdl2-image-dev
+python3-pytest python3-ply
