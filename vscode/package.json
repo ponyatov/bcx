@@ -163,18 +163,60 @@
         ],
         "commands": [
             {
-                "command": "bcx.compile",
-                "title": "bcx: compile current file to bytecode"
+                "command": "bcx.hello",
+                "title": "bcx: hello",
+                "icon": "$(gear)"
             },
             {
                 "command": "bcx.run",
-                "title": "bcx: run current bytecode on host VM"
+                "title": "bcx: run current bytecode on host VM",
+                "icon": "$(play)"
             },
             {
                 "command": "bcx.flash",
-                "title": "bcx: flash firmware to target MCU"
+                "title": "bcx: flash firmware to connected MCU-based device",
+                "icon": "$(chip)"
             }
         ],
+        "viewsContainers": {
+            "activitybar": [
+                {
+                    "id": "bcx",
+                    "title": "bcx",
+                    "icon": "$(server-process)"
+                }
+            ]
+        },
+        "views": {
+            "bcx": [
+                {
+                    "id": "bcx.explorer",
+                    "name": "bcx",
+                    "icon": "$(circuit-board)",
+                    "contextualTitle": "contextualTitle",
+                    "type": "webview"
+                }
+            ]
+        },
+        "menus": {
+            "view/title": [
+                {
+                    "command": "bcx.hello",
+                    "when": "view == bcx.explorer",
+                    "group": "navigation@1"
+                },
+                {
+                    "command": "bcx.run",
+                    "when": "view == bcx.explorer",
+                    "group": "navigation@2"
+                },
+                {
+                    "command": "bcx.flash",
+                    "when": "view == bcx.explorer",
+                    "group": "navigation@3"
+                }
+            ]
+        },
         "taskDefinitions": [
             {
                 "type": "bcx",
@@ -185,7 +227,7 @@
                     "action": {
                         "type": "string",
                         "enum": [
-                            "compile",
+                            "run",
                             "flash",
                             "clean"
                         ]

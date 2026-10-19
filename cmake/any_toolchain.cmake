@@ -20,10 +20,10 @@ add_compile_options(
 
 set(APP ${CMAKE_PROJECT_NAME})
 string (TOUPPER ${APP}  APP_  )
-string (TOUPPER ${HW}   HW_   )
-string (TOUPPER ${CPU}  CPU_  )
-string (TOUPPER ${ARCH} ARCH_ )
-string (TOUPPER ${OS}   OS_   )
+# string (TOUPPER ${HW}   HW_   )
+# string (TOUPPER ${CPU}  CPU_  )
+# string (TOUPPER ${ARCH} ARCH_ )
+# string (TOUPPER ${OS}   OS_   )
 
 add_compile_definitions(
     APP="${APP}" ${APP_} ${HW_} ${CPU_} ${ARCH_} ${OS_}

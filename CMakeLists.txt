@@ -6,6 +6,7 @@ project(${CMAKE_PROJECT_NAME} LANGUAGES CXX C ASM VERSION 0.0.1)
 include(version)  # binary files naming by version & git branch/hash
 include(src)      # scan project for source code files
 include(syntax)   # parser generators (flex,yacc/bison,ragel,..)
+include(debug)    # VSCode IDE debugger interface
 
 message("-- |")
 message("-- | toolchain: " ${CMAKE_CXX_COMPILER} " @ " ${CMAKE_TOOLCHAIN_FILE})
@@ -28,5 +29,9 @@ add_executable(${CMAKE_PROJECT_NAME}
     ${INI}              # init/config files & scripts
     ${DATA}             # precompiled binary data (bytecode,..)
 )
+
+target_link_libraries(${CMAKE_PROJECT_NAME}
+    -Wl,--start-group ${L} -Wl,--end-group
+) # -static
 
 include(install) # target install

@@ -1,6 +1,7 @@
 /// @defgroup memory memory
 /// @ingroup vm
 /// @{
+#pragma once
 
 #include "config.hpp"
 #include "types.hpp"

@@ -12,17 +12,17 @@ include(FindPackageHandleStandardArgs)
 #  READLINE_VERSION, the version of the library
 # ~~~
 
-find_package(PkgConfig REQUIRED)
-pkg_check_modules(READLINE REQUIRED readline>=8.2)
+find_package(PkgConfig REQUIRED QUIET)
+pkg_check_modules(READLINE REQUIRED readline>=8.2 QUIET)
 
 if(READLINE_FOUND)
   message("-- Found READLINE: ${READLINE_LIBRARIES} (found version \"${READLINE_VERSION}\")")
-  add_compile_definitions(READLINE_FOUND)
 
-  add_library(READLINE::READLINE INTERFACE IMPORTED)    
+  add_library(READLINE::READLINE INTERFACE IMPORTED)
 
   target_include_directories(READLINE::READLINE INTERFACE ${READLINE_INCLUDE_DIRS})
   target_compile_options(READLINE::READLINE INTERFACE ${READLINE_CFLAGS_OTHER})
   target_link_libraries(READLINE::READLINE INTERFACE ${READLINE_LIBRARIES})
 
+  list(APPEND L ${READLINE_LIBRARIES})
 endif()

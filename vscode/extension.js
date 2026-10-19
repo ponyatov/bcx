@@ -4,6 +4,21 @@ function hello() {
     vscode.window.showInformationMessage('bcx/hello');
 }
 
+class BcxViewProvider {
+    resolveWebviewView(webviewView) {
+        // webviewView.webview.options = { enableScripts: true };
+        webviewView.webview.html = `
+<pre>
+Cp:0000
+Ip:0000
+M[]
+R[]
+D[]
+</pre>
+        `;
+    }
+}
+
 function activate(context) {
     // сообщение в консоль разработчика
     console.log('bcx: activate');
@@ -15,13 +30,16 @@ function activate(context) {
         vscode.window.showInformationMessage('bcx.hello');
     });
     context.subscriptions.push(disposable);
+    context.subscriptions.push(
+        vscode.window.registerWebviewViewProvider(
+            'bcx.explorer',
+            new BcxViewProvider
+        )
+    );
 }
 
 function deactivate(context) {
     console.log('bcx: deactivate');
 }
 
-module.exports = {
-    activate,
-    deactivate
-};
+module.exports = { activate, deactivate };

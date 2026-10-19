@@ -15,6 +15,12 @@ add_custom_command(
 add_custom_command(
     TARGET              ${CMAKE_PROJECT_NAME} POST_BUILD
     WORKING_DIRECTORY   ${CMAKE_SOURCE_DIR}
+    COMMAND             ldd $<TARGET_FILE:${CMAKE_PROJECT_NAME}>
+)
+
+add_custom_command(
+    TARGET              ${CMAKE_PROJECT_NAME} POST_BUILD
+    WORKING_DIRECTORY   ${CMAKE_SOURCE_DIR}
     COMMAND             $<TARGET_FILE:${CMAKE_PROJECT_NAME}> ${INI}
 )
 

@@ -1,12 +1,17 @@
 
 #include "bc.hpp"
+#include "cli.hpp"
+#include "debug.hpp"
 #include "lib.hpp"
 #include "main.hpp"
+#include "vm.hpp"
 
 int main(int argc, char* argv[]) {
     fprintf(stderr, "" APP "\n");
     arg(0, argv[0]);
     init(argc, argv);
+    // auto session = dap::Session::create();
+
     for (int i = 1; i < argc; i++) {
         arg(i, argv[i]);
         yyfile = argv[i];
@@ -15,7 +20,7 @@ int main(int argc, char* argv[]) {
         fclose(yyin);
         yyfile = nullptr;
     }
-    return fini();
+    return vm();
 }
 
 void arg(int argc, char* argv) {  //

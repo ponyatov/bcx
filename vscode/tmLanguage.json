@@ -46,7 +46,7 @@
             "patterns": [
                 {
                     "name" : "keyword.mnemonic.bcx.assembly",
-                    "match": "\\b(nop|halt|jmp|jz)\\b"
+                    "match": "\\b(nop|halt|jmp|jz|call|ret|[bac]lit)\\b"
                 }
             ]
         },
