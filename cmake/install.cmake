@@ -18,4 +18,12 @@ add_custom_command(
     COMMAND             $<TARGET_FILE:${CMAKE_PROJECT_NAME}> ${INI}
 )
 
-endif() # HOST
+else() # TARGET
+
+add_custom_command(
+    TARGET              ${CMAKE_PROJECT_NAME} POST_BUILD
+    WORKING_DIRECTORY   ${CMAKE_SOURCE_DIR}
+    COMMAND             ${CMAKE_CROSSCOMPILING_EMULATOR} $<TARGET_FILE:${CMAKE_PROJECT_NAME}> ${INI}
+)
+
+endif()

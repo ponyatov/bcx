@@ -19,6 +19,16 @@ add_compile_options(
     $<$<CONFIG:Debug>:-DDEBUG>
 )
 
+# string (TOUPPER ${APP}  APP_  )
+# string (TOUPPER ${HW}   HW_   )
+# string (TOUPPER ${CPU}  CPU_  )
+# string (TOUPPER ${ARCH} ARCH_ )
+# string (TOUPPER ${OS}   OS_   )
+
+# add_compile_definitions(
+#     ${APP_} ${HW_} ${CPU_} ${ARCH_} ${OS_}
+# )
+
 add_link_options(
     -Wl,--print-memory-usage
 )
