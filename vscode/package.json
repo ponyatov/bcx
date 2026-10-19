@@ -95,13 +95,13 @@
                                 "enum": [
                                     "linux",
                                     "win32",
-                                    "rpi"
+                                    "rpi",
                                     "stm32f",
                                     "esp32s",
-                                    "esp32s",
+                                    "esp32c",
                                     "avr"
                                 ],
-                                "default": "host",
+                                "default": "linux",
                                 "description": "Execution target (host VM or MCU under gdb/openocd)"
                             },
                             "gdb": {
