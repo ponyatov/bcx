@@ -16,6 +16,7 @@ add_compile_definitions(APP="${CMAKE_PROJECT_NAME}")
 
 add_compile_options(
       -Wall -Wextra -Wpedantic
+      -Wno-unused-function        # flex
     $<$<CONFIG:Debug>:-DDEBUG>
 )
 

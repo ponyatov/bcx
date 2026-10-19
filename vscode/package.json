@@ -1,42 +1,49 @@
 {
-    "name": "bcx",
-    "displayName": "ByteCode eXecutor",
-    "description": "script language VM for embedded systems",
-    "version": "0.0.1",
-    "publisher": "dponyatov",
-    "license": "MIT",
+    "name"        : "bcx",
+    "displayName" : "bcx: ByteCode eXecutor",
+    "description" : "script language VM for embedded systems",
+    "version"     : "0.0.1",
+    "icon"        : "./logo.png",
+    "publisher"   : "dponyatov",
+    "license"     : "MIT",
+    "homepage"    : "https://github.com/ponyatov/bcx",
     "author": {
-        "name": "Dmitry Ponyatov",
-        "email": "dponyatov@gmail.com"
+        "name": "Dmitry Ponyatov", "email": "dponyatov@gmail.com"
+    },
+    "bugs": {
+        "url": "https://github.com/ponyatov/bcx/issue"
     },
     "repository": {
-        "type": "git",
-        "url": "https://github.com/ponyatov/bcx"
+        "type": "git", "url" : "https://github.com/ponyatov/bcx/tree/dponyatov/vscode"
     },
     "engines": {
         "vscode": "^1.85.0"
     },
     "categories": [
-        "Programming Languages",
-        "Debuggers"
+        "Programming Languages", "Debuggers"
     ],
     "keywords": [
-        "bcx",
-        "bytecode",
-        "FORTH",
-        "VM",
-        "embedded",
-        "MCU",
-        "STM32",
-        "ESP32"
+        "bcx", "bytecode", "VM",
+        "FORTH","CLI", "REPL",
+        "embedded", "MCU", "STM32", "ESP32"
     ],
-    "icon": "./logo.png",
-    "main": "./extension.js",
     "activationEvents": [
         "onLanguage:bcx",
         "onDebugResolve:bcx",
-        "onDebugDynamicConfigurations:bcx"
+        "onDebugDynamicConfigurations:bcx",
+        "workspaceContains:lib/*.ini",
+        "workspaceContains:lib/*.?"
     ],
+    "extensionDependencies": [
+        "ms-vscode.cpptools",
+        "jeff-hykin.better-cpp-syntax",
+        "ms-vscode.cmake-tools",
+        "daohong-emilio.yash",
+        "rreverser.ragel",
+        "zixuanwang.linkerscript",
+        "ms-vscode.vscode-serial-monitor"
+    ],
+    "main": "./extension.js",
     "contributes": {
         "languages": [
             {
@@ -86,11 +93,13 @@
                             "target": {
                                 "type": "string",
                                 "enum": [
-                                    "host",
-                                    "stm32f030",
-                                    "stm32f103",
-                                    "esp32s3",
-                                    "rpi3"
+                                    "linux",
+                                    "win32",
+                                    "rpi"
+                                    "stm32f",
+                                    "esp32s",
+                                    "esp32s",
+                                    "avr"
                                 ],
                                 "default": "host",
                                 "description": "Execution target (host VM or MCU under gdb/openocd)"
@@ -116,29 +125,37 @@
                     {
                         "type": "bcx",
                         "request": "launch",
-                        "name": "bcx: launch (host)",
-                        "program": "${workspaceFolder}/bin/bcx.bin",
-                        "target": "host",
+                        "name": "bcx: launch (linux)",
+                        "program": "${workspaceFolder}/bin/bcx",
+                        "target": "linux",
                         "stopOnEntry": true
                     },
                     {
                         "type": "bcx",
                         "request": "launch",
-                        "name": "bcx: launch (pill103 / STM32F103)",
-                        "program": "${workspaceFolder}/bin/bcx.bin",
-                        "target": "stm32f103",
+                        "name": "bcx: launch (win32)",
+                        "program": "${workspaceFolder}/bin/bcx,exe",
+                        "target": "win32",
+                        "stopOnEntry": true
+                    },
+                    {
+                        "type": "bcx",
+                        "request": "launch",
+                        "name": "bcx: launch (stm32f)",
+                        "program": "${workspaceFolder}/bin/bcx.elf",
+                        "target": "stm32f",
                         "stopOnEntry": true
                     }
                 ],
                 "configurationSnippets": [
                     {
-                        "label": "bcx: launch (host)",
+                        "label": "bcx: launch (linux)",
                         "body": {
                             "type": "bcx",
                             "request": "launch",
-                            "name": "bcx: launch (host)",
+                            "name": "bcx: launch (linux)",
                             "program": "^\"\\${workspaceFolder}/bin/${workspaceFolderBaseName}\"",
-                            "target": "host"
+                            "target": "linux"
                         }
                     }
                 ]
