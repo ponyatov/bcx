@@ -10,7 +10,7 @@
 %%
 syntax: | ex syntax 
 
-ex:   COLON ID        {} // global($2,Cp); }    // compile global label
-    | AT    ID        {} // local ($2,Cp); }    // compile local label
-    | CMD0            {}
-    | CMD1 ID
+ex:   COLON ID        { global($2,Cp); }                     // global label
+    | AT    ID        { local ($2,Cp); }                     // local label
+    | CMD0            { compile($1); }                       // no-op command
+    | CMD1 ID         { compile($1); compile(resolve($2)); } // call/jmp label

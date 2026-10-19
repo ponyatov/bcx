@@ -26,10 +26,19 @@ extern void yyerror(const char* msg);
 
 /// @defgroup compiler compiler
 /// @{
-extern addr compile(byte b);                       ///< single @ref byte
-extern addr compile(addr a);                       ///< 16-bit @ref addr
-extern addr compile(cell c);                       ///< 32-bit @ref cell
-extern addr compile(std::string* label, addr Cp);  ///< global label
+extern addr compile(byte b);                     ///< single @ref byte
+extern addr compile(Op op);                      ///< command @ref Op
+extern addr compile(addr a);                     ///< 16-bit @ref addr
+extern addr compile(cell c);                     ///< 32-bit @ref cell
+extern addr global(std::string* label, addr a);  ///< global label
+extern std::map<std::string, addr> globals;      ///< @ref global s table
+extern addr local(std::string* label, addr a);   ///< local label
+extern std::map<std::string, addr> locals;       ///< @ref global s table
+extern addr resolve(std::string* label);         ///< @ref local / @ref global
+extern std::map<std::string, std::vector<addr>> forwards;  ///< @ref forward s
+extern addr forward(std::string* label, addr a);    ///< push into @ref forwards
+extern addr backpatch(std::string* label, addr a);  ///< patch @ref forwards
+
 /// @}
 
 /// @}
