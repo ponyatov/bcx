@@ -3,10 +3,9 @@
 /// @brief bytecode compiler
 /// @{
 
-#include <stdio.h>
-#include <stdlib.h>
-
 #include "command.hpp"
+#include "lib.hpp"
+#include "memory.hpp"
 #include "types.hpp"
 
 /// @defgroup lexer lexer
@@ -17,10 +16,20 @@ extern FILE* yyin;
 extern char* yytext;
 extern char* yyfile;
 /// @}
+
 /// @defgroup parser parser
 /// @{
 extern int yyparse();
 extern void yyerror(const char* msg);
 #include "bc.yacc.hpp"
 /// @}
+
+/// @defgroup compiler compiler
+/// @{
+extern addr compile(byte b);                       ///< single @ref byte
+extern addr compile(addr a);                       ///< 16-bit @ref addr
+extern addr compile(cell c);                       ///< 32-bit @ref cell
+extern addr compile(std::string* label, addr Cp);  ///< global label
+/// @}
+
 /// @}

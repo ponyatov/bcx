@@ -2,9 +2,9 @@
 /// @ingroup vm
 /// @{
 
-#include <stdint.h>
+#include "types.hpp"
 
-enum class Op : uint8_t {
+enum class Op : byte {
     nop = 0x00,
     halt = 0xFF,
 };

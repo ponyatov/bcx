@@ -12,23 +12,22 @@ set(CMAKE_OBJCOPY      ${TOOLCHAIN_PREFIX}-objcopy)
 set(CMAKE_SIZE         ${TOOLCHAIN_PREFIX}-size)
 set(CMAKE_RC_COMPILER  ${TOOLCHAIN_PREFIX}-windres)
 
-add_compile_definitions(APP="${CMAKE_PROJECT_NAME}")
-
 add_compile_options(
       -Wall -Wextra -Wpedantic
       -Wno-unused-function        # flex
     $<$<CONFIG:Debug>:-DDEBUG>
 )
 
-# string (TOUPPER ${APP}  APP_  )
-# string (TOUPPER ${HW}   HW_   )
-# string (TOUPPER ${CPU}  CPU_  )
-# string (TOUPPER ${ARCH} ARCH_ )
-# string (TOUPPER ${OS}   OS_   )
+set(APP ${CMAKE_PROJECT_NAME})
+string (TOUPPER ${APP}  APP_  )
+string (TOUPPER ${HW}   HW_   )
+string (TOUPPER ${CPU}  CPU_  )
+string (TOUPPER ${ARCH} ARCH_ )
+string (TOUPPER ${OS}   OS_   )
 
-# add_compile_definitions(
-#     ${APP_} ${HW_} ${CPU_} ${ARCH_} ${OS_}
-# )
+add_compile_definitions(
+    APP="${APP}" ${APP_} ${HW_} ${CPU_} ${ARCH_} ${OS_}
+)
 
 add_link_options(
     -Wl,--print-memory-usage
