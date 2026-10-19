@@ -1,4 +1,4 @@
-/// @defgroup cli cli
+/// @defgroup cli CLI
 /// @ingroup vm
 /// @brief command-line interface (command console)
 /// @{

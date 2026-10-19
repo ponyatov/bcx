@@ -1,5 +1,6 @@
 /// @defgroup config config
 /// @ingroup vm
+/// @brief @ref vm config constants
 /// @{
 #pragma once
 

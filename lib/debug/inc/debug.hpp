@@ -1,5 +1,6 @@
 /// @defgroup debug debug
 /// @ingroup vm
+/// @brief @ref compiler / run traces & interactive debug (with IDE integration)
 /// @{
 #pragma once
 

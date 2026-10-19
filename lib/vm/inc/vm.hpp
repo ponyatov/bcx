@@ -1,4 +1,4 @@
-/// @defgroup vm vm
+/// @defgroup vm VM
 /// @ingroup lib
 /// @{
 #pragma once
