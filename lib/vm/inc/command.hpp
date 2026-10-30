@@ -1,6 +1,6 @@
 /// @defgroup command command
 /// @ingroup vm
-/// @brief @ref vm command set
+/// @brief command set
 /// @{
 #pragma once
 

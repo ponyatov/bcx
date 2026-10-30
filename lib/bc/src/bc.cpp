@@ -26,7 +26,7 @@ addr global(std::string* label, addr a) {
     locals.clear();
     globals[*label] = a;
     Ip = a;
-    if (debug) fprintf(stderr, "%.4X: %s\n", a, label->c_str());
+    trace("%.4X: %s\n", a, label->c_str());
     return a;
 }
 
@@ -34,7 +34,7 @@ std::map<std::string, addr> globals;
 
 addr local(std::string* label, addr a) {
     locals[*label] = a;
-    if (debug) fprintf(stderr, "%.4X: %s\n", a, label->c_str());
+    trace("%.4X: %s\n", a, label->c_str());
     return a;
 }
 

@@ -1,5 +1,5 @@
 /// @defgroup cli CLI
-/// @ingroup vm
+/// @ingroup lib
 /// @brief command-line interface (command console)
 /// @{
 #pragma once

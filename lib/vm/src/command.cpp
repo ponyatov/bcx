@@ -1,10 +1,10 @@
 #include "command.hpp"
 
 void nop() {  //
-    if (debug) fprintf(stderr, "\tnop");
+    trace("\tnop");
 }
 
 void halt() {  //
-    if (debug) fprintf(stderr, "\thalt\n");
+    trace("\thalt\n");
     exit(fini());
 }

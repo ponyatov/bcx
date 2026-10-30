@@ -1,6 +1,6 @@
 /// @defgroup types types
 /// @ingroup vm
-/// @brief @ref vm types (MCU-optimized)
+/// @brief types (MCU-optimized)
 /// @{
 #pragma once
 

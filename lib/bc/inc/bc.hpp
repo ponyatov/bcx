@@ -1,6 +1,6 @@
 /// @defgroup bc bc
-/// @ingroup vm
-/// @brief bytecode compiler
+/// @ingroup lib
+/// @brief @ref vm bytecode compiler
 /// @{
 
 #include "command.hpp"

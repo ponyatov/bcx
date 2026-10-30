@@ -1,12 +1,12 @@
 #include "vm.hpp"
 
 int vm() {
-    fprintf(stderr,"\nvm:\n");
+    info("\nvm:\n");
     while (true) {
-        if (debug) fprintf(stderr, "\n%.4X: ", Ip);
+        trace( "\n%.4X: ", Ip);
         assert(Ip < Cp);
         Op op = (Op)M[Ip++];
-        if (debug) fprintf(stderr, "%.2X ", (byte)op);
+        trace( "%.2X ", (byte)op);
         switch (op) {
             case Op::nop:
                 nop();
@@ -15,7 +15,7 @@ int vm() {
                 halt();
                 break;
             default:
-                if (debug) fprintf(stderr, "???\n");
+                trace( "???\n");
                 abort();
         }
     }

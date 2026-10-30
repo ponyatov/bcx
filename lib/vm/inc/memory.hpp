@@ -1,6 +1,6 @@
 /// @defgroup memory memory
 /// @ingroup vm
-/// @brief @ref vm memory areas & registers
+/// @brief memory areas & registers
 /// @{
 #pragma once
 

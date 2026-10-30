@@ -7,11 +7,8 @@
 #include "vm.hpp"
 
 int main(int argc, char* argv[]) {
-    fprintf(stderr, "" APP "\n");
     arg(0, argv[0]);
     init(argc, argv);
-
-    // auto session = dap::Session::create();
 
     for (int i = 1; i < argc; i++) {
         arg(i, argv[i]);
@@ -26,7 +23,7 @@ int main(int argc, char* argv[]) {
 }
 
 void arg(int argc, char* argv) {  //
-    fprintf(stderr, "%i: %s\n", argc, argv);
+    info("%i: %s\n", argc, argv);
 }
 
 void init(int, char*[]) {}
