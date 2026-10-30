@@ -1,6 +1,7 @@
 #include "vm.hpp"
 
 int vm() {
+    fprintf(stderr,"\nvm:\n");
     while (true) {
         if (debug) fprintf(stderr, "\n%.4X: ", Ip);
         assert(Ip < Cp);
