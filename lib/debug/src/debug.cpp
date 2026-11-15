@@ -2,7 +2,7 @@
 
 LogLevel debug = LogLevel::DEB;
 
-// dap::Session session = dap::Session::create();
+std::unique_ptr<dap::Session> session = dap::Session::create();
 
 #include <stdarg.h>
 #include <stdio.h>
