@@ -6,8 +6,8 @@
 #pragma once
 
 // #include <dap/io.h>
-// #include <dap/protocol.h>
-// #include <dap/session.h>
+#include <dap/protocol.h>
+#include <dap/session.h>
 
 #include <stdint.h>
 
@@ -20,6 +20,6 @@ extern void warn(const char *format, ...);   ///<
 extern void err(const char *format, ...);    ///<
 extern void trace(const char *format, ...);  ///< program run trace
 
-// extern dap::Session session;  ///< DAP sesstion
+extern std::unique_ptr<dap::Session> session;  ///< DAP sesstion
 
 /// @}
