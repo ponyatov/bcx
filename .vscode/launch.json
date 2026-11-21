@@ -1,1 +1,31 @@
-{}
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "type": "bcx",
+            "request": "launch",
+            "name": "bcx: dev host",
+            "program": "/bin/",
+            "serverPort": 4711
+        },
+        {
+            "type": "cppdbg",
+            "request": "launch",
+            "name": "bcx: cppdbg",
+            "program": "${workspaceFolder}/bin/${workspaceFolderBasename}",
+            "args": [],
+            "stopAtEntry": true,
+            "cwd": "${workspaceFolder}",
+            "environment": [],
+            "externalConsole": false,
+            "MIMode": "gdb",
+            "setupCommands": [
+                {
+                    "description": "Enable pretty-printing",
+                    "text": "-enable-pretty-printing",
+                    "ignoreFailures": true
+                }
+            ]
+        }
+    ]
+}

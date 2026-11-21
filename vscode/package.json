@@ -77,9 +77,7 @@
             {
                 "type": "bcx",
                 "label": "bcx bytecode debugger",
-                "languages": [
-                    "bcx"
-                ],
+                "languages": ["bcx"],
                 "configurationAttributes": {
                     "launch": {
                         "required": [
@@ -88,74 +86,32 @@
                         "properties": {
                             "program": {
                                 "type": "string",
-                                "description": "Path to the bytecode image (bcx.bin) to execute"
+                                "description": "Path to the DAP-enabled VM",
+                                "default": "${workspaceFolder}/bin/${workspaceFolderBasename}"
                             },
-                            "target": {
-                                "type": "string",
-                                "enum": [
-                                    "linux",
-                                    "win32",
-                                    "rpi",
-                                    "stm32f",
-                                    "esp32s",
-                                    "esp32c",
-                                    "avr"
-                                ],
-                                "default": "linux",
-                                "description": "Execution target (host VM or MCU under gdb/openocd)"
+                            "serverPort": {
+                                "type": "number",
+                                "description": "DAP server IP port",
+                                "default": 4711
                             },
-                            "gdb": {
-                                "type": "string",
-                                "default": "gdb-multiarch",
-                                "description": "GDB executable used for MCU targets"
-                            },
-                            "openocd": {
-                                "type": "string",
-                                "default": "openocd",
-                                "description": "OpenOCD executable used for MCU targets"
-                            },
-                            "stopOnEntry": {
+                            "stopAtEntry": {
                                 "type": "boolean",
                                 "default": true
                             }
                         }
                     }
                 },
-                "initialConfigurations": [
-                    {
-                        "type": "bcx",
-                        "request": "launch",
-                        "name": "bcx: launch (linux)",
-                        "program": "${workspaceFolder}/bin/bcx",
-                        "target": "linux",
-                        "stopOnEntry": true
-                    },
-                    {
-                        "type": "bcx",
-                        "request": "launch",
-                        "name": "bcx: launch (win32)",
-                        "program": "${workspaceFolder}/bin/bcx,exe",
-                        "target": "win32",
-                        "stopOnEntry": true
-                    },
-                    {
-                        "type": "bcx",
-                        "request": "launch",
-                        "name": "bcx: launch (stm32f)",
-                        "program": "${workspaceFolder}/bin/bcx.elf",
-                        "target": "stm32f",
-                        "stopOnEntry": true
-                    }
-                ],
                 "configurationSnippets": [
                     {
-                        "label": "bcx: launch (linux)",
+                        "label": "bcx: linux host",
+                        "description": "local developer's host (project-local)",
                         "body": {
                             "type": "bcx",
                             "request": "launch",
-                            "name": "bcx: launch (linux)",
-                            "program": "^\"\\${workspaceFolder}/bin/${workspaceFolderBaseName}\"",
-                            "target": "linux"
+                            "name": "bcx: dev host",
+                            "program": "${workspaceFolder}/bin/${workspaceFolderBasename}",
+                            "serverPort": 4711,
+                            "log": true
                         }
                     }
                 ]
