@@ -72,6 +72,7 @@ void trace(const char *format, ...) {  //
 }
 
 #include "command.hpp"
+#include "vm.hpp"
 
 void dap_init() {
     session->registerHandler([&](const dap::InitializeRequest & /* request */) {
@@ -81,18 +82,135 @@ void dap_init() {
     });
 
     session->registerHandler([](const dap::LaunchRequest &) {
-        error("DAP: LaunchRequest\n");
+        info("DAP: LaunchRequest\n");
         session->send(dap::InitializedEvent{});
+        dap::StoppedEvent stopped;
+        // stopped.reason = "breakpoint";
+        // stopped.threadId = 1;
+        stopped.allThreadsStopped = true;
+        session->send(stopped);
         return dap::LaunchResponse{};
     });
 
-    session->registerHandler([](const dap::ConfigurationDoneRequest &) {
-        info("DAP: ConfigurationDoneRequest\n");
-        return dap::ConfigurationDoneResponse{};
+    session->registerHandler([](const dap::ThreadsRequest &) {
+        dap::ThreadsResponse response;
+        dap::Thread thread;
+        thread.id = 0;
+        thread.name = "idle";
+        response.threads.push_back(thread);
+        thread.id = 1;
+        thread.name = "init";
+        response.threads.push_back(thread);
+        return response;
     });
 
+    session->registerHandler([](const dap::StackTraceRequest &request) {
+        dap::StackTraceResponse response;
+        dap::StackFrame frame;
+        switch (request.threadId) {
+            case 1:
+                frame.id = 1;
+                frame.name = "main";
+                frame.line = 0;
+                frame.column = 0;
+                dap::Source src;
+                src.name = "src";
+                src.sourceReference = 42;
+                frame.source = src;
+                response.stackFrames.push_back(frame);
+        }
+        return response;
+    });
+
+    session->registerHandler([](const dap::ScopesRequest &) {
+        dap::ScopesResponse response;
+        dap::Scope scope;
+        scope.name = "VM";
+        scope.variablesReference = 100;
+        response.scopes.push_back(scope);
+        return response;
+    });
+
+    session->registerHandler([](const dap::VariablesRequest &request) {
+        dap::VariablesResponse response;
+        char buf[0x10];
+        dap::Variable var;
+        switch (request.variablesReference) {
+            case 'M':
+                var.name = "Cp";
+                var.type = "uint16";
+                snprintf(buf, sizeof(buf), "0x%04X", Cp);
+                var.value = buf;
+                response.variables.push_back(var);
+                var.name = "Ip";
+                var.type = "uint16";
+                snprintf(buf, sizeof(buf), "0x%04X", Ip);
+                var.value = buf;
+                response.variables.push_back(var);
+                break;
+            case 'R':
+                var.name = "Rp";
+                var.type = "uint8";
+                snprintf(buf, sizeof(buf), "0x%02X", Rp);
+                var.value = buf;
+                var.variablesReference = 0;
+                var.indexedVariables = 0;
+                response.variables.push_back(var);
+                break;
+            case 'D':
+                var.name = "Dp";
+                var.type = "uint8";
+                snprintf(buf, sizeof(buf), "0x%02X", Dp);
+                var.value = buf;
+                var.variablesReference = 0;
+                var.indexedVariables = 0;
+                response.variables.push_back(var);
+                break;
+            default:
+                //
+                var.name = "M[]";
+                var.type = "uint8";
+                snprintf(buf, sizeof(buf), "byte[0x%X]", Msz);
+                var.value = buf;
+                var.variablesReference = 'M';
+                var.indexedVariables = Cp + 2;
+                response.variables.push_back(var);
+                //
+                var.name = "R[]";
+                var.type = "uint16";
+                snprintf(buf, sizeof(buf), "addr[%d]", Rsz);
+                var.value = buf;
+                var.variablesReference = 'R';
+                var.indexedVariables = Rp + 1;
+                response.variables.push_back(var);
+                //
+                var.name = "D[]";
+                var.type = "int32";
+                snprintf(buf, sizeof(buf), "cell[%d]", Dsz);
+                var.value = buf;
+                var.variablesReference = 'D';
+                var.indexedVariables = Dp + 1;
+                response.variables.push_back(var);
+        }
+        return response;
+    });
+
+    session->registerHandler([](const dap::SourceRequest &request) {
+        dap::SourceResponse response;
+        switch (request.sourceReference) {
+            default:
+                response.content = "main:\n";
+        }
+        return response;
+    });
+
+    // session->registerHandler([](const dap::ConfigurationDoneRequest &) {
+    //     info("DAP: ConfigurationDoneRequest\n");
+    //     return dap::ConfigurationDoneResponse{};
+    // });
+
     session->registerHandler([](const dap::DisconnectRequest &) {
-        info("DAP: DisconnectRequest\n");
+        error("DAP: DisconnectRequest\n");
         halt();
         return dap::DisconnectResponse{};
     });
