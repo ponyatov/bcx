@@ -53,11 +53,13 @@ void trace(const char *format, ...) {  //
 static auto session = dap::Session::create();
 static auto server = dap::net::Server::create();
 
+static volatile bool dap_stop = false;
+
 void dap_init() {
     bool started = server->start(
         DAP_PORT,
         [](const std::shared_ptr<dap::ReaderWriter> &socket) {
-            session->bind(socket, socket);
+            session->bind(socket, socket, [] { dap_stop = true; });
             session->startProcessingMessages();
         },
         [](const char *err) {
@@ -65,4 +67,14 @@ void dap_init() {
             abort();
         });
     assert(started);
+    fprintf(stderr, "DAP: localhost:%i\n", DAP_PORT);
+}
+
+#include <thread>
+
+int dap_wait() {
+    while (!dap_stop)
+        std::this_thread::sleep_for(std::chrono::milliseconds(111));
+    fprintf(stderr, "DAP: closed\n");
+    return 0;
 }

@@ -9,7 +9,8 @@
 int main(int argc, char* argv[]) {
     arg(0, argv[0]);
     init(argc, argv);
-    dap_init();
+
+    if (argc == 1) dap_init();
 
     for (int i = 1; i < argc; i++) {
         arg(i, argv[i]);
@@ -20,7 +21,11 @@ int main(int argc, char* argv[]) {
         fclose(yyin);
         yyfile = nullptr;
     }
-    return vm();
+
+    if (argc == 1)
+        return dap_wait();
+    else
+        return vm();
 }
 
 void arg(int argc, char* argv) {  //

@@ -4,7 +4,7 @@
         {
             "type": "bcx",
             "request": "launch",
-            "name": "bcx: dev host",
+            "name": "bcx: linux host",
             "program": "${workspaceFolder}/bin/${workspaceFolderBasename}",
             "serverPort": 4711
         },

@@ -28,7 +28,7 @@ extern void trace(const char *format, ...);  ///< program run trace
 /// DAP server default IP port
 #define DAP_PORT 4711
 
-/// init & run @ref session
-void dap_init();
+void dap_init();  ///< init & run @ref session
+int dap_wait();   ///< DAP server command loop
 
 /// @}
