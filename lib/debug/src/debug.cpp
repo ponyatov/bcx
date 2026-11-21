@@ -5,6 +5,13 @@ LogLevel debug = LogLevel::DEB;
 #include <stdarg.h>
 #include <stdio.h>
 
+static volatile bool console = true;
+static auto session = dap::Session::create();
+static auto server = dap::net::Server::create();
+
+static dap::OutputEvent debcon;
+static char outbuf[1024];
+
 void log(const char *format, ...) {  //
     if (debug >= LogLevel::NONE) {
         va_list args;
@@ -14,11 +21,18 @@ void log(const char *format, ...) {  //
     }
 }
 
-void info(const char *format, ...) {  //
+void info(const char *format, ...) {
     if (debug >= LogLevel::INFO) {
         va_list args;
         va_start(args, format);
-        vfprintf(stderr, format, args);
+        if (console)
+            vfprintf(stderr, format, args);
+        else {
+            debcon.category = "stdout";
+            vsnprintf(outbuf, sizeof(outbuf), format, args);
+            debcon.output = outbuf;
+            session->send(debcon);
+        }
         va_end(args);
     }
 }
@@ -32,11 +46,18 @@ void warn(const char *format, ...) {  //
     }
 }
 
-void err(const char *format, ...) {  //
+void error(const char *format, ...) {  //
     if (debug >= LogLevel::ERR) {
         va_list args;
         va_start(args, format);
-        vfprintf(stderr, format, args);
+        if (console)
+            vfprintf(stderr, format, args);
+        else {
+            debcon.category = "stderr";
+            vsnprintf(outbuf, sizeof(outbuf), format, args);
+            debcon.output = outbuf;
+            session->send(debcon);
+        }
         va_end(args);
     }
 }
@@ -50,20 +71,41 @@ void trace(const char *format, ...) {  //
     }
 }
 
-static auto session = dap::Session::create();
-static auto server = dap::net::Server::create();
-
-static volatile bool dap_stop = false;
+#include "command.hpp"
 
 void dap_init() {
+    session->registerHandler([&](const dap::InitializeRequest & /* request */) {
+        info("DAP: InitializeRequest\n");
+        dap::InitializeResponse response;
+        return response;
+    });
+
+    session->registerHandler([](const dap::LaunchRequest &) {
+        error("DAP: LaunchRequest\n");
+        session->send(dap::InitializedEvent{});
+        return dap::LaunchResponse{};
+    });
+
+    session->registerHandler([](const dap::ConfigurationDoneRequest &) {
+        info("DAP: ConfigurationDoneRequest\n");
+        return dap::ConfigurationDoneResponse{};
+    });
+
+    session->registerHandler([](const dap::DisconnectRequest &) {
+        info("DAP: DisconnectRequest\n");
+        halt();
+        return dap::DisconnectResponse{};
+    });
+
     bool started = server->start(
         DAP_PORT,
         [](const std::shared_ptr<dap::ReaderWriter> &socket) {
-            session->bind(socket, socket, [] { dap_stop = true; });
+            session->bind(socket, socket);
             session->startProcessingMessages();
+            console = false;
         },
         [](const char *err) {
-            fprintf(stderr, "\n\nDAP server error: %s\n\n", err);
+            error("\n\nDAP error:%s\n\n", err);
             abort();
         });
     assert(started);
@@ -73,8 +115,6 @@ void dap_init() {
 #include <thread>
 
 int dap_wait() {
-    while (!dap_stop)
-        std::this_thread::sleep_for(std::chrono::milliseconds(111));
-    fprintf(stderr, "DAP: closed\n");
+    while (true) std::this_thread::sleep_for(std::chrono::seconds(1));
     return 0;
 }

@@ -1,4 +1,5 @@
 const vscode = require('vscode');
+const { spawn } = require('child_process');
 
 function hello() {
     vscode.window.showInformationMessage('bcx/hello');
@@ -33,9 +34,25 @@ function activate(context) {
     context.subscriptions.push(
         vscode.window.registerWebviewViewProvider(
             'bcx.explorer',
-            new BcxViewProvider
+            new BcxViewProvider()
         )
     );
+
+    // регистрация кастомного типа отладчика
+    vscode.debug.registerDebugAdapterDescriptorFactory('bcx', {
+        async createDebugAdapterDescriptor(session) {
+            const program = session.configuration.program;
+            const child = spawn(program, [], {
+                stdio: ['ignore', 'pipe', 'pipe']
+            });
+
+            await new Promise(r => setTimeout(r, 500));
+
+            const host = session.configuration.serverHost || '127.0.0.1';
+            const port = session.configuration.serverPort || 4711;
+            return new vscode.DebugAdapterServer(port, host);
+        }
+    });
 }
 
 function deactivate(context) {

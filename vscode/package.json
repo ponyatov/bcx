@@ -80,14 +80,17 @@
                 "languages": ["bcx"],
                 "configurationAttributes": {
                     "launch": {
-                        "required": [
-                            "program"
-                        ],
+                        "required": [],
                         "properties": {
                             "program": {
                                 "type": "string",
                                 "description": "Path to the DAP-enabled VM",
                                 "default": "${workspaceFolder}/bin/${workspaceFolderBasename}"
+                            },
+                            "serverHost": {
+                                "type": "string",
+                                "description": "DAP server IP",
+                                "default": "127.0.0.1"
                             },
                             "serverPort": {
                                 "type": "number",
@@ -110,6 +113,7 @@
                             "request": "launch",
                             "name": "bcx: linux host",
                             "program": "^\"\\${workspaceFolder}/bin/\\${workspaceFolderBasename}\"",
+                            "serverHost": "127.0.0.1",
                             "serverPort": 4711
                         }
                     }

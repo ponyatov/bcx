@@ -23,8 +23,6 @@ extern void trace(const char *format, ...);  ///< program run trace
 #include "dap/io.h"
 #include "dap/network.h"
 
-// extern std::unique_ptr<dap::Session> session;  ///< DAP session
-
 /// DAP server default IP port
 #define DAP_PORT 4711
 
