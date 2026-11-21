@@ -9,6 +9,7 @@
 int main(int argc, char* argv[]) {
     arg(0, argv[0]);
     init(argc, argv);
+    dap_init();
 
     for (int i = 1; i < argc; i++) {
         arg(i, argv[i]);

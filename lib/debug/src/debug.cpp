@@ -2,8 +2,6 @@
 
 LogLevel debug = LogLevel::DEB;
 
-std::unique_ptr<dap::Session> session = dap::Session::create();
-
 #include <stdarg.h>
 #include <stdio.h>
 
@@ -50,4 +48,21 @@ void trace(const char *format, ...) {  //
         vfprintf(stderr, format, args);
         va_end(args);
     }
+}
+
+static auto session = dap::Session::create();
+static auto server = dap::net::Server::create();
+
+void dap_init() {
+    bool started = server->start(
+        DAP_PORT,
+        [](const std::shared_ptr<dap::ReaderWriter> &socket) {
+            session->bind(socket, socket);
+            session->startProcessingMessages();
+        },
+        [](const char *err) {
+            fprintf(stderr, "\n\nDAP server error: %s\n\n", err);
+            abort();
+        });
+    assert(started);
 }

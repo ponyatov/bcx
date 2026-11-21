@@ -91,7 +91,7 @@
                             },
                             "serverPort": {
                                 "type": "number",
-                                "description": "DAP server IP port",
+                                "description": "DAP server localhost port",
                                 "default": 4711
                             },
                             "stopAtEntry": {
@@ -109,9 +109,8 @@
                             "type": "bcx",
                             "request": "launch",
                             "name": "bcx: dev host",
-                            "program": "${workspaceFolder}/bin/${workspaceFolderBasename}",
-                            "serverPort": 4711,
-                            "log": true
+                            "program": "^\"\\${workspaceFolder}/bin/\\${workspaceFolderBasename}\"",
+                            "serverPort": 4711
                         }
                     }
                 ]
