@@ -29,6 +29,7 @@
     "auto-tab-closer.delayMs": 5555,
     "auto-tab-closer.numLeftTabs": 3,
     "auto-tab-closer.numMaxTabs": 3,
+    "closeIdleTabs.idleTimeout": 30,
     // "git.enabled": false,
 
     // terminal
