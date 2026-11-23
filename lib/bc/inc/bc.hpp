@@ -10,11 +10,11 @@
 
 /// @defgroup lexer lexer
 /// @{
-extern int yylex();
-extern int yylineno;
-extern FILE* yyin;
-extern char* yytext;
-extern char* yyfile;
+extern int yylex();   ///< lexer
+extern int yylineno;  ///< current line
+extern FILE* yyin;    ///< current file handler
+extern char* yyfile;  ///< current file name
+extern char* yytext;  ///< lexeme value
 /// @}
 
 /// @defgroup parser parser

@@ -26,7 +26,7 @@
     "workbench.tree.indent": 24,
     "files.autoSave": "afterDelay",
     "files.autoSaveDelay": 2222,
-    "closeIdleTabs.idleTimeout": 60
+    "closeIdleTabs.idleTimeout": 60,
     // "git.enabled": false,
 
     // terminal
