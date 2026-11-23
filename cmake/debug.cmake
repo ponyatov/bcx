@@ -1,6 +1,9 @@
 # VSCode IDE debugger interface
+if(CMAKE_SYSTEM_NAME STREQUAL "Linux") #  AND CMAKE_CROSSCOMPILING EQUAL FALSE)
 find_package(JSON REQUIRED)
 find_package(DAP  REQUIRED)
+add_compile_definitions(DAP)
+endif()
 
 # if(DAP_FOUND)
 #   message("-- Found DAP: ${DAP_LIBRARIES} (found version \"${DAP_VERSION}\")")

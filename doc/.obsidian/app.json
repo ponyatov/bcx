@@ -3,5 +3,11 @@
   "livePreview": false,
   "newFileLocation": "current",
   "attachmentFolderPath": "./",
-  "alwaysUpdateLinks": true
+  "alwaysUpdateLinks": true,
+  "pdfExportSettings": {
+    "pageSize": "A5",
+    "landscape": true,
+    "margin": "1",
+    "downscalePercent": 100
+  }
 }

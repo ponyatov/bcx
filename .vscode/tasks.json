@@ -25,6 +25,14 @@
             "presentation"   : {"showReuseMessage": false, "focus": false, "reveal": "silent", "close": false}
         },
         {
+            "label"          : "make: book",
+            "type"           : "shell",
+            "command"        : "make book",
+            "problemMatcher" : [],
+            "presentation"   : {"showReuseMessage": true, "focus": true, "reveal": "silent", "close": false},
+            "group"          : {"kind": "build", "isDefault": true}
+        },
+        {
             "label"          : "make: ai",
             "type"           : "shell",
             "command"        : "make ai",

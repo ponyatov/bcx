@@ -142,11 +142,23 @@
                 {
                     "id": "bcx",
                     "title": "bcx",
-                    "icon": "$(server-process)"
+                    "icon": "$(chip)"
                 }
             ]
         },
         "views": {
+            "debug": [
+                {
+                    "id": "Ds",
+                    "name": "Data Stack",
+                    "when": "debugType == 'bcx'"
+                },
+                {
+                    "id": "Rs",
+                    "name": "Return Stack",
+                    "when": "debugType == 'bcx'"
+                }
+            ],
             "bcx": [
                 {
                     "id": "bcx.explorer",

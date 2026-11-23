@@ -5,7 +5,10 @@
 /// @{
 #pragma once
 
+#include <stdarg.h>
 #include <stdint.h>
+#include <memory>
+#include "vm.hpp"
 
 enum class LogLevel : uint8_t { NONE, INFO, WARN, ERR, DEB };
 extern LogLevel debug;  ///< global debug level flag
@@ -15,6 +18,11 @@ extern void info(const char *format, ...);   ///< log if @ref LogLevel::INFO +
 extern void warn(const char *format, ...);   ///<
 extern void err(const char *format, ...);    ///<
 extern void trace(const char *format, ...);  ///< program run trace
+
+#ifdef DAP
+
+/// @defgroup dap DAP
+/// @{
 
 // #include <dap/io.h>
 #include <dap/protocol.h>
@@ -26,7 +34,14 @@ extern void trace(const char *format, ...);  ///< program run trace
 /// DAP server default IP port
 #define DAP_PORT 4711
 
-void dap_init();  ///< init & run @ref session
-int dap_wait();   ///< DAP server command loop
+extern std::shared_ptr<dap::Session> session;  ///< DAP server
+
+void dap_init();                 ///< init & run @ref session
+int dap_wait();                  ///< DAP server command loop
+extern dap::OutputEvent debcon;  ///< debug console
+
+#endif  // DAP
+
+/// @}
 
 /// @}
