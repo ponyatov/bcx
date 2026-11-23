@@ -10,12 +10,6 @@ addr st(addr a, byte b) {
     return a + sizeof(b);
 }
 
-addr st(addr a, Op op) {
-    assert(a + sizeof(op) < Msz);
-    *(Op*)&M[a] = op;
-    return a + sizeof(op);
-}
-
 addr st(addr a, addr x) {
     assert(a + sizeof(x) < Msz);
     *(addr*)&M[a] = x;

@@ -7,7 +7,9 @@
 
 #include <stdarg.h>
 #include <stdint.h>
+
 #include <memory>
+
 #include "vm.hpp"
 
 enum class LogLevel : uint8_t { NONE, INFO, WARN, ERR, DEB };
@@ -16,10 +18,13 @@ extern LogLevel debug;  ///< global debug level flag
 extern void log(const char *format, ...);    ///< unconditional logging
 extern void info(const char *format, ...);   ///< log if @ref LogLevel::INFO +
 extern void warn(const char *format, ...);   ///<
-extern void err(const char *format, ...);    ///<
+extern void error(const char *format, ...);  ///<
 extern void trace(const char *format, ...);  ///< program run trace
 
 #ifdef DAP
+
+#include <filesystem>
+#include <thread>
 
 /// @defgroup dap DAP
 /// @{

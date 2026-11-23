@@ -23,7 +23,7 @@ __attribute__((weak)) void info(const char *format, ...) {
     }
 }
 
-__attribute__((weak)) void warn(const char *format, ...) {  //
+__attribute__((weak)) void warn(const char *format, ...) {
     if (debug >= LogLevel::WARN) {
         va_list args;
         va_start(args, format);
@@ -36,14 +36,7 @@ __attribute__((weak)) void error(const char *format, ...) {  //
     if (debug >= LogLevel::ERR) {
         va_list args;
         va_start(args, format);
-        if (console)
-            vfprintf(stderr, format, args);
-        else {
-            debcon.category = "stderr";
-            vsnprintf(outbuf, sizeof(outbuf), format, args);
-            debcon.output = outbuf;
-            session->send(debcon);
-        }
+        vfprintf(stderr, format, args);
         va_end(args);
     }
 }

@@ -13,7 +13,7 @@ addr compile(byte b) {
 }
 
 addr compile(Op op) {
-    Cp = st(Cp, op);
+    Cp = st(Cp, (byte)op);
     return Cp;
 }
 

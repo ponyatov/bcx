@@ -44,7 +44,7 @@ void dap_init() {
             case 1:
                 frame.id = 1;
                 frame.name = "main";
-                frame.line = 5;
+                frame.line = 3;
                 frame.column = 1;
                 dap::Source src;
                 src.name = "ini";
@@ -155,7 +155,6 @@ void dap_init() {
         [](const std::shared_ptr<dap::ReaderWriter> &socket) {
             session->bind(socket, socket);
             session->startProcessingMessages();
-            console = false;
         },
         [](const char *err) {
             error("\n\nDAP error:%s\n\n", err);
@@ -178,11 +177,12 @@ void log(const char *format, ...) {
         vsnprintf(outbuf, sizeof(outbuf), format, args);
         debcon.output = outbuf;
         session->send(debcon);
+        fprintf(stderr, "%s", outbuf);
         va_end(args);
     }
 }
 
-__attribute__((weak)) void info(const char *format, ...) {
+void info(const char *format, ...) {
     if (debug >= LogLevel::INFO) {
         va_list args;
         va_start(args, format);
@@ -190,6 +190,46 @@ __attribute__((weak)) void info(const char *format, ...) {
         vsnprintf(outbuf, sizeof(outbuf), format, args);
         debcon.output = outbuf;
         session->send(debcon);
+        fprintf(stderr, "%s", outbuf);
+        va_end(args);
+    }
+}
+
+void warn(const char *format, ...) {
+    if (debug >= LogLevel::WARN) {
+        va_list args;
+        va_start(args, format);
+        debcon.category = "stdout";
+        vsnprintf(outbuf, sizeof(outbuf), format, args);
+        debcon.output = outbuf;
+        session->send(debcon);
+        fprintf(stderr, "%s", outbuf);
+        va_end(args);
+    }
+}
+
+void error(const char *format, ...) {  //
+    if (debug >= LogLevel::ERR) {
+        va_list args;
+        va_start(args, format);
+        debcon.category = "stderr";
+        vsnprintf(outbuf, sizeof(outbuf), format, args);
+        debcon.output = outbuf;
+        session->send(debcon);
+        fprintf(stderr, "%s", outbuf);
+        va_end(args);
+    }
+}
+
+void trace(const char *format, ...) {  //
+    if (debug >= LogLevel::DEB) {
+        va_list args;
+        va_start(args, format);
+        debcon.category = "stderr";
+        vsnprintf(outbuf, sizeof(outbuf), format, args);
+        debcon.output = outbuf;
+        session->send(debcon);
+        fprintf(stderr, "%s", outbuf);
         va_end(args);
     }
 }

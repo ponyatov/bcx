@@ -4,13 +4,11 @@
 /// @{
 #pragma once
 
-#include <stdio.h>
-#include <stdlib.h>
-
 #include "debug.hpp"
 #include "main.hpp"
 #include "types.hpp"
 
+/// @brief opcode
 enum class Op : byte {
     nop = 0x00,   ///< @ref nop
     halt = 0xFF,  ///< @ref halt
@@ -21,7 +19,7 @@ enum class Op : byte {
 
 };
 
-extern void nop();
-extern void halt();
+extern void nop();   ///< `( -- )` empty command (do nothing)
+extern void halt();  ///< `( -- )` stop system
 
 /// @}
