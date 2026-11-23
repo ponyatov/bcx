@@ -3,3 +3,4 @@ ai: tmp/$(APP).ai.md
 tmp/$(APP).ai.md:
 	find doc -type f -regex .+.md -exec cat {} > $@ \;
 	cat README.md >> $@
+	cat doc/bcx/debug.md >> $@

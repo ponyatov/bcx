@@ -1,6 +1,6 @@
 # VSCode IDE debugger interface
 find_package(JSON REQUIRED)
-find_package(DAP REQUIRED)
+find_package(DAP  REQUIRED)
 
 # if(DAP_FOUND)
 #   message("-- Found DAP: ${DAP_LIBRARIES} (found version \"${DAP_VERSION}\")")

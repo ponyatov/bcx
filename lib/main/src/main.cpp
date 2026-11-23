@@ -7,6 +7,7 @@
 #include "vm.hpp"
 
 int main(int argc, char* argv[]) {
+    if (argc == 1) dap_init();
     arg(0, argv[0]);
     init(argc, argv);
 
@@ -19,7 +20,11 @@ int main(int argc, char* argv[]) {
         fclose(yyin);
         yyfile = nullptr;
     }
-    return vm();
+
+    if (argc == 1)
+        return dap_wait();
+    else
+        return vm();
 }
 
 void arg(int argc, char* argv) {  //

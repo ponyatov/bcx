@@ -27,3 +27,9 @@ addr st(addr a, cell c) {
     *(cell*)&M[a] = c;
     return a + sizeof(c);
 }
+
+addr R[Rsz];
+byte Rp = 0;
+
+cell D[Dsz];
+byte Dp = 0;

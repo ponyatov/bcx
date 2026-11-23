@@ -6,5 +6,9 @@
 
 /// @ref M size, @ref byte s (64K limited: MCU is the main target)
 #define Msz 0x10000
+/// @ref R size, @ref addr esses (255 calls limit)
+#define Rsz 0x100
+/// @ref D size, @ref cell s (16 cells limit)
+#define Dsz 0x10
 
 /// @}
