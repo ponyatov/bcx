@@ -25,3 +25,5 @@ ref/**
 
 !.vscode/**
 !vscode/**
+
+!apt.*
