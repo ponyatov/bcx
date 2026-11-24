@@ -6,3 +6,10 @@ tmp/**
 ref/**
 !.stignore
 !.gitignore
+!inc/**
+!src/**
+!hw/**
+!cpu/**
+!arch/**
+!os/**
+!lib/**
