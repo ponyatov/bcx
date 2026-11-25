@@ -1,9 +1,7 @@
 
 #include "bc.hpp"
-#include "cli.hpp"
 #include "debug.hpp"
 #include "lib.hpp"
-#include "main.hpp"
 #include "vm.hpp"
 
 int main(int argc, char* argv[]) {
