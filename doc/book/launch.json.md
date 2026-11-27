@@ -5,6 +5,7 @@
     "version": "0.2.0",
     "configurations": [
 ```
+## bcx
 ```json
         {
             "type": "bcx",
@@ -13,6 +14,7 @@
             "program": "${workspaceFolder}/bin/${workspaceFolderBasename}"
         },
 ```
+## 
 ```json
         {
             "type": "cppdbg",

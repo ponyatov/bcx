@@ -49,3 +49,14 @@ __attribute__((weak)) void trace(const char *format, ...) {  //
         va_end(args);
     }
 }
+
+void dump() {
+    for (addr a = 0; a < Cp; a++) {
+        if (a % 0x10 == 0)
+            fprintf(stderr, "\n%.4X: ", a);
+        else if (a % 0x08 == 0)
+            fprintf(stderr, "  ");
+        fprintf(stderr, " %.2X", M[a]);
+    }
+    fprintf(stderr, "\n");
+}

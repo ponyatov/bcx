@@ -22,6 +22,11 @@ addr st(addr a, cell c) {
     return a + sizeof(c);
 }
 
+addr lda(addr a) {
+    assert(a + sizeof(addr) < Msz);
+    return *(addr*)&M[a];
+}
+
 addr R[Rsz];
 byte Rp = 0;
 

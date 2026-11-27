@@ -17,6 +17,10 @@ extern addr st(addr a, byte b);  ///< store @ref byte
 extern addr st(addr a, addr c);  ///< store @ref addr
 extern addr st(addr a, cell c);  ///< store @ref cell
 
+extern byte ldb(addr a);  ///< load @ref byte
+extern addr lda(addr a);  ///< load @ref addr
+extern cell ldc(addr a);  ///< load @ref cell
+
 extern addr R[Rsz];  ///< return stack
 extern byte Rp;      ///< @ref R pointer
 

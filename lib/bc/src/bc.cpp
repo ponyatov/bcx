@@ -25,6 +25,7 @@ addr compile(addr a) {
 addr global(std::string* label, addr a) {
     locals.clear();
     globals[*label] = a;
+    backpatch(label, a);
     Ip = a;
     trace("%.4X: %s\n", a, label->c_str());
     return a;
@@ -34,7 +35,8 @@ std::map<std::string, addr> globals;
 
 addr local(std::string* label, addr a) {
     locals[*label] = a;
-    trace("%.4X: %s\n", a, label->c_str());
+    backpatch(label, a);
+    trace("%.4X: @%s\n", a, label->c_str());
     return a;
 }
 
@@ -52,12 +54,11 @@ std::map<std::string, std::vector<addr>> forwards;
 
 addr forward(std::string* label, addr a) {
     forwards[*label].push_back(a);
-    return a;
+    return 0xFFFF;
 }
 
 addr backpatch(std::string* label, addr a) {
     for (addr at : forwards[*label]) st(at, a);
     forwards[*label].clear();
-    // forwards.remove(*label);
     return a;
 }

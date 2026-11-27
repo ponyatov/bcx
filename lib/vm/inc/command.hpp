@@ -19,7 +19,7 @@ enum class Op : byte {
 
 };
 
-extern void nop();   ///< `( -- )` empty command (do nothing)
-extern void halt();  ///< `( -- )` stop system
+#include "control.hpp"
+#include "stack.hpp"
 
 /// @}

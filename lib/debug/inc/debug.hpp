@@ -21,6 +21,8 @@ extern void warn(const char *format, ...);   ///<
 extern void error(const char *format, ...);  ///<
 extern void trace(const char *format, ...);  ///< program run trace
 
+extern void dump();  ///< `( -- )` dump compiled @ref M `[0..Cp]`
+
 #ifdef DAP
 
 #include <filesystem>
