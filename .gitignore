@@ -1,12 +1,16 @@
 *~
 *.swp
 *.log
-*.exe
-*.o
+/target/
+.stfolder/
+.sync*/
+.*sync-conflict.*
 !.gitignore
 
 # ---> C++
 # Prerequisites
+*.exe
+*.o
 *.d
 
 # Compiled Object files
@@ -38,7 +42,3 @@
 *.exe
 *.out
 *.app
-
-.stfolder/
-.sync*/
-.*sync-conflict.*

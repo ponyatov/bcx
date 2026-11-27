@@ -2,5 +2,6 @@
 bin/**
 tmp/**
 ref/**
+target/**
 fw/**
 root/**
