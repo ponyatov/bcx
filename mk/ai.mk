@@ -12,4 +12,4 @@ tmp/$(APP).ai.md:
 .PHONY: book tmp/$(APP).book.md
 book: tmp/$(APP).book.md
 tmp/$(APP).book.md:
-	cat doc/book/*.md > $@
+	cat doc/book/*.md doc/book/book.ai.md > $@
