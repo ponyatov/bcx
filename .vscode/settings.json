@@ -8,6 +8,7 @@
         "_build/**": true, "target/**": true,
     },
     "files.associations": {
+        "ws.?": "jsonc",
         "*.ini": "bcx", "*.f": "bcx"
     },
 
